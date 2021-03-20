@@ -1,0 +1,532 @@
+* {
+  margin: 0;
+  padding: 0;
+  background-color: #0D1B2A;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+.all {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.navbarcon {
+  width: 100%;
+  height: 15vh;
+  color: #E0E1DD;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+}
+
+.navbarcon .navbar {
+  width: 95%;
+  height: 15vh;
+  color: #E0E1DD;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  position: relative;
+}
+
+.navbarcon .navbar .title .link {
+  font-size: 1.4rem;
+  text-decoration: none;
+  color: #E0E1DD;
+}
+
+.navbarcon .navbar .right {
+  width: 20%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  position: relative;
+}
+
+.navbarcon .navbar .right .link {
+  text-decoration: none;
+  color: #E0E1DD;
+}
+
+.navbarcon .navbar .right button {
+  color: #E0E1DD;
+  outline: none;
+  border: 1px solid #E0E1DD;
+  border-radius: .5rem;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.searchcon {
+  width: 100%;
+  height: 20vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+}
+
+.searchcon .search {
+  width: 90%;
+  height: 30%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.searchcon .search button {
+  height: 100%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  outline: none;
+  padding: 10px;
+  border: 1px solid #E0E1DD;
+  border-radius: .7rem;
+  color: #E0E1DD;
+  cursor: pointer;
+}
+
+.cardcon {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.cardcon .card {
+  width: 80%;
+  padding: 10px;
+  margin: 10px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  max-height: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  border: 1px solid #1B263B;
+  color: #415A77;
+  border-radius: .7rem;
+  line-height: 1.5rem;
+  -webkit-box-shadow: 0px 0px 5px #8f8f8f;
+          box-shadow: 0px 0px 5px #8f8f8f;
+  -webkit-transition: .3s;
+  transition: .3s;
+}
+
+.cardcon .card:hover {
+  -webkit-box-shadow: 0px 0px 10px #8f8f8f;
+          box-shadow: 0px 0px 10px #8f8f8f;
+}
+
+.cardcon .card .title {
+  font-size: 1.4rem;
+  text-decoration: none;
+  color: #778DA9;
+}
+
+.cardcon .card .date {
+  font-size: .8rem;
+}
+
+.cardcon .card .body {
+  font-size: 1rem;
+}
+
+.about {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #E0E1DD;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.notfound {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #E0E1DD;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.articlecon {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  color: #E0E1DD;
+  position: relative;
+}
+
+.articlecon .commentscon {
+  width: 65%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 10px;
+}
+
+.articlecon .commentscon .addcomment > div {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.articlecon .commentscon .addcomment form input {
+  color: white;
+  border: 1px solid #5a5656;
+  margin-right: 10px;
+  outline: none;
+  padding: 7px;
+}
+
+.articlecon .commentscon .addcomment form button {
+  color: white;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 7px;
+  border: 1px solid #5a5656;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.articlecon .commentscon .commentsection .comment {
+  padding: 10px;
+  background-color: #4c5e75;
+  border-radius: .5rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.articlecon .commentscon .commentsection .comment div {
+  background-color: #4c5e75;
+  border-radius: .5rem;
+}
+
+.articlecon .isi {
+  width: 65%;
+  padding: 10px;
+}
+
+.articlecon .isi .title {
+  font-size: 2rem;
+}
+
+.articlecon .isi .date {
+  font-size: .85rem;
+}
+
+.articlecon .isi .body {
+  font-size: 1.2rem;
+}
+
+.logincon {
+  width: 100%;
+  height: 70vh;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.logincon form {
+  height: 80%;
+  width: 30%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #1B263B;
+  border-radius: .6rem;
+}
+
+.logincon form p {
+  color: white;
+  background-color: #1B263B;
+}
+
+.logincon form p a {
+  color: #778DA9;
+  text-decoration: none;
+  background-color: #1B263B;
+}
+
+.logincon form input {
+  color: #E0E1DD;
+  height: 30px;
+  border: none;
+  outline: none;
+}
+
+.logincon form button {
+  width: 30%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 5px;
+  border: none;
+  outline: none;
+  border-radius: .3rem;
+  color: white;
+  cursor: pointer;
+}
+
+.admin {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #E0E1DD;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.newblogcon {
+  width: 100vw;
+  height: 75vh;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.newblogcon .newblogdesc {
+  height: 10vh;
+  width: 95%;
+  font-size: 1.8rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  color: #E0E1DD;
+}
+
+.newblogcon form {
+  width: 70%;
+  height: 70%;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.newblogcon form input {
+  color: #E0E1DD;
+  padding: .8rem;
+  height: 30px;
+  width: 50%;
+  border: none;
+  outline: none;
+  border: 1px solid #E0E1DD;
+  border-radius: .5rem;
+}
+
+.newblogcon form .title {
+  font-size: 1.7rem;
+}
+
+.newblogcon form .title::-webkit-input-placeholder {
+  font-size: 1.7rem;
+}
+
+.newblogcon form .title:-ms-input-placeholder {
+  font-size: 1.7rem;
+}
+
+.newblogcon form .title::-ms-input-placeholder {
+  font-size: 1.7rem;
+}
+
+.newblogcon form .title::placeholder {
+  font-size: 1.7rem;
+}
+
+.newblogcon form .body {
+  font-size: 1.4rem;
+}
+
+.newblogcon form .body::-webkit-input-placeholder {
+  font-size: 1.4rem;
+}
+
+.newblogcon form .body:-ms-input-placeholder {
+  font-size: 1.4rem;
+}
+
+.newblogcon form .body::-ms-input-placeholder {
+  font-size: 1.4rem;
+}
+
+.newblogcon form .body::placeholder {
+  font-size: 1.4rem;
+}
+
+.newblogcon form button {
+  width: 20%;
+  height: 10%;
+  border: none;
+  outline: none;
+  background-color: #E0E1DD;
+  border-radius: .3rem;
+  cursor: pointer;
+  font-size: 1.3rem;
+}
+/*# sourceMappingURL=style.css.map */
