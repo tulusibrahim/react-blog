@@ -16,13 +16,11 @@ server.use((req, res, next) => {
 server.use(bodyParser.urlencoded({ extended: true }))
 
 let connection = mysql.createConnection({
-    host: 'ec2-52-71-161-140.compute-1.amazonaws.com',
-    user: 'usodxpyaoncifd',
-    password: '940d1b127705692af74965b690b6d5b691a8948f8601f32e830f3d9d4f326e03',
-    database: 'd8a05s6m5vf8pb',
-    port: 5432
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'latihan'
 })
-
 
 
 server.get("/", (req, res) => {
