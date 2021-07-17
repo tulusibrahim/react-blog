@@ -99,8 +99,8 @@ const Login = (props) => {
                     </form>
                     :
                     <form onSubmit={logIn}>
-                        <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} name="email"></input>
-                        <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password"></input>
+                        <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} name="email" required></input>
+                        <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password" required></input>
                         <p>Dont have an account? Create one <a href="#" onClick={() => setlogin('false')}>here!</a></p>
                         <button>Log In</button>
                     </form>
