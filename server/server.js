@@ -35,7 +35,7 @@ server.post('/updateblog', (req, result) => {
             result.send({ message: 'Failed to update. Error: ' + err })
         }
         else {
-            result.redirect('http://localhost:3000/admin')
+            result.redirect('/admin')
         }
     })
 })
@@ -89,7 +89,7 @@ server.post("/new", (req, res) => {
             }
         })
     })
-    res.redirect("http://localhost:3000")
+    res.redirect("")
 })
 
 server.get("/new", (req, res) => {
@@ -99,7 +99,7 @@ server.get("/new", (req, res) => {
     //     email: req.body.email,
     //     pass: req.body.password
     // })
-    res.redirect("http://localhost:3000")
+    res.redirect("")
 })
 
 server.get("/data", (req, res) => {
@@ -127,7 +127,7 @@ server.post("/newcomment", (req, res) => {
     let author = req.body.author
     let route = req.body.route
     let data = [req.body.author, req.body.route, req.body.fromwho, req.body.comment]
-    res.redirect("http://localhost:3000/article/" + route)
+    res.redirect("/article/" + route)
     // console.log(req.body)
     // res.send("okdech")
     connection.query("insert into blog_comments (email, article, from_who, comment) VALUES (?)", [data], (err, res) => {
@@ -143,7 +143,7 @@ server.post('/:id/deletepost', (req, res) => {
             res.send({ message: 'Failed to delete post' })
         }
         else {
-            res.redirect("http://localhost:3000/admin")
+            res.redirect("/admin")
         }
     })
 })
