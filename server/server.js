@@ -1,11 +1,15 @@
 let express = require('express')
 let mysql = require('mysql')
+let bcrypt = require('bcryptjs')
 let bodyParser = require('body-parser')
 let { v4: uuidv4 } = require('uuid')
 let server = express()
 
 server.listen(process.env.PORT || 3100, () => {
     console.log(uuidv4())
+    let pass = 'Jayasutiabadi01'
+    let hash = bcrypt.hashSync(pass, bcrypt.genSaltSync())
+    console.log('ini hasilnya: ' + hash)
 })
 
 server.use((req, res, next) => {
@@ -22,25 +26,48 @@ let connection = mysql.createConnection({
     database: 'latihan'
 })
 
+//pass: hahaha
 
-server.get("/", (req, res) => {
-    res.send("yok")
-
-    connection.connect(() => {
-        // connection.query("INSERT INTO blog_comments VALUES('icha@gmail.com', 'one last time', 'taqwim@gmail.com', 'ini beneran gaksih')", (err, res) => {
-        //     console.log(err)
-        // })
-        // connection.query("SELECT * FROM blog INNER JOIN blog_comments ON blog.email = blog_comments.email AND blog.title = blog_comments.article", (err, res) => {
-        //     console.log(res)
-        // })
+server.post('/updateblog', (req, result) => {
+    console.log(req.body)
+    connection.query(`UPDATE blog SET title = '${req.body.title}', body = '${req.body.body}' WHERE id = '${req.body.id}'`, (err, res) => {
+        if (err) {
+            result.send({ message: 'Failed to update. Error: ' + err })
+        }
+        else {
+            result.redirect('http://localhost:3000/admin')
+        }
     })
+})
 
-    // connection.connect(() => {
-    //     console.log("yeybisa")
-    //     connection.query("INSERT INTO blog VALUES ('', 'heh world!', 'tulus@gmail.com', '', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste sint animi deleniti eveniet similique tempore ad consequatur amet. Consequatur, consequuntur soluta. Doloremque inventore minus ea minima? Beatae magni ipsam dolorum')", (err, result) => {
-    //         res.send(result)
-    //     })
-    // })
+server.post('/newuser/:email/:nickname/:pass', (req, res) => {
+    let hashedPass = bcrypt.hashSync(req.params.pass, bcrypt.genSaltSync())
+    let data = [uuidv4(), hashedPass, req.params.email, req.params.nickname]
+
+    connection.query(`INSERT INTO blog_users (id, password, email, nickname) VALUES (?)`, [data], (err, result) => {
+        if (err) {
+            res.send({ message: 'failed' })
+        }
+        else {
+            res.send({ message: 'success' })
+        }
+    })
+})
+
+server.post('/login/:email/:pass', (req, res) => {
+    connection.query(`select * from blog_users where email = '${req.params.email}'`, (err, result) => {
+        if (err) {
+            res.send({ message: 'failed' })
+        }
+        else {
+            if (bcrypt.compareSync(req.params.pass, result[0].password) == false) {
+                res.send({ message: 'failed' })
+            }
+            else {
+                res.send({ message: 'success' })
+            }
+        }
+    })
 })
 
 server.post("/new", (req, res) => {
@@ -87,16 +114,36 @@ server.get("/article", (req, res) => {
     })
 })
 
+// server.post('/deleteksong', (req, res) => {
+//     connection.query('DELETE FROM blog WHERE body = ""', (err, res) => {
+//         console.log(err)
+//         console.log(res)
+//     })
+// })
+
 server.post("/newcomment", (req, res) => {
     let fromwho = req.body.fromwho
     let comment = req.body.comment
     let author = req.body.author
     let route = req.body.route
     let data = [req.body.author, req.body.route, req.body.fromwho, req.body.comment]
-    // res.redirect("http://localhost:3000/article/" + route)
-    console.log(req.body)
-    res.send("okdech")
-    // connection.query("insert into blog_comments (email, article, from_who, comment) VALUES (?)", [data], (err, res) => {
-    //     console.log(err, res)
-    // })
+    res.redirect("http://localhost:3000/article/" + route)
+    // console.log(req.body)
+    // res.send("okdech")
+    connection.query("insert into blog_comments (email, article, from_who, comment) VALUES (?)", [data], (err, res) => {
+        console.log(err, res)
+    })
+})
+
+server.post('/:id/deletepost', (req, res) => {
+    console.log("ini id nya nii " + req.params.id)
+    connection.query(`DELETE FROM blog WHERE id = '${req.params.id}'`, (err, res) => {
+        console.log(err)
+        if (err) {
+            res.send({ message: 'Failed to delete post' })
+        }
+        else {
+            res.redirect("http://localhost:3000/admin")
+        }
+    })
 })

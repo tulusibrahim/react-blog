@@ -61,7 +61,7 @@ const Article = (props) => {
             <div className="articlecon">
                 <div className="isi">
                     <div className="title">{content.title}</div>
-                    <div className="date">{content.date}</div>
+                    <div className="date">{content.email}, {content.date}</div>
                     <div className="body">{content.body}</div>
                 </div>
                 <div className="commentscon">
@@ -102,7 +102,7 @@ const Article = (props) => {
             <div className="articlecon">
                 <div className="isi">
                     <div className="title">{props.data.title}</div>
-                    <div className="date">{props.data.date}</div>
+                    <div className="date">{props.data.email}{props.data.date}</div>
                     <div className="body">{props.data.body}</div>
                 </div>
                 <div className="commentscon">

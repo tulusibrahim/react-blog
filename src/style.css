@@ -7,7 +7,23 @@
 }
 
 html::-webkit-scrollbar {
-  display: none;
+  width: 10px;
+}
+
+/* Track */
+html::-webkit-scrollbar-track {
+  background: #060c13;
+}
+
+/* Handle */
+html::-webkit-scrollbar-thumb {
+  background: #425c77;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+html::-webkit-scrollbar-thumb:hover {
+  background: #35495f;
 }
 
 .all {
@@ -56,7 +72,7 @@ html::-webkit-scrollbar {
 }
 
 .navbarcon .navbar .right {
-  width: 20%;
+  width: 25%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -76,14 +92,18 @@ html::-webkit-scrollbar {
 .navbarcon .navbar .right button {
   color: #E0E1DD;
   outline: none;
-  border: 1px solid #E0E1DD;
-  border-radius: .5rem;
+  border: 1px solid #2e2e2e;
+  border-radius: 5px;
   padding-left: 4px;
   padding-right: 4px;
   padding-top: 2px;
   padding-bottom: 2px;
   cursor: pointer;
   font-weight: 600;
+}
+
+.navbarcon .navbar .right button:hover {
+  color: #858585;
 }
 
 .searchcon {
@@ -123,9 +143,14 @@ html::-webkit-scrollbar {
   outline: none;
   padding: 10px;
   border: 1px solid #E0E1DD;
-  border-radius: .7rem;
+  border-radius: 5px;
   color: #E0E1DD;
   cursor: pointer;
+}
+
+.searchcon .search button:hover {
+  color: #808080;
+  border: 1px solid #808080;
 }
 
 .cardcon {
@@ -137,26 +162,28 @@ html::-webkit-scrollbar {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .cardcon .card {
-  width: 80%;
+  width: 25%;
   padding: 10px;
   margin: 10px;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
-  max-height: 200px;
+  max-height: auto;
   overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
@@ -170,6 +197,10 @@ html::-webkit-scrollbar {
   transition: .3s;
 }
 
+.cardcon .card .readMore {
+  color: #8f8f8f;
+}
+
 .cardcon .card:hover {
   -webkit-box-shadow: 0px 0px 10px #8f8f8f;
           box-shadow: 0px 0px 10px #8f8f8f;
@@ -178,7 +209,7 @@ html::-webkit-scrollbar {
 .cardcon .card .title {
   font-size: 1.4rem;
   text-decoration: none;
-  color: #778DA9;
+  color: #b8b8b8;
 }
 
 .cardcon .card .date {
@@ -187,6 +218,7 @@ html::-webkit-scrollbar {
 
 .cardcon .card .body {
   font-size: 1rem;
+  color: #abacab;
 }
 
 .about {
@@ -416,7 +448,7 @@ html::-webkit-scrollbar {
 
 .newblogcon {
   width: 100vw;
-  height: 75vh;
+  height: 85vh;
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -434,7 +466,7 @@ html::-webkit-scrollbar {
 }
 
 .newblogcon .newblogdesc {
-  height: 10vh;
+  height: 5vh;
   width: 95%;
   font-size: 1.8rem;
   display: -webkit-box;
@@ -450,15 +482,15 @@ html::-webkit-scrollbar {
 }
 
 .newblogcon form {
-  width: 70%;
-  height: 70%;
+  width: 95%;
+  height: 90%;
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
@@ -472,11 +504,42 @@ html::-webkit-scrollbar {
   color: #E0E1DD;
   padding: .8rem;
   height: 30px;
-  width: 50%;
+  width: 80%;
   border: none;
   outline: none;
   border: 1px solid #E0E1DD;
   border-radius: .5rem;
+}
+
+.newblogcon form textarea {
+  color: #E0E1DD;
+  padding: .8rem;
+  height: auto;
+  width: 80%;
+  border: none;
+  outline: none;
+  border: 1px solid #E0E1DD;
+  border-radius: 5px;
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+
+.newblogcon form textarea::-webkit-scrollbar {
+  width: 10px;
+}
+
+.newblogcon form textarea::-webkit-scrollbar-track {
+  background: #fde5e5;
+}
+
+.newblogcon form textarea::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.newblogcon form textarea::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .newblogcon form .title {
@@ -519,14 +582,19 @@ html::-webkit-scrollbar {
   font-size: 1.4rem;
 }
 
-.newblogcon form button {
-  width: 20%;
-  height: 10%;
+.newblogcon form .button {
+  width: 10%;
+  height: 7%;
   border: none;
   outline: none;
-  background-color: #E0E1DD;
-  border-radius: .3rem;
+  background-color: #c0c0c0;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.newblogcon form .button:hover {
+  background-color: #9e9e9c;
 }
 /*# sourceMappingURL=style.css.map */

@@ -5,8 +5,25 @@
     font-family: 'Nunito', sans-serif;
     font-size: 1rem;
 }
-html::-webkit-scrollbar{
-    display: none;
+html::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+html::-webkit-scrollbar-track {
+background: #060c13;
+// border-radius: 5px;
+}
+
+/* Handle */
+html::-webkit-scrollbar-thumb {
+background: #425c77;
+border-radius: 5px;
+}
+
+/* Handle on hover */
+html::-webkit-scrollbar-thumb:hover {
+background: #35495f;
 }
 
 .all{
@@ -43,13 +60,13 @@ html::-webkit-scrollbar{
         }
 
         .right{
-            width: 20%;
+            width: 25%;
             // border : 1px solid black;
             display : flex; 
             align-items : center; 
             justify-content: space-around;
             position: relative;
-
+            
             .link{
                 text-decoration: none;
                 color: #E0E1DD;
@@ -58,14 +75,18 @@ html::-webkit-scrollbar{
             button{
                 color: #E0E1DD;
                 outline: none;
-                border : 1px solid #E0E1DD;
-                border-radius: .5rem;
+                border : 1px solid #2e2e2e;
+                border-radius: 5px;
                 padding-left:4px;
                 padding-right:4px;
                 padding-top: 2px;
                 padding-bottom: 2px;
                 cursor: pointer;
                 font-weight: 600;
+
+                &:hover{
+                    color: #858585;
+                }
             }
         }
     }
@@ -94,9 +115,14 @@ html::-webkit-scrollbar{
             outline: none;
             padding: 10px;
             border : 1px solid #E0E1DD;
-            border-radius: .7rem;
+            border-radius: 5px;
             color: #E0E1DD;
             cursor: pointer;
+
+            &:hover{
+                color: #808080;
+                border : 1px solid #808080;
+            }
         }
     }
 }
@@ -105,15 +131,17 @@ html::-webkit-scrollbar{
     width: 100%;
     height: fit-content;
     position: relative;
-    display : flex; align-items : center; justify-content: center;
-    flex-direction: column;
+    display : flex; 
+    align-items : flex-start; justify-content: space-evenly;
+    flex-direction: row;
+    flex-wrap: wrap;
 
     .card{
-        width: 80%;
+        width: 25%;
         padding: 10px;
         margin: 10px;
         height: fit-content;
-        max-height: 200px;
+        max-height: auto;
         overflow: hidden;
         text-overflow: ellipsis;
         position: relative;
@@ -124,6 +152,10 @@ html::-webkit-scrollbar{
         box-shadow: 0px 0px 5px rgb(143, 143, 143);
         transition: .3s;
 
+        .readMore{
+            color: rgb(143, 143, 143);
+        }
+
         &:hover{
             box-shadow: 0px 0px 10px rgb(143, 143, 143);
         }
@@ -131,13 +163,14 @@ html::-webkit-scrollbar{
         .title{
             font-size: 1.4rem;
             text-decoration: none;
-            color: #778DA9;
+            color: rgb(184, 184, 184);
         }
         .date{
             font-size: .8rem;
         }
         .body{
             font-size: 1rem;
+            color: #abacab;
         }
     }
 }
@@ -308,7 +341,7 @@ html::-webkit-scrollbar{
 
 .newblogcon{
     width: 100vw;
-    height: 75vh;
+    height: 85vh;
     position: relative;
     display : flex; 
     align-items : center; 
@@ -316,7 +349,7 @@ html::-webkit-scrollbar{
     flex-direction: column;
 
     .newblogdesc{
-        height: 10vh;
+        height: 5vh;
         width: 95%;
         font-size: 1.8rem;
         display : flex; 
@@ -326,11 +359,11 @@ html::-webkit-scrollbar{
     }
 
     form{
-        width: 70%;
-        height: 70%;
+        width: 95%;
+        height: 90%;
         position: relative;
         display : flex; 
-        align-items : center; 
+        align-items : flex-start; 
         justify-content: space-evenly;
         flex-direction: column;
 
@@ -338,11 +371,42 @@ html::-webkit-scrollbar{
             color: #E0E1DD;
             padding: .8rem;
             height: 30px;
-            width: 50%;
+            width: 80%;
             border: none;
             outline: none;
             border : 1px solid #E0E1DD;
             border-radius: .5rem;
+        }
+        textarea{
+            color: #E0E1DD;
+            padding: .8rem;
+            height: auto;
+            width: 80%;
+            border: none;
+            outline: none;
+            border : 1px solid #E0E1DD;
+            border-radius: 5px;
+            
+            &::-webkit-scrollbar {
+                width: 10px;
+              }
+              
+              /* Track */
+            &::-webkit-scrollbar-track {
+            background: #fde5e5;
+            // border-radius: 5px;
+            }
+            
+            /* Handle */
+            &::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
+            }
+            
+            /* Handle on hover */
+            &::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            }
         }
 
         .title{
@@ -361,15 +425,19 @@ html::-webkit-scrollbar{
             }
         }
 
-        button{
-            width: 20%;
-            height: 10%;
+        .button{
+            width: 10%;
+            height: 7%;
             border: none;
             outline: none;
-            background-color: #E0E1DD;
-            border-radius: .3rem;
+            background-color: #c0c0c0;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            &:hover{
+                background-color: #9e9e9c;
+            }
         }
     }
 }

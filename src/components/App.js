@@ -11,6 +11,7 @@ import Admin from './admin'
 import NewBlog from "./newblog";
 import Logout from "./logout";
 import NotResponsive from "./notResponsive";
+import EditPost from "./editPost";
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
             <Admin dataFromEmail={user} />
           </Route>
           <Route path="/new" component={NewBlog}></Route>
+          <Route path="/edit" component={EditPost}></Route>
           <Route path="/logout">
             <Logout isLogin={getBtnInOut} />
           </Route>

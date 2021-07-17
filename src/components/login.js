@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import fire from '../firebase'
+import axios from "axios";
 
 // alert("Still working on it!")
 // let datee = new Date()
@@ -17,56 +18,94 @@ const Login = (props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [login, setlogin] = useState('')
+    const [nickname, setNickname] = useState('')
     let history = useHistory()
 
     const signUp = (e) => {
         e.preventDefault()
+        let form = new FormData()
+        form.append('username', 'haha')
 
-        fire.auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then(() => {
-                history.push("/login")
+        // fetch('http://localhost:3100/newuser', { body: JSON.stringify({ username: 'haha' }), method: 'post' })
+
+        axios.post(`http://localhost:3100/newuser/${email}/${nickname}/${password}`)
+            .then(res => {
+                if (res.data.message == 'failed') {
+                    alert('Login failed')
+                }
+                else {
+                    history.push('/')
+                }
             })
-            .catch(err => {
-                alert(err.code)
-            })
+
+        // fire.auth()
+        //     .createUserWithEmailAndPassword(email, password)
+        //     .then(() => {
+        //         history.push("/login")
+        //     })
+        //     .catch(err => {
+        //         alert(err.code)
+        //     })
     }
 
     const logIn = (e) => {
         e.preventDefault()
 
-        fire.auth()
-            .signInWithEmailAndPassword(email, password)
-            .then((res) => {
-                props.getuser(email)
-                console.log(res.user.email)
-                console.log(res.user)
-                localStorage.setItem('email', res.user.email)
-                localStorage.setItem('isLogin', 'yes')
-                props.isLogin('yes')
-                history.push('/admin')
+        axios.post(`http://localhost:3100/login/${email}/${password}`)
+            .then(res => {
+                if (res.data.message == 'failed') {
+                    alert('Login failed')
+                }
+                else {
+                    history.push('/')
+                    localStorage.setItem('email', email)
+                    localStorage.setItem('isLogin', 'yes')
+                    props.isLogin('yes')
+                }
             })
-            .catch(err => {
-                alert(err.message)
-            })
+
+        // fire.auth()
+        //     .signInWithEmailAndPassword(email, password)
+        //     .then((res) => {
+        //         props.getuser(email)
+        //         console.log(res.user.email)
+        //         console.log(res.user)
+        //         localStorage.setItem('email', res.user.email)
+        //         localStorage.setItem('isLogin', 'yes')
+        //         props.isLogin('yes')
+        //         history.push('/')
+        //     })
+        //     .catch(err => {
+        //         alert(err.message)
+        //     })
     }
+
+    useEffect(() => {
+        let cache = localStorage.getItem('isLogin')
+        if (cache !== null) {
+            history.push('/')
+        }
+    }, [])
 
     return (
         <div className="logincon">
-            {login == 'false' ?
-                <form onSubmit={signUp}>
-                    <input placeholder="Username" type="email" onChange={(e) => setEmail(e.target.value)} name="email"></input>
-                    <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password"></input>
-                    <button>Sign Up</button>
-                </form> :
-                <form onSubmit={logIn}>
-                    <input placeholder="Username" onChange={(e) => setEmail(e.target.value)} name="email"></input>
-                    <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password"></input>
-                    <p>Dont have an account? Create one <a href="#" onClick={() => setlogin('false')}>here!</a></p>
-                    <button>Log In</button>
-                </form>
+            {
+                login == 'false' ?
+                    <form onSubmit={signUp}>
+                        <input placeholder="Email" type="email" onChange={(e) => setEmail(e.target.value)} name="email"></input>
+                        <input placeholder="Nickname" onChange={(e) => setNickname(e.target.value)}></input>
+                        <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password"></input>
+                        <button>Sign Up</button>
+                    </form>
+                    :
+                    <form onSubmit={logIn}>
+                        <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} name="email"></input>
+                        <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password"></input>
+                        <p>Dont have an account? Create one <a href="#" onClick={() => setlogin('false')}>here!</a></p>
+                        <button>Log In</button>
+                    </form>
             }
-        </div>
+        </div >
     );
 };
 

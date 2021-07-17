@@ -5,7 +5,7 @@ const Search = () => {
         <div className="searchcon">
             <div className="search">
                 <Link to="/new">
-                    <button>Add New</button>
+                    <button>Write New</button>
                 </Link>
             </div>
         </div>
