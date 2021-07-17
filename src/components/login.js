@@ -34,7 +34,7 @@ const Login = (props) => {
                     alert('Login failed')
                 }
                 else {
-                    history.push('/')
+                    history.push('https://wr8.herokuapp.com/')
                 }
             })
 
@@ -57,7 +57,7 @@ const Login = (props) => {
                     alert('Login failed')
                 }
                 else {
-                    history.push('/')
+                    history.push('https://wr8.herokuapp.com/')
                     localStorage.setItem('email', email)
                     localStorage.setItem('isLogin', 'yes')
                     props.isLogin('yes')
@@ -83,7 +83,7 @@ const Login = (props) => {
     useEffect(() => {
         let cache = localStorage.getItem('isLogin')
         if (cache !== null) {
-            history.push('/')
+            history.push('https://wr8.herokuapp.com/')
         }
     }, [])
 

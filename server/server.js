@@ -4,12 +4,10 @@ let bcrypt = require('bcryptjs')
 let bodyParser = require('body-parser')
 let { v4: uuidv4 } = require('uuid')
 let server = express()
+const baseURL = 'https://wr8.herokuapp.com'
 
 server.listen(process.env.PORT || 3100, () => {
     console.log(uuidv4())
-    let pass = 'Jayasutiabadi01'
-    let hash = bcrypt.hashSync(pass, bcrypt.genSaltSync())
-    console.log('ini hasilnya: ' + hash)
 })
 
 server.use((req, res, next) => {
@@ -35,7 +33,7 @@ server.post('/updateblog', (req, result) => {
             result.send({ message: 'Failed to update. Error: ' + err })
         }
         else {
-            result.redirect('/admin')
+            result.redirect(baseURL + '/admin')
         }
     })
 })
@@ -127,7 +125,7 @@ server.post("/newcomment", (req, res) => {
     let author = req.body.author
     let route = req.body.route
     let data = [req.body.author, req.body.route, req.body.fromwho, req.body.comment]
-    res.redirect("/article/" + route)
+    res.redirect(baseURL + "/article" + route)
     // console.log(req.body)
     // res.send("okdech")
     connection.query("insert into blog_comments (email, article, from_who, comment) VALUES (?)", [data], (err, res) => {
@@ -143,7 +141,7 @@ server.post('/:id/deletepost', (req, res) => {
             res.send({ message: 'Failed to delete post' })
         }
         else {
-            res.redirect("/admin")
+            res.redirect(baseURL + "/admin")
         }
     })
 })
