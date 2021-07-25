@@ -1,8 +1,9 @@
 import { useHistory } from "react-router";
+import { supabase } from "../configs/configurations"
 
-const Logout = (props) => {
-    localStorage.clear()
-    props.isLogin('no')
+const Logout = async (props) => {
+
+    await supabase.auth.signOut()
     useHistory().push('/')
     return (
         <div>Redirecting...</div>

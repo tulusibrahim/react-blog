@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import fire from '../firebase'
+import { supabase } from "../configs/configurations";
 import axios from "axios";
 
 // alert("Still working on it!")
@@ -21,69 +21,43 @@ const Login = (props) => {
     const [nickname, setNickname] = useState('')
     let history = useHistory()
 
-    const signUp = (e) => {
-        e.preventDefault()
-        let form = new FormData()
-        form.append('username', 'haha')
-
-        // fetch('http://localhost:3100/newuser', { body: JSON.stringify({ username: 'haha' }), method: 'post' })
-
-        axios.post(`http://localhost:3100/newuser/${email}/${nickname}/${password}`)
-            .then(res => {
-                if (res.data.message == 'failed') {
-                    alert('Login failed')
-                }
-                else {
-                    history.push('https://wr8.herokuapp.com/')
-                }
-            })
-
-        // fire.auth()
-        //     .createUserWithEmailAndPassword(email, password)
-        //     .then(() => {
-        //         history.push("/login")
-        //     })
-        //     .catch(err => {
-        //         alert(err.code)
-        //     })
-    }
-
-    const logIn = (e) => {
+    const signUp = async (e) => {
         e.preventDefault()
 
-        axios.post(`http://localhost:3100/login/${email}/${password}`)
-            .then(res => {
-                if (res.data.message == 'failed') {
-                    alert('Login failed')
-                }
-                else {
-                    history.push('https://wr8.herokuapp.com/')
-                    localStorage.setItem('email', email)
-                    localStorage.setItem('isLogin', 'yes')
-                    props.isLogin('yes')
-                }
-            })
+        const { user, session, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+        })
 
-        // fire.auth()
-        //     .signInWithEmailAndPassword(email, password)
-        //     .then((res) => {
-        //         props.getuser(email)
-        //         console.log(res.user.email)
-        //         console.log(res.user)
-        //         localStorage.setItem('email', res.user.email)
-        //         localStorage.setItem('isLogin', 'yes')
-        //         props.isLogin('yes')
-        //         history.push('/')
-        //     })
-        //     .catch(err => {
-        //         alert(err.message)
-        //     })
+        if (error) {
+            alert("Failed to sign up")
+        }
+        else {
+            history.push('/')
+            document.location.reload()
+        }
     }
 
-    useEffect(() => {
-        let cache = localStorage.getItem('isLogin')
-        if (cache !== null) {
-            history.push('https://wr8.herokuapp.com/')
+    const logIn = async (e) => {
+        e.preventDefault()
+
+        const { user, session, error } = await supabase.auth.signIn({
+            email: email,
+            password: password,
+        })
+        if (error) {
+            alert("Failed to sign in")
+        }
+        else {
+            history.push('/')
+            document.location.reload()
+        }
+    }
+
+    useEffect(async () => {
+        let isLogin = await supabase.auth.session()
+        if (isLogin !== null) {
+            history.push('/')
         }
     }, [])
 
@@ -93,7 +67,7 @@ const Login = (props) => {
                 login == 'false' ?
                     <form onSubmit={signUp}>
                         <input placeholder="Email" type="email" onChange={(e) => setEmail(e.target.value)} name="email"></input>
-                        <input placeholder="Nickname" onChange={(e) => setNickname(e.target.value)}></input>
+                        {/* <input placeholder="Nickname" onChange={(e) => setNickname(e.target.value)}></input> */}
                         <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password"></input>
                         <button>Sign Up</button>
                     </form>

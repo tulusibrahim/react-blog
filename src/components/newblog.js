@@ -1,29 +1,44 @@
-import axios from "axios";
+import { supabase, uuidv4 } from "../configs/configurations";
+import moment from 'moment'
+import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
 const NewBlog = () => {
 
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
+    let history = useHistory()
 
-    const monthNames = ["Jan", "Feb", "March", "Apr", "May", "Jun",
-        "July", "August", "Sept", "Oct", "Nov", "Dec"
-    ];
-    let date = new Date()
-    let getDate = `${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`
-    let style = { fontSize: '2rem', fontWeight: '500', textAlign: 'center', color: 'white' }
+    const postData = async (e) => {
+        e.preventDefault()
+        const { data, error } = await supabase
+            .from('blog')
+            .insert([
+                {
+                    id: uuidv4(),
+                    title: title,
+                    body: body,
+                    email: localStorage.getItem('email'),
+                    date: moment().format('DD MMMM YYYY'),
+                }
+            ])
+        if (error) {
+            alert('Failed to add post')
+        }
+        else {
+            history.push('/')
+        }
+    }
 
     return (
-        localStorage.getItem('email') == null ?
-            <h1 style={style}>Log in first atuh boi</h1>
+        supabase.auth.session() == null ?
+            <h1 style={{ fontSize: '2rem', fontWeight: '500', textAlign: 'center', color: 'white' }}>Log in first atuh boi</h1>
             :
             <div className="newblogcon">
                 <div className="newblogdesc">Add New Blog</div>
-                <form action="http://localhost:3100/new" method="POST">
-                    <input placeholder="Title" onChange={setTitle} name="title" className="title" required></input>
-                    <textarea rows="10" cols="50" placeholder="Body" onChange={setBody} name="body" className="body" required></textarea>
-                    <input value={getDate} style={{ display: 'none' }} name="date"></input>
-                    <input name="email" value={localStorage.getItem('email')} style={{ display: 'none' }}></input>
+                <form onSubmit={postData}>
+                    <input placeholder="Title" onChange={(e => setTitle(e.target.value))} name="title" className="title" required></input>
+                    <textarea rows="10" cols="50" placeholder="Body" onChange={(e) => setBody(e.target.value)} name="body" className="body" required></textarea>
                     <button type="submit" className="button" >Submit</button>
                 </form>
             </div>

@@ -1,27 +1,24 @@
 import { useEffect, useState } from "react";
 import { Link, useHistory } from 'react-router-dom'
-import axios from 'axios'
+import { supabase } from '../configs/configurations'
 import ShowMoreText from 'react-show-more-text';
 
-const Content = (props) => {
-    const [contentt, setcontentt] = useState([])
-    let history = useHistory()
-    // const [clickContent, setClickContent] = useState('')
-    // props.callback(contentt)
 
-    useEffect(() => {
+const Content = (props) => {
+    const [data, setData] = useState([])
+    let history = useHistory
+
+    const getData = async () => {
+        const { data, error } = await supabase.from('blog').select()
+        setData(data)
+    }
+
+    useEffect(async () => {
         if (window.screen.width < 992) {
-            history.push("/notresponsive")
+            history.push("https://wr8.herokuapp.com/notresponsive")
         }
         else {
-            history.push("/")
-            fetch('http://localhost:3100/data')
-                .then(res => res.json())
-                .then(response => {
-                    setcontentt(response)
-                    console.log(response)
-                })
-                .catch(err => console.log(err))
+            getData()
         }
         // axios.post('http://localhost:3100/deleteksong')
         //     .then(res => console.log(res))
@@ -34,9 +31,9 @@ const Content = (props) => {
     return (
         <div className="cardcon">
             {
-                contentt ?
-                    contentt.map((res) => (
-                        <div className="card" key={res.id}>
+                data ?
+                    data.map((res, index) => (
+                        <div className="card" key={index}>
                             <Link className="title" to={{ pathname: `/article/${res.title}`, query: { res } }}>
                                 <div>{res.title}</div>
                             </Link>
