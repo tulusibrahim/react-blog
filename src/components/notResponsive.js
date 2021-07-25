@@ -8,7 +8,7 @@ const NotResponsive = () => {
 
     useEffect(() => {
         if (window.screen.width > 992) {
-            history.push("https://wr8.herokuapp.com/")
+            history.push("/")
         }
     }, [])
     return (
