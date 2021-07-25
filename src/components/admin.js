@@ -32,7 +32,7 @@ const Admin = (props) => {
     }
 
     useEffect(() => {
-        if (localStorage.getItem('email') == null) {
+        if (supabase.auth.session() == null) {
             setWarn("Youre not login yet")
         } else {
             getData()

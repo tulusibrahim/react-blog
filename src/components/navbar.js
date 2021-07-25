@@ -6,7 +6,6 @@ import { supabase } from "../configs/configurations";
 const Navbar = (props) => {
 
     const session = supabase.auth.session()
-    console.log(session)
 
     const logOut = async () => {
         await supabase.auth.signOut()
