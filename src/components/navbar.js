@@ -9,6 +9,7 @@ const Navbar = (props) => {
 
     const logOut = async () => {
         await supabase.auth.signOut()
+
         document.location.reload()
     }
 

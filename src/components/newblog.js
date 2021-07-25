@@ -11,6 +11,7 @@ const NewBlog = () => {
 
     const postData = async (e) => {
         e.preventDefault()
+        const user = supabase.auth.user()
         const { data, error } = await supabase
             .from('blog')
             .insert([
@@ -18,11 +19,12 @@ const NewBlog = () => {
                     id: uuidv4(),
                     title: title,
                     body: body,
-                    email: localStorage.getItem('email'),
+                    email: user.email,
                     date: moment().format('DD MMMM YYYY'),
                 }
             ])
         if (error) {
+            console.log(error)
             alert('Failed to add post')
         }
         else {

@@ -27,7 +27,8 @@ const Admin = (props) => {
     }
 
     const getData = async () => {
-        const { data, error } = await supabase.from('blog').select().eq('email', localStorage.getItem('email'))
+        const user = supabase.auth.user()
+        const { data, error } = await supabase.from('blog').select().eq('email', user.email)
         setData(data)
     }
 
