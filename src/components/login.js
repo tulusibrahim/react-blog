@@ -40,6 +40,7 @@ const Login = (props) => {
 
     const logIn = async (e) => {
         e.preventDefault()
+        e.target.reset()
 
         const { user, session, error } = await supabase.auth.signIn({
             email: email,
@@ -69,13 +70,14 @@ const Login = (props) => {
                         <input placeholder="Email" type="email" onChange={(e) => setEmail(e.target.value)} name="email"></input>
                         {/* <input placeholder="Nickname" onChange={(e) => setNickname(e.target.value)}></input> */}
                         <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password"></input>
+                        <p>Have an account? Login <a href="#" onClick={() => setlogin('true')}>here!</a></p>
                         <button>Sign Up</button>
                     </form>
                     :
                     <form onSubmit={logIn}>
                         <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} name="email" required></input>
                         <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password" required></input>
-                        <p>Dont have an account? Create one <a href="#" onClick={() => setlogin('false')}>here!</a></p>
+                        <p>Don't have an account? Create one <a href="#" onClick={() => setlogin('false')}>here!</a></p>
                         <button>Log In</button>
                     </form>
             }

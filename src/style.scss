@@ -201,67 +201,88 @@ background: #35495f;
 }
 
 .articlecon{
-    width: 100%;
+    width: 85%;
     height: 100%;
     display : flex; 
     align-items : center; 
-    justify-content: center;
-    flex-direction: column;
+    justify-content: flex-start;
+    flex-direction: row;
     color: #E0E1DD; 
     position: relative;
 
-    .commentscon{
-        width: 65%;
-        height: fit-content;
-        display : flex; 
-        align-items : flex-start; 
-        justify-content: flex-start;
-        flex-direction: column;
-        padding: 10px;
+    .likes{
+        width: 20%;
+        height: 50;
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: row;
+        align-items: center;
 
-        .addcomment>div{
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-
-        .addcomment form input{
-            color: white;
-            border : 1px solid rgb(90, 86, 86);
-            margin-right: 10px;
-            outline: none;
-            padding: 7px;
-        }
-
-        .addcomment form button{
-            color: white;
-            width: fit-content;
-            height: fit-content;
-            padding: 7px;
-            border : 1px solid rgb(90, 86, 86);
-            outline: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .commentsection{
-
-            .comment{
-                padding: 10px;
-                background-color: #4c5e75;
-                border-radius: .5rem;
-                width: fit-content;
-                margin-top: 5px;
-                margin-bottom: 5px;
-                div{
-                    background-color: #4c5e75;
-                    border-radius: .5rem;
-                }
+        .icon{
+            text-align: center;
+            i{
+                cursor: pointer;
             }
         }
     }
+    .contentandcomment{
+        width: 80%;
+        height: 100%;
+
+        .commentscon{
+            width: 65%;
+            height: fit-content;
+            display : flex; 
+            align-items : flex-start; 
+            justify-content: flex-start;
+            flex-direction: column;
+            padding: 10px;
+    
+            .addcomment>div{
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+    
+            .addcomment form input{
+                color: white;
+                border : 1px solid rgb(90, 86, 86);
+                margin-right: 10px;
+                outline: none;
+                padding: 7px;
+            }
+    
+            .addcomment form button{
+                color: white;
+                width: fit-content;
+                height: fit-content;
+                padding: 7px;
+                border : 1px solid rgb(90, 86, 86);
+                outline: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+    
+            .commentsection{
+    
+                .comment{
+                    padding: 10px;
+                    background-color: #4c5e75;
+                    border-radius: .5rem;
+                    width: fit-content;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                    div{
+                        background-color: #4c5e75;
+                        border-radius: .5rem;
+                    }
+                }
+            }
+    }
+
+    }
 
     .isi{
-        width: 65%;
+        width: 70%;
         padding: 10px;
 
         .title{

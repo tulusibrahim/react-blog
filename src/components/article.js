@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase, uuidv4 } from "../configs/configurations";
+import moment from "moment";
 
 const Article = (props) => {
     const { title } = useParams()
@@ -12,29 +13,54 @@ const Article = (props) => {
     const getData = async () => {
         const { data, error } = await supabase
             .from('blog')
-            .select()
+            .select(`
+                *,
+                blog_comments(
+                    *
+                )
+            `)
             .eq('title', title)
-        console.log(data)
         setData(data)
-        setComments(data[0].comments)
+        setComments(data[0].blog_comments)
     }
 
     const postComment = async (e) => {
         e.preventDefault()
-        const { data, error } = await supabase
-            .from('blog')
+        e.target.reset()
+        const { dataa, error } = await supabase
+            .from('blog_comments')
             .insert([
                 {
-                    comments: [{
-                        "author": localStorage.getItem('email'),
-                        "comment": inputComment,
-                        "time": "28 july 2021"
-                    }]
+                    id: uuidv4(),
+                    articleId: data[0].id,
+                    author: supabase.auth.user().email,
+                    comment: inputComment,
+                    time: moment().format('DD MMMM YYYY')
                 }
             ])
-            .filter('title', 'eq', title)
-        console.log(data)
-        console.log(error)
+        getData()
+    }
+
+    const addLikes = async () => {
+        const { data: dataLikes, error } = await supabase
+            .from('blog')
+            .select('likes')
+            .eq('title', title)
+
+        if (data[0].likes == null) {
+            const { data, error } = await supabase
+                .from('blog')
+                .update({ likes: 1 })
+                .eq('title', title)
+            if (error) alert('Failed to like')
+        }
+        else {
+            const { data, error } = await supabase
+                .from('blog')
+                .update({ likes: dataLikes[0].likes + 1 })
+                .eq('title', title)
+            if (error) alert('Failed to like')
+        }
         getData()
     }
 
@@ -46,52 +72,61 @@ const Article = (props) => {
 
     return (
         <div className="articlecon">
-            <div className="isi">
-                {
-                    data.map((res, index) => (
-                        <div key={index}>
-                            <div className="title">{res.title}</div>
-                            <div className="date">{res.email}, {res.date}</div>
-                            <div className="body">{res.body}</div>
-                        </div>
-                    ))
-                }
+            <div className="likes">
+                <div className="icon">
+                    <i className="far fa-heart" onClick={addLikes}></i>
+                    <div>{data.map(like => like.likes == null ? 0 : like.likes)}</div>
+                </div>
+                <div className="icon">
+                    <i className="far fa-comment-dots"></i>
+                    <div>{comments.length}</div>
+                </div>
             </div>
-            {/* <div className="commentscon">
-                <h2>Comments</h2>
-                {
-                    comments == null ?
-                        <div className="commentsection">
-                            <div>There is no comment here.</div>
-                        </div>
-                        :
-                        <div className="commentsection">
-                            {
-                                comments.map((komentar, index) => (
-                                    <div key={index} className="comment">
-                                        <div>{komentar.author}</div>
-                                        <div>{komentar.comment}</div>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                }
-                <div className="addcomment">
+            <div className="contentandcomment">
+                <div className="isi">
                     {
-                        localStorage.getItem('email') == null ? 'You need to login first to comment' :
-                            <>
-                                <div>Add comment</div>
-                                <form onSubmit={postComment}>
-                                    <input name="comment" placeholder=" Your comment..." onChange={(e) => setInputComments(e.target.value)}></input>
-                                    <input name="fromwho" defaultValue={localStorage.getItem('email')} style={{ display: 'none' }}></input>
-                                    <input name="route" style={{ display: "none" }} defaultValue={title}></input>
-                                    <input name="author" style={{ display: "none" }} defaultValue={content.email}></input>
-                                    <button>Comment</button>
-                                </form>
-                            </>
+                        data.map((res, index) => (
+                            <div key={index}>
+                                <div className="title">{res.title}</div>
+                                <div className="date">{res.email}, {res.date}</div>
+                                <div className="body">{res.body}</div>
+                            </div>
+                        ))
                     }
                 </div>
-            </div> */}
+                <div className="commentscon">
+                    <h2>Comments</h2>
+                    {
+                        comments == '' ?
+                            <div className="commentsection">
+                                <div>There is no comment here.</div>
+                            </div>
+                            :
+                            <div className="commentsection">
+                                {
+                                    comments.map((komentar, index) => (
+                                        <div key={index} className="comment">
+                                            <div style={{ fontSize: 16 }}>{komentar.author}</div>
+                                            <div style={{ fontSize: 20 }}>{komentar.comment}</div>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                    }
+                    <div className="addcomment">
+                        {
+                            supabase.auth.session() == null ? 'You need to login first to comment' :
+                                <>
+                                    <div>Add comment</div>
+                                    <form onSubmit={postComment}>
+                                        <input name="comment" placeholder=" Your comment..." onChange={(e) => setInputComments(e.target.value)}></input>
+                                        <button>Comment</button>
+                                    </form>
+                                </>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
 
     );

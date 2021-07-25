@@ -19,9 +19,15 @@ const Content = (props) => {
         }
         else {
             getData()
+            // const { data, error } = await supabase
+            //     .from('blog')
+            //     .select(`
+            //         *,
+            //         blog_comments(
+            //             author
+            //         )
+            //     `)
         }
-        // axios.post('http://localhost:3100/deleteksong')
-        //     .then(res => console.log(res))
     }, [])
 
     const certainContent = (res) => {

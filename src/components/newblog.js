@@ -34,7 +34,7 @@ const NewBlog = () => {
 
     return (
         supabase.auth.session() == null ?
-            <h1 style={{ fontSize: '2rem', fontWeight: '500', textAlign: 'center', color: 'white' }}>Log in first atuh boi</h1>
+            <h1 style={{ fontSize: '2rem', fontWeight: '500', textAlign: 'center', color: 'white' }}>You need to log in first to create new post.</h1>
             :
             <div className="newblogcon">
                 <div className="newblogdesc">Add New Blog</div>

@@ -262,7 +262,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .articlecon {
-  width: 100%;
+  width: 85%;
   height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -270,18 +270,49 @@ html::-webkit-scrollbar-thumb:hover {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+      -ms-flex-direction: row;
+          flex-direction: row;
   color: #E0E1DD;
   position: relative;
 }
 
-.articlecon .commentscon {
+.articlecon .likes {
+  width: 20%;
+  height: 50;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.articlecon .likes .icon {
+  text-align: center;
+}
+
+.articlecon .likes .icon i {
+  cursor: pointer;
+}
+
+.articlecon .contentandcomment {
+  width: 80%;
+  height: 100%;
+}
+
+.articlecon .contentandcomment .commentscon {
   width: 65%;
   height: -webkit-fit-content;
   height: -moz-fit-content;
@@ -302,12 +333,12 @@ html::-webkit-scrollbar-thumb:hover {
   padding: 10px;
 }
 
-.articlecon .commentscon .addcomment > div {
+.articlecon .contentandcomment .commentscon .addcomment > div {
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-.articlecon .commentscon .addcomment form input {
+.articlecon .contentandcomment .commentscon .addcomment form input {
   color: white;
   border: 1px solid #5a5656;
   margin-right: 10px;
@@ -315,7 +346,7 @@ html::-webkit-scrollbar-thumb:hover {
   padding: 7px;
 }
 
-.articlecon .commentscon .addcomment form button {
+.articlecon .contentandcomment .commentscon .addcomment form button {
   color: white;
   width: -webkit-fit-content;
   width: -moz-fit-content;
@@ -330,7 +361,7 @@ html::-webkit-scrollbar-thumb:hover {
   cursor: pointer;
 }
 
-.articlecon .commentscon .commentsection .comment {
+.articlecon .contentandcomment .commentscon .commentsection .comment {
   padding: 10px;
   background-color: #4c5e75;
   border-radius: .5rem;
@@ -341,13 +372,13 @@ html::-webkit-scrollbar-thumb:hover {
   margin-bottom: 5px;
 }
 
-.articlecon .commentscon .commentsection .comment div {
+.articlecon .contentandcomment .commentscon .commentsection .comment div {
   background-color: #4c5e75;
   border-radius: .5rem;
 }
 
 .articlecon .isi {
-  width: 65%;
+  width: 70%;
   padding: 10px;
 }
 
