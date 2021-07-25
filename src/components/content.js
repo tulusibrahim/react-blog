@@ -6,7 +6,7 @@ import ShowMoreText from 'react-show-more-text';
 
 const Content = (props) => {
     const [data, setData] = useState([])
-    let history = useHistory
+    let history = useHistory()
 
     const getData = async () => {
         const { data, error } = await supabase.from('blog').select()
@@ -15,7 +15,7 @@ const Content = (props) => {
 
     useEffect(async () => {
         if (window.screen.width < 992) {
-            history.push("https://wr8.herokuapp.com/notresponsive")
+            history.push("/notresponsive")
         }
         else {
             getData()
