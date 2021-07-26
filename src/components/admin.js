@@ -29,10 +29,15 @@ const Admin = (props) => {
     const getData = async () => {
         const user = supabase.auth.user()
         const { data, error } = await supabase.from('blog').select().eq('email', user.email)
+        if (data == '') {
+            setWarn('Your post will appear here.')
+        }
         setData(data)
     }
 
     useEffect(() => {
+        setData('')
+        setWarn('')
         if (supabase.auth.session() == null) {
             setWarn("Youre not login yet")
         } else {
@@ -40,15 +45,15 @@ const Admin = (props) => {
         }
     }, [])
 
-    let style = { fontSize: '2rem', fontWeight: '500' }
-
     return (
         <div>
             <div className="admin" style={{ flexDirection: 'column', width: '100%' }}>
                 <div style={{ width: '90%' }}>
                     <div className="admin" style={{ justifyContent: "flex-start" }}>Your posts</div>
                     {
-                        data !== '' ?
+                        data == '' ?
+                            <h1 style={{ fontSize: '2rem', fontWeight: '500' }}>{warn}</h1>
+                            :
                             data.map(res => (
                                 <div className="" key={res.id} style={{ marginTop: 10, display: 'flex', paddingBottom: 10, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottom: '.1px #838383 solid' }}>
                                     <div className="isi" style={{ width: '90%' }}>
@@ -68,8 +73,7 @@ const Admin = (props) => {
                                     </div>
                                 </div>
                             ))
-                            :
-                            <h1 style={style}>{warn}</h1>}
+                    }
                 </div>
             </div>
         </div>

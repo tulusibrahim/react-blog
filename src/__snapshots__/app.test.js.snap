@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="all"
+  >
+    <div
+      class="navbarcon"
+    >
+      <div
+        class="navbar"
+      >
+        <div
+          class="title"
+        >
+          <a
+            class="link"
+            href="/"
+          >
+            Write
+          </a>
+        </div>
+        <div
+          class="right"
+        >
+          <span>
+            <a
+              class="link"
+              href="/about"
+            >
+              About Us
+            </a>
+          </span>
+          <a
+            href="/login"
+          >
+            <button>
+              Log In 
+              <i
+                class="fas fa-sign-in-alt"
+              />
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+    <h1
+      style="font-size: 2rem; font-weight: 500; color: white; text-align: center;"
+    >
+      Sorry, the website is not responsive yet :(
+    </h1>
+  </div>
+</DocumentFragment>
+`;
