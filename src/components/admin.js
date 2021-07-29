@@ -16,6 +16,11 @@ const Admin = (props) => {
                 .delete()
                 .match({ id: id })
 
+            const { data, errorr } = await supabase
+                .from('blog_comments')
+                .delete()
+                .match({ articleId: id })
+
             if (error) {
                 alert('Failed to delete post')
             }
