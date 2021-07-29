@@ -16,7 +16,7 @@ const Admin = (props) => {
                 .delete()
                 .match({ id: id })
 
-            const { data, errorr } = await supabase
+            const { dataa, errorr } = await supabase
                 .from('blog_comments')
                 .delete()
                 .match({ articleId: id })
