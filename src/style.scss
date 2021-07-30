@@ -137,19 +137,22 @@ background: #35495f;
     flex-wrap: wrap;
 
     .card{
-        width: 25%;
+        width: auto;
         padding: 10px;
         margin: 10px;
+        margin-bottom: 20px;
         height: fit-content;
         max-height: auto;
         overflow: hidden;
         text-overflow: ellipsis;
         position: relative;
-        border : 1px solid #1B263B;
+        border : 1px solid #161f30;
         color: #415A77;
-        border-radius: .7rem;
+        border-radius: .5rem;
         line-height: 1.5rem;
-        box-shadow: 0px 0px 5px rgb(143, 143, 143);
+        box-shadow:  2px 2px 4px #060f18,
+        -2px -2px 4px #152b43;
+        // rgb(143, 143, 143);
         transition: .3s;
 
         .readMore{
@@ -157,7 +160,8 @@ background: #35495f;
         }
 
         &:hover{
-            box-shadow: 0px 0px 10px rgb(143, 143, 143);
+            box-shadow: 0px 0px 5px #305a88;
+            transform: translateY(-2px);
         }
 
         .title{

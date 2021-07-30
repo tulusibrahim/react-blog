@@ -177,9 +177,10 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .cardcon .card {
-  width: 25%;
+  width: auto;
   padding: 10px;
   margin: 10px;
+  margin-bottom: 20px;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
@@ -187,12 +188,12 @@ html::-webkit-scrollbar-thumb:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
-  border: 1px solid #1B263B;
+  border: 1px solid #161f30;
   color: #415A77;
-  border-radius: .7rem;
+  border-radius: .5rem;
   line-height: 1.5rem;
-  -webkit-box-shadow: 0px 0px 5px #8f8f8f;
-          box-shadow: 0px 0px 5px #8f8f8f;
+  -webkit-box-shadow: 2px 2px 4px #060f18, -2px -2px 4px #152b43;
+          box-shadow: 2px 2px 4px #060f18, -2px -2px 4px #152b43;
   -webkit-transition: .3s;
   transition: .3s;
 }
@@ -202,8 +203,10 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .cardcon .card:hover {
-  -webkit-box-shadow: 0px 0px 10px #8f8f8f;
-          box-shadow: 0px 0px 10px #8f8f8f;
+  -webkit-box-shadow: 0px 0px 5px #305a88;
+          box-shadow: 0px 0px 5px #305a88;
+  -webkit-transform: translateY(-2px);
+          transform: translateY(-2px);
 }
 
 .cardcon .card .title {

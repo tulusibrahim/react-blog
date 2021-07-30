@@ -11,24 +11,26 @@ const Admin = (props) => {
     const deletePost = async (id) => {
         let ask = window.confirm('Are you sure?');
         if (ask == true) {
+            await deleteComment(id)
             const { data, error } = await supabase
                 .from('blog')
                 .delete()
                 .match({ id: id })
 
-            const { dataa, errorr } = await supabase
-                .from('blog_comments')
-                .delete()
-                .match({ articleId: id })
-
-            if (error) {
-                alert('Failed to delete post')
-            }
+            if (error) alert('Failed to delete post')
             getData()
         }
         else {
             return
         }
+    }
+
+    const deleteComment = async (id) => {
+        const { data, error } = await supabase
+            .from('blog_comments')
+            .delete()
+            .match({ articleId: id })
+        if (error) alert('Failed to delete post comment')
     }
 
     const getData = async () => {
