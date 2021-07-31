@@ -15,20 +15,15 @@ const Content = (props) => {
     }
 
     useEffect(async () => {
-        if (window.screen.width < 992) {
-            history.push("/notresponsive")
-        }
-        else {
-            getData()
-            // const { data, error } = await supabase
-            //     .from('blog')
-            //     .select(`
-            //         *,
-            //         blog_comments(
-            //             author
-            //         )
-            //     `)
-        }
+        getData()
+        // const { data, error } = await supabase
+        //     .from('blog')
+        //     .select(`
+        //         *,
+        //         blog_comments(
+        //             author
+        //         )
+        //     `)
     }, [])
 
     return (

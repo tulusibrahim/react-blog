@@ -2,8 +2,7 @@
   margin: 0;
   padding: 0;
   background-color: #0D1B2A;
-  font-family: 'Nunito', sans-serif;
-  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
 }
 
 html::-webkit-scrollbar {
@@ -69,6 +68,8 @@ html::-webkit-scrollbar-thumb:hover {
   font-size: 1.4rem;
   text-decoration: none;
   color: #E0E1DD;
+  font-family: 'Playfair Display', serif;
+  letter-spacing: .2ch;
 }
 
 .navbarcon .navbar .right {
@@ -87,6 +88,13 @@ html::-webkit-scrollbar-thumb:hover {
 .navbarcon .navbar .right .link {
   text-decoration: none;
   color: #E0E1DD;
+  font-size: 1.2vw;
+}
+
+@media screen and (max-width: 700px) {
+  .navbarcon .navbar .right .link {
+    display: none;
+  }
 }
 
 .navbarcon .navbar .right button {
@@ -211,6 +219,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 .cardcon .card .title {
   font-size: 1.4rem;
+  font-family: 'Lato', sans-serif !important;
   text-decoration: none;
   color: #b8b8b8;
 }
@@ -414,7 +423,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 .logincon form {
   height: 80%;
-  width: 30%;
+  width: 50vw;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -427,39 +436,43 @@ html::-webkit-scrollbar-thumb:hover {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  background-color: #1B263B;
+  text-align: center;
   border-radius: .6rem;
 }
 
 .logincon form p {
   color: white;
-  background-color: #1B263B;
 }
 
 .logincon form p a {
   color: #778DA9;
   text-decoration: none;
-  background-color: #1B263B;
 }
 
 .logincon form input {
   color: #E0E1DD;
   height: 30px;
-  border: none;
+  border: 1px white solid;
   outline: none;
 }
 
 .logincon form button {
-  width: 30%;
+  width: 30vw;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
   padding: 5px;
-  border: none;
+  border: 1px white solid;
   outline: none;
   border-radius: .3rem;
   color: white;
   cursor: pointer;
+}
+
+@media screen and (min-width: 565px) {
+  .logincon form button {
+    width: 120px;
+  }
 }
 
 .admin {

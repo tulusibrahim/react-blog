@@ -2,8 +2,8 @@
     margin: 0;
     padding: 0;
     background-color: #0D1B2A;
-    font-family: 'Nunito', sans-serif;
-    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    // font-size: calc(16px + 6 * ((100vw - 320px) / 680));;
 }
 html::-webkit-scrollbar {
     width: 10px;
@@ -56,6 +56,8 @@ background: #35495f;
                 font-size: 1.4rem;
                 text-decoration: none;
                 color: #E0E1DD;
+                font-family: 'Playfair Display', serif;
+                letter-spacing: .2ch;
             }
         }
 
@@ -66,10 +68,15 @@ background: #35495f;
             align-items : center; 
             justify-content: space-around;
             position: relative;
+
             
             .link{
                 text-decoration: none;
                 color: #E0E1DD;
+                font-size: 1.2vw;
+                @media screen and (max-width: 700px) {
+                    display: none;
+                }
             }
 
             button{
@@ -83,6 +90,11 @@ background: #35495f;
                 padding-bottom: 2px;
                 cursor: pointer;
                 font-weight: 600;
+                // font-size: 1.2vw;
+
+                // @media screen and (max-width: 700px) {
+                //     font-size: 1.5vw;
+                // }
 
                 &:hover{
                     color: #858585;
@@ -166,6 +178,7 @@ background: #35495f;
 
         .title{
             font-size: 1.4rem;
+            font-family: 'Lato', sans-serif !important;
             text-decoration: none;
             color: rgb(184, 184, 184);
         }
@@ -314,40 +327,44 @@ background: #35495f;
 
     form{
         height: 80%;
-        width: 30%;
+        width: 50vw;
         display : flex; 
         align-items : center; 
         justify-content: space-around;
         flex-direction: column;
-        background-color: #1B263B;
+        text-align: center;
+        // background-color: #1B263B;
         border-radius: .6rem;
 
         p{
             color: white;
-            background-color: #1B263B;
+            // background-color: #1B263B;
             a{
                 color: #778DA9;
                 text-decoration: none;
-                background-color: #1B263B;
+                // background-color: #1B263B;
             }
         }
 
         input{
             color: #E0E1DD;
             height: 30px;
-            border: none;
+            border: 1px white solid;
             outline: none;
         }
 
         button{
-            width: 30%;
+            width: 30vw;
             height: fit-content;
             padding: 5px;
-            border: none;
+            border: 1px white solid;
             outline: none;
             border-radius: .3rem;
             color: white;
             cursor: pointer;
+            @media screen and (min-width:565px) {
+                width: 120px;
+            }
         }
     }
 }
