@@ -10,12 +10,12 @@ const Content = (props) => {
     let history = useHistory()
 
     const getData = async () => {
+        window.location.reload()
         const { data, error } = await supabase.from('blog').select()
         setData(data)
     }
 
     useEffect(async () => {
-        window.location.reload()
         getData()
         // const { data, error } = await supabase
         //     .from('blog')
