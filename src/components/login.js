@@ -55,6 +55,13 @@ const Login = (props) => {
         }
     }
 
+    const loginWithGithub = async () => {
+        const { user, session, error } = await supabase.auth.signIn({
+            // provider can be 'github', 'google', 'gitlab', or 'bitbucket'
+            provider: 'github'
+        })
+    }
+
     useEffect(async () => {
         let isLogin = await supabase.auth.session()
         if (isLogin !== null) {
@@ -68,19 +75,26 @@ const Login = (props) => {
                 login == 'false' ?
                     <form onSubmit={signUp}>
                         <input placeholder="Email" type="email" onChange={(e) => setEmail(e.target.value)} name="email"></input>
-                        {/* <input placeholder="Nickname" onChange={(e) => setNickname(e.target.value)}></input> */}
                         <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password"></input>
-                        <p>Have an account? Login <a href="#" onClick={() => setlogin('true')}>here!</a></p>
-                        <button>Sign Up</button>
+                        <div className="formbtn">
+                            <p>Have an account? Login <a style={{ cursor: 'pointer' }} onClick={() => setlogin('true')}>here!</a></p>
+                            <button>Sign Up</button>
+                        </div>
                     </form>
                     :
                     <form onSubmit={logIn}>
                         <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} name="email" required></input>
                         <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password" required></input>
-                        <p>Don't have an account? Create one <a href="#" onClick={() => setlogin('false')}>here!</a></p>
-                        <button>Log In</button>
+                        <div className="formbtn">
+                            <p>Don't have an account? Create one <a style={{ cursor: 'pointer' }} onClick={() => setlogin('false')}>here!</a></p>
+                            <button>Log In</button>
+                        </div>
                     </form>
             }
+            <p style={{ margin: '10px' }}>or login with</p>
+            <div>
+                <button onClick={() => loginWithGithub()}><i class="fab fa-github"></i> Github</button>
+            </div>
         </div >
     );
 };

@@ -373,6 +373,11 @@ html::-webkit-scrollbar-thumb:hover {
   cursor: pointer;
 }
 
+.articlecon .contentandcomment .commentscon .commentsection {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .articlecon .contentandcomment .commentscon .commentsection .comment {
   padding: 10px;
   background-color: #4c5e75;
@@ -380,8 +385,8 @@ html::-webkit-scrollbar-thumb:hover {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .articlecon .contentandcomment .commentscon .commentsection .comment div {
@@ -396,13 +401,16 @@ html::-webkit-scrollbar-thumb:hover {
 
 .articlecon .isi .title {
   font-size: 2rem;
+  margin-bottom: 10px;
 }
 
 .articlecon .isi .date {
   font-size: .85rem;
+  margin-bottom: 10px;
 }
 
 .articlecon .isi .body {
+  margin-bottom: 10px;
   font-size: 1.2rem;
 }
 
@@ -419,6 +427,33 @@ html::-webkit-scrollbar-thumb:hover {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.logincon p {
+  color: white;
+}
+
+.logincon button {
+  width: 30vw;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 5px;
+  border: 1px white solid;
+  outline: none;
+  border-radius: .3rem;
+  color: white;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 565px) {
+  .logincon button {
+    width: 120px;
+  }
 }
 
 .logincon form {
@@ -438,6 +473,25 @@ html::-webkit-scrollbar-thumb:hover {
           flex-direction: column;
   text-align: center;
   border-radius: .6rem;
+}
+
+.logincon form .formbtn {
+  height: '20%';
+  display: 'flex';
+  -webkit-box-pack: 'space-evenly';
+      -ms-flex-pack: 'space-evenly';
+          justify-content: 'space-evenly';
+  -webkit-box-align: 'center';
+      -ms-flex-align: 'center';
+          align-items: 'center';
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: 'column';
+          flex-direction: 'column';
+}
+
+.logincon form .formbtn p {
+  margin: 5px;
 }
 
 .logincon form p {

@@ -280,14 +280,16 @@ background: #35495f;
             }
     
             .commentsection{
+                margin-top: 10px;
+                margin-bottom: 10px;
     
                 .comment{
                     padding: 10px;
                     background-color: #4c5e75;
                     border-radius: .5rem;
                     width: fit-content;
-                    margin-top: 5px;
-                    margin-bottom: 5px;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
                     div{
                         background-color: #4c5e75;
                         border-radius: .5rem;
@@ -304,14 +306,14 @@ background: #35495f;
 
         .title{
             font-size: 2rem;
-            // margin: 10px;
+            margin-bottom: 10px;
         }
         .date{
             font-size: .85rem;
-            // margin: 10px;
+            margin-bottom: 10px;
         }
         .body{
-            // margin: 10px;
+            margin-bottom: 10px;
             font-size: 1.2rem;
         }
     }
@@ -324,6 +326,24 @@ background: #35495f;
     display : flex; 
     align-items : center; 
     justify-content: center;
+    flex-direction: column;
+    p{
+        color: white;
+    }
+
+    button{
+        width: 30vw;
+        height: fit-content;
+        padding: 5px;
+        border: 1px white solid;
+        outline: none;
+        border-radius: .3rem;
+        color: white;
+        cursor: pointer;
+        @media screen and (min-width:565px) {
+            width: 120px;
+        }
+    }
 
     form{
         height: 80%;
@@ -335,6 +355,18 @@ background: #35495f;
         text-align: center;
         // background-color: #1B263B;
         border-radius: .6rem;
+
+        .formbtn{
+            height: '20%';
+            display: 'flex'; 
+            justify-content: 'space-evenly'; 
+            align-items: 'center'; 
+            flex-direction: 'column';
+
+            p{
+                margin: 5px;
+            }
+        }
 
         p{
             color: white;
