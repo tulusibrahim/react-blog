@@ -15,7 +15,7 @@ const Content = (props) => {
     }
 
     useEffect(async () => {
-        location.reload()
+        window.location.reload()
         getData()
         // const { data, error } = await supabase
         //     .from('blog')
