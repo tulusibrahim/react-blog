@@ -73,7 +73,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .navbarcon .navbar .right {
-  width: 25%;
+  width: 10%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -86,25 +86,23 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .navbarcon .navbar .right .link {
-  text-decoration: none;
   color: #E0E1DD;
-  font-size: 1.2vw;
+  outline: none;
+  border: none;
+  padding-bottom: 2px;
+  cursor: pointer;
+  font-weight: normal;
+  text-decoration: none;
 }
 
-@media screen and (max-width: 700px) {
-  .navbarcon .navbar .right .link {
-    display: none;
-  }
+.navbarcon .navbar .right .link:hover {
+  color: #858585;
 }
 
 .navbarcon .navbar .right button {
   color: #E0E1DD;
   outline: none;
-  border: 1px solid #2e2e2e;
-  border-radius: 5px;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-top: 2px;
+  border: none;
   padding-bottom: 2px;
   cursor: pointer;
   font-weight: 600;
@@ -282,15 +280,22 @@ html::-webkit-scrollbar-thumb:hover {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
   color: #E0E1DD;
   position: relative;
+  padding-bottom: 10px;
+}
+
+@media screen and (max-width: 800px) {
+  .articlecon {
+    width: 100%;
+  }
 }
 
 .articlecon .likes {
@@ -311,6 +316,12 @@ html::-webkit-scrollbar-thumb:hover {
           align-items: center;
 }
 
+@media screen and (max-width: 800px) {
+  .articlecon .likes {
+    display: none;
+  }
+}
+
 .articlecon .likes .icon {
   text-align: center;
 }
@@ -319,9 +330,63 @@ html::-webkit-scrollbar-thumb:hover {
   cursor: pointer;
 }
 
+.articlecon .likesBottom {
+  width: 40%;
+  height: 50;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+}
+
+@media screen and (min-width: 800px) {
+  .articlecon .likesBottom {
+    display: none;
+  }
+}
+
+.articlecon .likesBottom .icon {
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.articlecon .likesBottom .icon i {
+  cursor: pointer;
+  padding-right: 10px;
+}
+
 .articlecon .contentandcomment {
   width: 80%;
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .articlecon .contentandcomment .commentscon {
@@ -342,7 +407,9 @@ html::-webkit-scrollbar-thumb:hover {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  padding: 10px;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  padding-top: 10px;
 }
 
 .articlecon .contentandcomment .commentscon .addcomment > div {
@@ -356,6 +423,7 @@ html::-webkit-scrollbar-thumb:hover {
   margin-right: 10px;
   outline: none;
   padding: 7px;
+  margin-bottom: 10px;
 }
 
 .articlecon .contentandcomment .commentscon .addcomment form button {
@@ -395,7 +463,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .articlecon .isi {
-  width: 70%;
+  width: 100%;
   padding: 10px;
 }
 
@@ -412,6 +480,7 @@ html::-webkit-scrollbar-thumb:hover {
 .articlecon .isi .body {
   margin-bottom: 10px;
   font-size: 1.2rem;
+  line-height: 1.6;
 }
 
 .logincon {

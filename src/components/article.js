@@ -94,6 +94,16 @@ const Article = (props) => {
                         ))
                     }
                 </div>
+                <div className="likesBottom">
+                    <div className="icon">
+                        <i className="far fa-heart" onClick={addLikes}></i>
+                        <div>{data.map(like => like.likes == null ? 0 : like.likes)}</div>
+                    </div>
+                    <div className="icon">
+                        <i className="far fa-comment-dots"></i>
+                        <div>{comments.length}</div>
+                    </div>
+                </div>
                 <div className="commentscon">
                     <h2>Comments</h2>
                     {

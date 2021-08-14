@@ -1,17 +1,11 @@
 import { Link } from 'react-router-dom'
-// import { useHistory } from "react-router";
 import { supabase } from "../configs/configurations";
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import PersonIcon from '@material-ui/icons/Person';
-import MenuIcon from '@material-ui/icons/Menu';
+import { useEffect, useState } from 'react';
 
 
 const Navbar = (props) => {
-
     const session = supabase.auth.session()
+    const [display, setDisplay] = useState('')
 
     const logOut = async () => {
         await supabase.auth.signOut()
@@ -19,35 +13,36 @@ const Navbar = (props) => {
         document.location.reload()
     }
 
+    useEffect(() => {
+        setDisplay('none')
+    }, [])
+
     return (
-
-        // <AppBar position="static">
-        //     <Toolbar style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        //         <div>
-        //             <MenuIcon />
-        //             News
-        //         </div>
-        //         <PersonIcon />
-        //     </Toolbar>
-        // </AppBar>
-
-
         <div className="navbarcon">
             <div className="navbar">
                 <div className="title"><Link to="/" className="link" >Write</Link></div>
                 <div className="right">
-                    {/* <span><Link to="/" className="link">Browse</Link></span> */}
-                    <span><Link to="/about" className="link">About Us</Link></span>
-                    {
-                        session !== null ?
-                            <>
-                                <Link to="/admin"><button style={{ fontWeight: 'normal' }}>{session !== null ? 'Manage Blogs' : 'Log In'}</button></Link>
-                                <button onClick={logOut} style={{ fontWeight: 'normal' }}>{session !== null ? 'Log Out' : 'Log In'}</button>
-                            </>
-                            :
-                            <Link to="/login"><button style={{ fontWeight: 'normal' }}>{session !== null ? 'Log Out' : 'Log In'} </button></Link>
-                    }
-                    {/* <Link to="/login"><button>{props.data == 'yes' ? 'Log Out' : 'Log In'}</button></Link> */}
+                    <i class="far fa-user-circle fa-lg" onClick={() => setDisplay(!display)} onMouseLeave={() => setDisplay('none')} onMouseEnter={() => setDisplay('flex')}>
+                        <div style={{ display: display, transitionDelay: 1, flexDirection: 'column', position: 'absolute', right: 30, top: 20, zIndex: 2, justifyContent: 'center', alignItems: 'center' }}>
+                            {
+                                session !== null ?
+                                    <>
+                                        <Link to="/admin">
+                                            <button style={{ fontWeight: 'normal' }}>{session !== null ? 'Manage Blogs' : 'Log In'}</button>
+                                        </Link>
+                                        <button onClick={logOut} style={{ fontWeight: 'normal' }}>{session !== null ? 'Log Out' : 'Log In'}</button>
+                                        <button><Link to="/about" className="link">About Us</Link></button>
+                                    </>
+                                    :
+                                    <>
+                                        <Link to="/login">
+                                            <button style={{ fontWeight: 'normal' }}>{session !== null ? 'Log Out' : 'Log In'} </button>
+                                        </Link>
+                                        <button><Link to="/about" className="link">About Us</Link></button>
+                                    </>
+                            }
+                        </div>
+                    </i>
                 </div>
             </div>
         </div>
