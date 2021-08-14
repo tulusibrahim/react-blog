@@ -1,13 +1,20 @@
 import { supabase, uuidv4 } from "../configs/configurations";
 import moment from 'moment'
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import React, { useState, useRef } from "react";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState } from "draft-js";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const NewBlog = () => {
 
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
     let history = useHistory()
+
+    const [editorState, setEditorState] = useState(() =>
+        EditorState.createEmpty()
+    );
 
     const postData = async (e) => {
         e.preventDefault()
@@ -44,6 +51,16 @@ const NewBlog = () => {
                     <button type="submit" className="button" >Submit</button>
                 </form>
             </div>
+        // <div style={{ border: "1px solid black",backgroundColor:'white' }}>
+        //     <Editor
+        //         toolbarStyle={{ backgroundColor: 'white' }}
+        //         editorStyle={{ backgroundColor: 'white' }}
+        //         wrapperStyle={{ backgroundColor: 'white' }}
+        //         toolbar={{ backgroundColor: 'none' }}
+        //         editorState={editorState}
+        //         onEditorStateChange={setEditorState}
+        //     />
+        // </div>
     );
 }
 
