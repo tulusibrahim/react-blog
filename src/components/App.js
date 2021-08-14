@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Content from "./content";
 import Navbar from "./navbar";
@@ -15,47 +14,23 @@ import EditPost from "./editPost";
 
 
 function App() {
-  const [data, setData] = useState('')
-  const [user, setUser] = useState('')
-  const [btnInOut, setBtnInOut] = useState('')
-
-  const getCertainContent = (res) => {
-    console.log(res)
-    setData(res)
-  }
-
-  const getUser = (props) => {
-    setUser(props)
-  }
-
-  const getBtnInOut = (res) => {
-    setBtnInOut(res)
-  }
 
   return (
     <Router>
       <div className="all">
-        <Navbar data={btnInOut} />
+        <Navbar />
         <Switch>
           <Route exact path="/" >
             <Search />
-            <Content dataFromEmail={user} getdata={getCertainContent} />
+            <Content />
           </Route>
           <Route path="/about" component={About}></Route>
-          <Route path="/article/:title">
-            <Article data={data} />
-          </Route>
-          <Route path="/login" >
-            <Login getuser={getUser} isLogin={getBtnInOut} />
-          </Route>
-          <Route path="/admin">
-            <Admin dataFromEmail={user} />
-          </Route>
+          <Route path="/article/:title" component={Article}></Route>
+          <Route path="/login" component={Login}></Route>
+          <Route path="/admin" component={Admin}></Route>
           <Route path="/new" component={NewBlog}></Route>
           <Route path="/edit" component={EditPost}></Route>
-          <Route path="/logout">
-            <Logout isLogin={getBtnInOut} />
-          </Route>
+          <Route path="/logout" component={Logout}></Route>
           <Route path="/notresponsive" component={NotResponsive}></Route>
           <Route component={PageNotFound}></Route>
         </Switch>
