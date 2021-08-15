@@ -2,6 +2,9 @@ import { useEffect, useState } from "react"
 import axios from 'axios'
 import { supabase } from "../configs/configurations"
 import { Link } from "react-router-dom"
+import { Editor, CompositeDecorator, EditorState, convertFromRaw } from "draft-js";
+import { stateToHTML } from 'draft-js-export-html';
+import ReactHtmlParser from 'react-html-parser';
 
 const Admin = (props) => {
 
@@ -64,9 +67,9 @@ const Admin = (props) => {
                             data.map(res => (
                                 <div className="" key={res.id} style={{ marginTop: 10, display: 'flex', paddingBottom: 10, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottom: '.1px #838383 solid' }}>
                                     <div className="isi" style={{ width: '90%' }}>
-                                        <div className="title" style={{ fontSize: 28 }}>{res.title}</div>
-                                        <div className="date" style={{ fontSize: 12, color: '#a1a1a1' }}>{res.date}</div>
-                                        <div className="body">{res.body}</div>
+                                        <div className="title" style={{ fontSize: "1.2em" }}>{res.title}</div>
+                                        <div className="date" style={{ fontSize: "0.6em", color: '#a1a1a1' }}>{res.date}</div>
+                                        {/* <div className="body" style={{ fontSize: "1em" }}>{parseBody(res.body)}</div> */}
                                     </div>
                                     <div style={{ width: '10%', textAlign: 'center', display: 'flex', flexDirection: "row", justifyContent: 'space-evenly' }}>
                                         <div style={{ cursor: 'pointer' }}>

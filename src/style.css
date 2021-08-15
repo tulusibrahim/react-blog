@@ -141,6 +141,12 @@ html::-webkit-scrollbar-thumb:hover {
           justify-content: flex-end;
 }
 
+@media screen and (max-width: 800px) {
+  .searchcon .search {
+    display: none;
+  }
+}
+
 .searchcon .search button {
   height: 100%;
   width: -webkit-fit-content;
@@ -389,6 +395,12 @@ html::-webkit-scrollbar-thumb:hover {
           flex-direction: column;
 }
 
+@media screen and (max-width: 800px) {
+  .articlecon .contentandcomment {
+    width: 95%;
+  }
+}
+
 .articlecon .contentandcomment .commentscon {
   width: 65%;
   height: -webkit-fit-content;
@@ -468,7 +480,7 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .articlecon .isi .title {
-  font-size: 2rem;
+  font-size: 1.6rem;
   margin-bottom: 10px;
 }
 
@@ -608,8 +620,8 @@ html::-webkit-scrollbar-thumb:hover {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: normal;
   color: #E0E1DD;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -679,37 +691,6 @@ html::-webkit-scrollbar-thumb:hover {
   outline: none;
   border: 1px solid #E0E1DD;
   border-radius: .5rem;
-}
-
-.newblogcon form textarea {
-  color: #E0E1DD;
-  padding: .8rem;
-  height: auto;
-  width: 80%;
-  border: none;
-  outline: none;
-  border: 1px solid #E0E1DD;
-  border-radius: 5px;
-  /* Track */
-  /* Handle */
-  /* Handle on hover */
-}
-
-.newblogcon form textarea::-webkit-scrollbar {
-  width: 10px;
-}
-
-.newblogcon form textarea::-webkit-scrollbar-track {
-  background: #fde5e5;
-}
-
-.newblogcon form textarea::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 5px;
-}
-
-.newblogcon form textarea::-webkit-scrollbar-thumb:hover {
-  background: #555;
 }
 
 .newblogcon form .title {

@@ -22,7 +22,7 @@ const Navbar = (props) => {
             <div className="navbar">
                 <div className="title"><Link to="/" className="link" >Write</Link></div>
                 <div className="right">
-                    <i class="far fa-user-circle fa-lg" onClick={() => setDisplay(!display)} onMouseLeave={() => setDisplay('none')} onMouseEnter={() => setDisplay('flex')}>
+                    <i className="far fa-user-circle fa-lg" onClick={() => setDisplay(!display)} onMouseLeave={() => setDisplay('none')} onMouseEnter={() => setDisplay('flex')}>
                         <div style={{ display: display, transitionDelay: 1, flexDirection: 'column', position: 'absolute', right: 30, top: 20, zIndex: 2, justifyContent: 'center', alignItems: 'center' }}>
                             {
                                 session !== null ?

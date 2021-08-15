@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase, uuidv4 } from "../configs/configurations";
 import moment from "moment";
+import { Editor, CompositeDecorator, EditorState, convertFromRaw } from "draft-js";
+import { stateToHTML } from 'draft-js-export-html';
+import ReactHtmlParser from 'react-html-parser';
 
 const Article = (props) => {
     const { title } = useParams()
     const [data, setData] = useState([])
-    const [content, setContent] = useState('')
+    const [body, setBody] = useState('')
     const [comments, setComments] = useState([])
     const [inputComment, setInputComments] = useState('')
 
@@ -20,6 +23,10 @@ const Article = (props) => {
                 )
             `)
             .eq('title', title)
+
+        const contentState = convertFromRaw(JSON.parse(data[0].body));
+        let html = stateToHTML(contentState);
+        setBody(html)
         setData(data)
         setComments(data[0].blog_comments)
     }
@@ -89,7 +96,7 @@ const Article = (props) => {
                             <div key={index}>
                                 <div className="title">{res.title}</div>
                                 <div className="date">{res.email}, {res.date}</div>
-                                <div className="body">{res.body}</div>
+                                <div className="body">{ReactHtmlParser(body)}</div>
                             </div>
                         ))
                     }

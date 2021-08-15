@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { supabase } from '../configs/configurations'
 import ShowMoreText from 'react-show-more-text';
 import Masonry from 'react-masonry-css'
+import { Editor, CompositeDecorator, EditorState, convertFromRaw } from "draft-js";
 
 
 const Content = (props) => {
@@ -12,6 +13,16 @@ const Content = (props) => {
     const getData = async () => {
         const { data, error } = await supabase.from('blog').select()
         setData(data)
+        // res.title === 'coba terakhir semoga pake draftjs' &&
+        console.log(data)
+        data.map(res => {
+            let jnk = JSON.stringify(res.body)
+            console.log(jnk)
+            res.title === 'coba terakhir semoga pake draftjs' &&
+                // let kk = convertFromRaw(jnk)
+                // console.log(kk)
+                console.log(convertFromRaw(JSON.parse(res.body)).getPlainText())
+        })
     }
 
     useEffect(async () => {
@@ -54,7 +65,7 @@ const Content = (props) => {
                                             onClick={(res) => console.log(res)}
                                             expanded={false}
                                         >
-                                            {res.body}
+                                            {convertFromRaw(JSON.parse(res.body)).getPlainText()}
                                         </ShowMoreText>
                                     </div>
                                 </div>

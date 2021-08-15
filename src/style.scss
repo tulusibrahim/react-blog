@@ -118,6 +118,10 @@ html::-webkit-scrollbar-thumb:hover {
         justify-content: flex-end;
         // border : 1px solid black;
 
+        @media screen and (max-width:800px) {
+            display: none;
+        }
+
         button {
             height: 100%;
             width: fit-content;
@@ -286,9 +290,9 @@ html::-webkit-scrollbar-thumb:hover {
         justify-content: center;
         flex-direction: column;
 
-        // @media screen and (min-width:800px) {
-        //     display: none;
-        // }
+        @media screen and (max-width:800px) {
+            width: 95%;
+        }
 
         .commentscon {
             width: 65%;
@@ -355,7 +359,7 @@ html::-webkit-scrollbar-thumb:hover {
         // }
 
         .title {
-            font-size: 2rem;
+            font-size: 1.6rem;
             margin-bottom: 10px;
         }
 
@@ -465,8 +469,8 @@ html::-webkit-scrollbar-thumb:hover {
     position: relative;
     display: flex;
     align-items: center;
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 1.2rem;
+    font-weight: normal;
     color: #E0E1DD;
     justify-content: center;
 }
@@ -508,38 +512,6 @@ html::-webkit-scrollbar-thumb:hover {
             outline: none;
             border: 1px solid #E0E1DD;
             border-radius: .5rem;
-        }
-
-        textarea {
-            color: #E0E1DD;
-            padding: .8rem;
-            height: auto;
-            width: 80%;
-            border: none;
-            outline: none;
-            border: 1px solid #E0E1DD;
-            border-radius: 5px;
-
-            &::-webkit-scrollbar {
-                width: 10px;
-            }
-
-            /* Track */
-            &::-webkit-scrollbar-track {
-                background: #fde5e5;
-                // border-radius: 5px;
-            }
-
-            /* Handle */
-            &::-webkit-scrollbar-thumb {
-                background: #888;
-                border-radius: 5px;
-            }
-
-            /* Handle on hover */
-            &::-webkit-scrollbar-thumb:hover {
-                background: #555;
-            }
         }
 
         .title {
