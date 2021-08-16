@@ -7,6 +7,28 @@
     width: 80%;
     color: white;
     border-radius: .5rem;
+    overflow: auto;
+}
+
+.RichEditor-root::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.RichEditor-root::-webkit-scrollbar-track {
+    background: #060c13;
+    border-radius: .5rem;
+}
+
+/* Handle */
+.RichEditor-root::-webkit-scrollbar-thumb {
+    background: #425c77;
+    border-radius: .5rem;
+}
+
+/* Handle on hover */
+.RichEditor-root::-webkit-scrollbar-thumb:hover {
+    background: #35495f;
 }
 
 .RichEditor-editor {

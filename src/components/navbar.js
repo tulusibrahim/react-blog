@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 const Navbar = (props) => {
     const session = supabase.auth.session()
-    const [display, setDisplay] = useState('')
+    const [display, setDisplay] = useState('none')
 
     const logOut = async () => {
         await supabase.auth.signOut()
@@ -22,7 +22,7 @@ const Navbar = (props) => {
             <div className="navbar">
                 <div className="title"><Link to="/" className="link" >Write</Link></div>
                 <div className="right">
-                    <i className="far fa-user-circle fa-lg" onClick={() => setDisplay(!display)} onMouseLeave={() => setDisplay('none')} onMouseEnter={() => setDisplay('flex')}>
+                    <i className="far fa-user-circle fa-lg" onClick={() => display == 'none' ? setDisplay('flex') : setDisplay('none')} >
                         <div style={{ display: display, transitionDelay: 1, flexDirection: 'column', position: 'absolute', right: 30, top: 20, zIndex: 2, justifyContent: 'center', alignItems: 'center' }}>
                             {
                                 session !== null ?
