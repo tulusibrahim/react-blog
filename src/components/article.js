@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase, uuidv4 } from "../configs/configurations";
 import moment from "moment";
-import { Editor, CompositeDecorator, EditorState, convertFromRaw } from "draft-js";
+import { convertFromRaw } from "draft-js";
 import { stateToHTML } from 'draft-js-export-html';
-import ReactHtmlParser from 'react-html-parser';
+import parse from 'html-react-parser';
 
 const Article = (props) => {
     const { title } = useParams()
@@ -96,7 +96,7 @@ const Article = (props) => {
                             <div key={index}>
                                 <div className="title">{res.title}</div>
                                 <div className="date">{res.email}, {res.date}</div>
-                                <div className="body">{ReactHtmlParser(body)}</div>
+                                <div className="body">{parse(body)}</div>
                             </div>
                         ))
                     }

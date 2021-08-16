@@ -1,20 +1,27 @@
 import React from 'react'
-import { Editor, EditorState, getDefaultKeyBinding, RichUtils, convertToRaw } from 'draft-js'
+import { Editor, EditorState, getDefaultKeyBinding, RichUtils, convertToRaw, convertFromRaw } from 'draft-js'
 import './rtestyle.css'
 
 class RichTextEditor extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { editorState: EditorState.createEmpty() };
+        this.state = {
+            editorState: EditorState.createEmpty(),
+            editorStateFromUpdate: this.props.data ? EditorState.createWithContent(convertFromRaw(JSON.parse(this.props.data))) : null
+        };
 
         this.focus = () => this.refs.editor.focus();
-        this.onChange = (editorState) => {
-            this.setState({ editorState }, () => {
-                // console.log(this.state.name);
-                // this.props.getBody(this.state.editorState.getCurrentContent().getPlainText('\u0001'))
-                // console.log(convertToRaw(editorState.getCurrentContent()))
-                this.props.getBody(convertToRaw(editorState.getCurrentContent()))
-            })
+        this.onChange = (currentState) => {
+            if (this.props.data) {
+                this.setState({ editorStateFromUpdate: currentState }, () => {
+                    this.props.getBody(convertToRaw(currentState.getCurrentContent()))
+                })
+            }
+            else {
+                this.setState({ editorState: currentState }, () => {
+                    this.props.getBody(convertToRaw(currentState.getCurrentContent()))
+                })
+            }
         };
 
         this.handleKeyCommand = this._handleKeyCommand.bind(this);
@@ -33,45 +40,81 @@ class RichTextEditor extends React.Component {
     }
 
     _mapKeyToEditorCommand(e) {
-        if (e.keyCode === 9 /* TAB */) {
-            const newEditorState = RichUtils.onTab(
-                e,
-                this.state.editorState,
-                4, /* maxDepth */
-            );
-            if (newEditorState !== this.state.editorState) {
-                this.onChange(newEditorState);
+        if (this.props.data) {
+            if (e.keyCode === 9 /* TAB */) {
+                const newEditorState = RichUtils.onTab(
+                    e,
+                    this.state.editorStateFromUpdate,
+                    4, /* maxDepth */
+                );
+                if (newEditorState !== this.state.editorStateFromUpdate) {
+                    this.onChange(newEditorState);
+                }
+                return;
             }
-            return;
+            return getDefaultKeyBinding(e);
         }
-        return getDefaultKeyBinding(e);
+        else {
+            if (e.keyCode === 9 /* TAB */) {
+                const newEditorState = RichUtils.onTab(
+                    e,
+                    this.state.editorState,
+                    4, /* maxDepth */
+                );
+                if (newEditorState !== this.state.editorState) {
+                    this.onChange(newEditorState);
+                }
+                return;
+            }
+            return getDefaultKeyBinding(e);
+        }
     }
 
     _toggleBlockType(blockType) {
-        this.onChange(
-            RichUtils.toggleBlockType(
-                this.state.editorState,
-                blockType
-            )
-        );
+        if (this.props.data) {
+            this.onChange(
+                RichUtils.toggleBlockType(
+                    this.state.editorStateFromUpdate,
+                    blockType
+                )
+            );
+        }
+        else {
+            this.onChange(
+                RichUtils.toggleBlockType(
+                    this.state.editorState,
+                    blockType
+                )
+            );
+        }
     }
 
     _toggleInlineStyle(inlineStyle) {
-        this.onChange(
-            RichUtils.toggleInlineStyle(
-                this.state.editorState,
-                inlineStyle
-            )
-        );
+        if (this.props.data) {
+            this.onChange(
+                RichUtils.toggleInlineStyle(
+                    this.state.editorStateFromUpdate,
+                    inlineStyle
+                )
+            );
+        }
+        else {
+            this.onChange(
+                RichUtils.toggleInlineStyle(
+                    this.state.editorState,
+                    inlineStyle
+                )
+            );
+        }
     }
 
     render() {
-        const { editorState } = this.state;
+        const { editorState, editorStateFromUpdate } = this.state;
 
         // If the user changes block type before entering any text, we can
         // either style the placeholder or hide it. Let's just hide it now.
         let className = 'RichEditor-editor';
-        var contentState = editorState.getCurrentContent();
+        var contentState = editorState ? editorState.getCurrentContent() : editorStateFromUpdate.getCurrentContent()
         if (!contentState.hasText()) {
             if (contentState.getBlockMap().first().getType() !== 'unstyled') {
                 className += ' RichEditor-hidePlaceholder';
@@ -81,18 +124,18 @@ class RichTextEditor extends React.Component {
         return (
             <div className="RichEditor-root">
                 <BlockStyleControls
-                    editorState={editorState}
+                    editorState={this.props.data ? editorStateFromUpdate : editorState}
                     onToggle={this.toggleBlockType}
                 />
                 <InlineStyleControls
-                    editorState={editorState}
+                    editorState={this.props.data ? editorStateFromUpdate : editorState}
                     onToggle={this.toggleInlineStyle}
                 />
                 <div className={className} onClick={this.focus}>
                     <Editor
                         blockStyleFn={getBlockStyle}
                         customStyleMap={styleMap}
-                        editorState={editorState}
+                        editorState={this.props.data ? editorStateFromUpdate : editorState}
                         handleKeyCommand={this.handleKeyCommand}
                         keyBindingFn={this.mapKeyToEditorCommand}
                         onChange={this.onChange}
