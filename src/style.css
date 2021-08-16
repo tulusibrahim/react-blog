@@ -230,6 +230,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 .cardcon .card .date {
   font-size: .8rem;
+  color: grey;
 }
 
 .cardcon .card .body {
@@ -487,6 +488,7 @@ html::-webkit-scrollbar-thumb:hover {
 .articlecon .isi .date {
   font-size: .85rem;
   margin-bottom: 10px;
+  color: grey;
 }
 
 .articlecon .isi .body {
