@@ -41,6 +41,25 @@ const NewBlog = () => {
         }
     }
 
+    const tagging = async (tag) => {
+        console.log(tag)
+        // const { data, error } = await supabase.from('blog_tags').select().filter('name', 'eq', 'hiyaaa')
+        // console.log(data[0])
+        // let neww = data[0].articleId
+        // neww.push("tambah lage")
+        // console.log(neww)
+
+        // const { dataa, errorr } = await supabase
+        //     .from('blog_tags')
+        //     .update({
+        //         articleId: neww
+        //     })
+        //     .filter('name', 'eq', 'hiyaaa')
+
+        // const { datar, errora } = await supabase.from('blog_tags').select()
+        // console.log(datar)
+    }
+
 
     return (
         supabase.auth.session() == null ?
@@ -51,8 +70,8 @@ const NewBlog = () => {
                 <form onSubmit={postData}>
                     <input placeholder="Title" onChange={(e => setTitle(e.target.value))} name="title" className="title" required></input>
                     <RichTextEditor getBody={setBody} />
-                    {/* <input onChange={(e) => setTag(val => [...val, e.target.value])} placeholder="Tag"></input>
-                <div>{tag}</div> */}
+                    <input onChange={(e) => tagging(e.target.value)} placeholder="Tag"></input>
+                    <div>{tag}</div>
                     <button type="submit" className="button" >Submit</button>
                 </form>
             </div>
