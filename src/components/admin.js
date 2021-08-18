@@ -49,7 +49,7 @@ const Admin = (props) => {
         setData('')
         setWarn('')
         if (supabase.auth.session() == null) {
-            setWarn("Youre not login yet")
+            setWarn("Login in to see your post")
         } else {
             getData()
         }
@@ -59,15 +59,24 @@ const Admin = (props) => {
         <div>
             <div className="admin" style={{ flexDirection: 'column', width: '100%' }}>
                 <div style={{ width: '90%' }}>
-                    <div className="admin" style={{ justifyContent: "flex-start" }}>Your posts</div>
+                    <div className="admin" style={{ justifyContent: "space-between", paddingTop: '20px' }}>
+                        <div>
+                            Your posts
+                        </div>
+                        <div>
+                            {supabase.auth.session() && supabase.auth.user().email}
+                        </div>
+                    </div>
                     {
                         data == '' ?
                             <h1 style={{ fontSize: '2rem', fontWeight: '500' }}>{warn}</h1>
                             :
                             data.map(res => (
-                                <div className="" key={res.id} style={{ marginTop: 10, display: 'flex', paddingBottom: 10, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottom: '.1px #838383 solid' }}>
+                                <div className="" key={res.id} style={{ paddingTop: 12, display: 'flex', paddingBottom: 12, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottom: '.1px #838383 solid' }}>
                                     <div className="isi" style={{ width: '90%' }}>
-                                        <div className="title" style={{ fontSize: "1.2em" }}>{res.title}</div>
+                                        <Link style={{ textDecoration: 'none', color: 'white' }} to={{ pathname: `/article/${res.title}`, query: { res } }}>
+                                            <div className="title" style={{ fontSize: "1.2em", marginBottom: '3px', textDecorationLine: 'none' }}>{res.title}</div>
+                                        </Link>
                                         <div className="date" style={{ fontSize: "0.6em", color: '#a1a1a1' }}>{res.date}</div>
                                         {/* <div className="body" style={{ fontSize: "1em" }}>{parseBody(res.body)}</div> */}
                                     </div>

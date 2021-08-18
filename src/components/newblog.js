@@ -69,8 +69,8 @@ const NewBlog = () => {
                 <form onSubmit={postData}>
                     <input placeholder="Title" onChange={(e => setTitle(e.target.value))} name="title" className="title" required></input>
                     <RichTextEditor getBody={setBody} />
-                    <input onChange={(e) => tagging(e.target.value)} placeholder="Tag"></input>
-                    <div>{tag}</div>
+                    {/* <input onChange={(e) => tagging(e.target.value)} placeholder="Tag"></input>
+                    <div>{tag}</div> */}
                     <button type="submit" className="button" >Submit</button>
                 </form>
             </div>
