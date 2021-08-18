@@ -230,6 +230,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 .cardcon .card .date {
   font-size: .8rem;
+  color: grey;
 }
 
 .cardcon .card .body {
@@ -252,7 +253,6 @@ html::-webkit-scrollbar-thumb:hover {
       -ms-flex-direction: column;
           flex-direction: column;
   font-size: 1.5rem;
-  font-weight: 700;
   color: #E0E1DD;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -487,6 +487,7 @@ html::-webkit-scrollbar-thumb:hover {
 .articlecon .isi .date {
   font-size: .85rem;
   margin-bottom: 10px;
+  color: grey;
 }
 
 .articlecon .isi .body {
@@ -695,6 +696,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 .newblogcon form .title {
   font-size: 1.7rem;
+  margin-bottom: 10px;
 }
 
 .newblogcon form .title::-webkit-input-placeholder {
@@ -735,17 +737,19 @@ html::-webkit-scrollbar-thumb:hover {
 
 .newblogcon form .button {
   width: 10%;
-  height: 7%;
+  min-height: 7%;
   border: none;
   outline: none;
-  background-color: #c0c0c0;
+  margin-top: 10px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1.1rem;
-  font-weight: 700;
+  color: white;
+  border: 1px solid #E0E1DD;
 }
 
 .newblogcon form .button:hover {
-  background-color: #9e9e9c;
+  color: #808080;
+  border: 1px solid #808080;
 }
 /*# sourceMappingURL=style.css.map */

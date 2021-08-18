@@ -3,7 +3,6 @@ import moment from 'moment'
 import { useHistory } from "react-router-dom";
 import React, { useState, useRef, useEffect } from "react";
 import RichTextEditor from './textEditor';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 const NewBlog = () => {
 
