@@ -47,7 +47,7 @@ const Content = (props) => {
                                     </div>
                                     <div className="body">
                                         <TextTruncate
-                                            line={4}
+                                            line={3}
                                             element="span"
                                             truncateText="…"
                                             text={res.body.replace(/<[^>]*>/g, '')}

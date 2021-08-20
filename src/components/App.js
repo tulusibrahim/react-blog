@@ -17,23 +17,25 @@ function App() {
 
   return (
     <Router>
-      <div className="all">
-        <Navbar />
-        <Switch>
-          <Route exact path="/" >
-            <Search />
-            <Content />
-          </Route>
-          <Route path="/about" component={About}></Route>
-          <Route path="/article/:title" component={Article}></Route>
-          <Route path="/login" component={Login}></Route>
-          <Route path="/admin" component={Admin}></Route>
-          <Route path="/new" component={NewBlog}></Route>
-          <Route path="/edit" component={EditPost}></Route>
-          <Route path="/logout" component={Logout}></Route>
-          <Route path="/notresponsive" component={NotResponsive}></Route>
-          <Route component={PageNotFound}></Route>
-        </Switch>
+      <div className="allwrapper">
+        <div className="all">
+          <Navbar />
+          <Switch>
+            <Route exact path="/" >
+              <Search />
+              <Content />
+            </Route>
+            <Route path="/about" component={About}></Route>
+            <Route path="/article/:title" component={Article}></Route>
+            <Route path="/login" component={Login}></Route>
+            <Route path="/admin" component={Admin}></Route>
+            <Route path="/new" component={NewBlog}></Route>
+            <Route path="/edit" component={EditPost}></Route>
+            <Route path="/logout" component={Logout}></Route>
+            <Route path="/notresponsive" component={NotResponsive}></Route>
+            <Route component={PageNotFound}></Route>
+          </Switch>
+        </div>
       </div>
     </Router>
   );

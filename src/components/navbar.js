@@ -28,17 +28,17 @@ const Navbar = (props) => {
                                 session !== null ?
                                     <>
                                         <Link to="/admin">
-                                            <button style={{ fontWeight: 'normal', padding: '3px' }}>{session !== null ? 'Profile' : 'Log In'}</button>
+                                            <button style={{ fontWeight: 'normal', padding: '3px', backgroundColor: "#12253a", minWidth: "70px" }}>{session !== null ? 'Profile' : 'Log In'}</button>
                                         </Link>
-                                        <button onClick={logOut} style={{ fontWeight: 'normal', padding: '3px' }}>{session !== null ? 'Log Out' : 'Log In'}</button>
-                                        <button style={{ padding: '3px' }}><Link to="/about" className="link">About Us</Link></button>
+                                        <button onClick={logOut} style={{ fontWeight: 'normal', padding: '3px', backgroundColor: "#12253a", minWidth: "70px" }}>{session !== null ? 'Log Out' : 'Log In'}</button>
+                                        <button style={{ padding: '3px', backgroundColor: "#12253a", minWidth: "70px" }}><Link to="/about" className="link">About Us</Link></button>
                                     </>
                                     :
                                     <>
                                         <Link to="/login">
-                                            <button style={{ fontWeight: 'normal', padding: '3px' }}>{session !== null ? 'Log Out' : 'Log In'} </button>
+                                            <button style={{ fontWeight: 'normal', padding: '3px', backgroundColor: "#12253a", minWidth: "70px" }}>{session !== null ? 'Log Out' : 'Log In'} </button>
                                         </Link>
-                                        <button style={{ padding: '3px' }}><Link to="/about" className="link">About Us</Link></button>
+                                        <button style={{ padding: '3px', backgroundColor: "#12253a", minWidth: "70px" }}><Link to="/about" className="link">About Us</Link></button>
                                     </>
                             }
                         </div>

@@ -1,31 +1,58 @@
 import { useEffect, useState } from "react"
-import axios from 'axios'
 import { supabase } from "../configs/configurations"
 import { Link } from "react-router-dom"
-import { Editor, CompositeDecorator, EditorState, convertFromRaw } from "draft-js";
-import { stateToHTML } from 'draft-js-export-html';
-import ReactHtmlParser from 'react-html-parser';
-
+import swal from 'sweetalert';
 const Admin = (props) => {
-
     const [data, setData] = useState('')
     const [warn, setWarn] = useState('')
 
     const deletePost = async (id) => {
-        let ask = window.confirm('Are you sure?');
-        if (ask == true) {
-            await deleteComment(id)
-            const { data, error } = await supabase
-                .from('blog')
-                .delete()
-                .match({ id: id })
+        // let ask = window.confirm('Are you sure?');
+        // if (ask == true) {
+        //     await deleteComment(id)
+        //     const { data, error } = await supabase
+        //         .from('blog')
+        //         .delete()
+        //         .match({ id: id })
 
-            if (error) alert('Failed to delete post')
-            getData()
-        }
-        else {
-            return
-        }
+        //     if (error) alert('Failed to delete post')
+        //     getData()
+        // }
+        // else {
+        //     return
+        // }
+
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to see the post anymore!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then(async (willDelete) => {
+                console.log(willDelete)
+                if (willDelete) {
+                    await deleteComment(id)
+                    const { data, error } = await supabase
+                        .from('blog')
+                        .delete()
+                        .match({ id: id })
+
+                    if (error) {
+                        swal("Failed delete post", {
+                            icon: "warning",
+                        });
+                    }
+                    else if (data) {
+                        swal("Success delete data", {
+                            icon: "success",
+                        });
+                    }
+                    getData()
+                } else {
+                    return
+                }
+            });
     }
 
     const deleteComment = async (id) => {
@@ -82,11 +109,11 @@ const Admin = (props) => {
                                     </div>
                                     <div style={{ width: '10%', textAlign: 'center', display: 'flex', flexDirection: "row", justifyContent: 'space-evenly' }}>
                                         <div style={{ cursor: 'pointer' }}>
-                                            <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white' }}>
+                                            <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white' }} data-toggle="tooltip" title="Edit">
                                                 <i className="far fa-edit"></i>
                                             </Link>
                                         </div>
-                                        <div onClick={() => deletePost(res.id)} style={{ cursor: 'pointer' }}>
+                                        <div onClick={() => deletePost(res.id)} style={{ cursor: 'pointer' }} data-toggle="tooltip" title="Delete">
                                             <i className="far fa-trash-alt"></i>
                                         </div>
                                     </div>

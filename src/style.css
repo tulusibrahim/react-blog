@@ -1,7 +1,6 @@
 * {
   margin: 0;
   padding: 0;
-  background-color: #0D1B2A;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -25,11 +24,17 @@ html::-webkit-scrollbar-thumb:hover {
   background: #35495f;
 }
 
-.all {
+.allwrapper {
   width: 100%;
+  height: 100vh;
+  background-color: #0D1B2A;
+}
+
+.allwrapper .all {
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
+  background-color: #0D1B2A;
 }
 
 .navbarcon {
@@ -161,6 +166,7 @@ html::-webkit-scrollbar-thumb:hover {
   border-radius: 5px;
   color: #E0E1DD;
   cursor: pointer;
+  background-color: #0D1B2A;
 }
 
 .searchcon .search button:hover {
@@ -234,6 +240,8 @@ html::-webkit-scrollbar-thumb:hover {
 .cardcon .card .date {
   font-size: .8rem;
   color: grey;
+  margin-top: 2px;
+  margin-bottom: 5px;
 }
 
 .cardcon .card .body {
@@ -278,9 +286,19 @@ html::-webkit-scrollbar-thumb:hover {
           justify-content: center;
 }
 
-.articlecon {
+.articleconwrapper {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: #0D1B2A;
+}
+
+.articleconwrapper .articlecon {
   width: 85%;
-  height: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -297,15 +315,16 @@ html::-webkit-scrollbar-thumb:hover {
   color: #E0E1DD;
   position: relative;
   padding-bottom: 10px;
+  background-color: #0D1B2A;
 }
 
 @media screen and (max-width: 800px) {
-  .articlecon {
+  .articleconwrapper .articlecon {
     width: 100%;
   }
 }
 
-.articlecon .likes {
+.articleconwrapper .articlecon .likes {
   width: 20%;
   height: 50;
   display: -webkit-box;
@@ -324,20 +343,20 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 @media screen and (max-width: 800px) {
-  .articlecon .likes {
+  .articleconwrapper .articlecon .likes {
     display: none;
   }
 }
 
-.articlecon .likes .icon {
+.articleconwrapper .articlecon .likes .icon {
   text-align: center;
 }
 
-.articlecon .likes .icon i {
+.articleconwrapper .articlecon .likes .icon i {
   cursor: pointer;
 }
 
-.articlecon .likesBottom {
+.articleconwrapper .articlecon .likesBottom {
   width: 40%;
   height: 50;
   display: -webkit-box;
@@ -351,12 +370,12 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 @media screen and (min-width: 800px) {
-  .articlecon .likesBottom {
+  .articleconwrapper .articlecon .likesBottom {
     display: none;
   }
 }
 
-.articlecon .likesBottom .icon {
+.articleconwrapper .articlecon .likesBottom .icon {
   text-align: center;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -373,23 +392,25 @@ html::-webkit-scrollbar-thumb:hover {
           flex-direction: row;
 }
 
-.articlecon .likesBottom .icon i {
+.articleconwrapper .articlecon .likesBottom .icon i {
   cursor: pointer;
   padding-right: 10px;
 }
 
-.articlecon .contentandcomment {
+.articleconwrapper .articlecon .contentandcomment {
   width: 80%;
-  height: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -397,12 +418,12 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 @media screen and (max-width: 800px) {
-  .articlecon .contentandcomment {
+  .articleconwrapper .articlecon .contentandcomment {
     width: 95%;
   }
 }
 
-.articlecon .contentandcomment .commentscon {
+.articleconwrapper .articlecon .contentandcomment .commentscon {
   width: 65%;
   height: -webkit-fit-content;
   height: -moz-fit-content;
@@ -425,21 +446,22 @@ html::-webkit-scrollbar-thumb:hover {
   padding-top: 10px;
 }
 
-.articlecon .contentandcomment .commentscon .addcomment > div {
+.articleconwrapper .articlecon .contentandcomment .commentscon .addcomment > div {
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-.articlecon .contentandcomment .commentscon .addcomment form input {
+.articleconwrapper .articlecon .contentandcomment .commentscon .addcomment form input {
   color: white;
   border: 1px solid #5a5656;
   margin-right: 10px;
   outline: none;
   padding: 7px;
   margin-bottom: 10px;
+  background-color: #0D1B2A;
 }
 
-.articlecon .contentandcomment .commentscon .addcomment form button {
+.articleconwrapper .articlecon .contentandcomment .commentscon .addcomment form button {
   color: white;
   width: -webkit-fit-content;
   width: -moz-fit-content;
@@ -452,14 +474,15 @@ html::-webkit-scrollbar-thumb:hover {
   outline: none;
   border-radius: 5px;
   cursor: pointer;
+  background-color: #0D1B2A;
 }
 
-.articlecon .contentandcomment .commentscon .commentsection {
+.articleconwrapper .articlecon .contentandcomment .commentscon .commentsection {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.articlecon .contentandcomment .commentscon .commentsection .comment {
+.articleconwrapper .articlecon .contentandcomment .commentscon .commentsection .comment {
   padding: 10px;
   background-color: #4c5e75;
   border-radius: .5rem;
@@ -470,35 +493,39 @@ html::-webkit-scrollbar-thumb:hover {
   margin-bottom: 10px;
 }
 
-.articlecon .contentandcomment .commentscon .commentsection .comment div {
+.articleconwrapper .articlecon .contentandcomment .commentscon .commentsection .comment div {
   background-color: #4c5e75;
   border-radius: .5rem;
 }
 
-.articlecon .isi {
+.articleconwrapper .articlecon .isi {
   width: 100%;
   padding: 10px;
   margin-top: 20px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: #0D1B2A;
 }
 
-.articlecon .isi .title {
+.articleconwrapper .articlecon .isi .title {
   font-size: 1.6rem;
   margin-bottom: 10px;
 }
 
-.articlecon .isi .date {
+.articleconwrapper .articlecon .isi .date {
   font-size: .85rem;
   margin-bottom: 10px;
   color: grey;
 }
 
-.articlecon .isi .body {
+.articleconwrapper .articlecon .isi .body {
   margin-bottom: 10px;
   font-size: 1.2rem;
   line-height: 1.6;
 }
 
-.articlecon .isi .body p a {
+.articleconwrapper .articlecon .isi .body p a {
   color: #abacab;
   font-style: italic;
 }
@@ -526,6 +553,10 @@ html::-webkit-scrollbar-thumb:hover {
   color: white;
 }
 
+.logincon input {
+  background-color: #0D1B2A;
+}
+
 .logincon button {
   width: 30vw;
   height: -webkit-fit-content;
@@ -537,6 +568,7 @@ html::-webkit-scrollbar-thumb:hover {
   border-radius: .3rem;
   color: white;
   cursor: pointer;
+  background-color: #0D1B2A;
 }
 
 @media screen and (min-width: 565px) {
@@ -698,6 +730,7 @@ html::-webkit-scrollbar-thumb:hover {
   border: none;
   outline: none;
   border-bottom: 1px solid #E0E1DD;
+  background-color: #0D1B2A;
 }
 
 .newblogcon form .title {
@@ -752,6 +785,7 @@ html::-webkit-scrollbar-thumb:hover {
   font-size: 1.1rem;
   color: white;
   border: 1px solid #E0E1DD;
+  background-color: #0D1B2A;
 }
 
 .newblogcon form .button:hover {

@@ -30,6 +30,7 @@ const Article = (props) => {
     const postComment = async (e) => {
         e.preventDefault()
         e.target.reset()
+        setInputComments('')
         const { dataa, error } = await supabase
             .from('blog_comments')
             .insert([
@@ -71,33 +72,13 @@ const Article = (props) => {
         setComments([])
         setData([])
         getData()
+        setInputComments('')
     }, [])
 
     return (
-        <div className="articlecon">
-            <div className="likes">
-                <div className="icon">
-                    <i className="far fa-heart" onClick={addLikes}></i>
-                    <div>{data.map(like => like.likes == null ? 0 : like.likes)}</div>
-                </div>
-                <div className="icon">
-                    <i className="far fa-comment-dots"></i>
-                    <div>{comments.length}</div>
-                </div>
-            </div>
-            <div className="contentandcomment">
-                <div className="isi">
-                    {
-                        data.map((res, index) => (
-                            <div key={index}>
-                                <div className="title">{res.title}</div>
-                                <div className="date">{res.email}, {res.date}</div>
-                                <div className="body">{parse(res.body)}</div>
-                            </div>
-                        ))
-                    }
-                </div>
-                <div className="likesBottom">
+        <div className="articleconwrapper">
+            <div className="articlecon">
+                <div className="likes">
                     <div className="icon">
                         <i className="far fa-heart" onClick={addLikes}></i>
                         <div>{data.map(like => like.likes == null ? 0 : like.likes)}</div>
@@ -107,41 +88,63 @@ const Article = (props) => {
                         <div>{comments.length}</div>
                     </div>
                 </div>
-                <div className="commentscon">
-                    <h2>Comments</h2>
-                    {
-                        comments == '' ?
-                            <div className="commentsection">
-                                <div>There is no comment here.</div>
-                            </div>
-                            :
-                            <div className="commentsection">
-                                {
-                                    comments.map((komentar, index) => (
-                                        <div key={index} className="comment">
-                                            <div style={{ fontSize: 16 }}>{komentar.author}</div>
-                                            <div style={{ fontSize: 20 }}>{komentar.comment}</div>
-                                        </div>
-                                    ))
-                                }
-                            </div>
-                    }
-                    <div className="addcomment">
+                <div className="contentandcomment">
+                    <div className="isi">
                         {
-                            supabase.auth.session() == null ? 'You need to login first to comment' :
-                                <>
-                                    <div>Add comment</div>
-                                    <form onSubmit={postComment}>
-                                        <input name="comment" placeholder=" Your comment..." onChange={(e) => setInputComments(e.target.value)}></input>
-                                        <button>Comment</button>
-                                    </form>
-                                </>
+                            data.map((res, index) => (
+                                <div key={index}>
+                                    <div className="title">{res.title}</div>
+                                    <div className="date">{res.email}, {res.date}</div>
+                                    <div className="body">{parse(res.body)}</div>
+                                </div>
+                            ))
                         }
+                    </div>
+                    <div className="likesBottom">
+                        <div className="icon">
+                            <i className="far fa-heart" onClick={addLikes}></i>
+                            <div>{data.map(like => like.likes == null ? 0 : like.likes)}</div>
+                        </div>
+                        <div className="icon">
+                            <i className="far fa-comment-dots"></i>
+                            <div>{comments.length}</div>
+                        </div>
+                    </div>
+                    <div className="commentscon">
+                        <h2>Comments</h2>
+                        {
+                            comments == '' ?
+                                <div className="commentsection">
+                                    <div>There is no comment here.</div>
+                                </div>
+                                :
+                                <div className="commentsection">
+                                    {
+                                        comments.map((komentar, index) => (
+                                            <div key={index} className="comment">
+                                                <div style={{ fontSize: 16 }}>{komentar.author}</div>
+                                                <div style={{ fontSize: 20 }}>{komentar.comment}</div>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                        }
+                        <div className="addcomment">
+                            {
+                                supabase.auth.session() == null ? 'You need to login first to comment' :
+                                    <>
+                                        <div>Add comment</div>
+                                        <form onSubmit={postComment}>
+                                            <input name="comment" placeholder=" Your comment..." onChange={(e) => setInputComments(e.target.value)} required></input>
+                                            <button>Comment</button>
+                                        </form>
+                                    </>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     );
 }
 

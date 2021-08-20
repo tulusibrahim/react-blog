@@ -77,7 +77,7 @@ const NewBlog = () => {
                 <div className="newblogdesc">Add New Blog</div>
                 <form onSubmit={postData}>
                     <input placeholder="Title" onChange={(e => setTitle(e.target.value))} name="title" className="title" required></input>
-                    <div style={{ width: '95%', backgroundColor: 'red' }}>
+                    <div style={{ width: '95%' }}>
                         <Editor
                             style={{ width: '100%', color: 'white', borderBottom: '1px white solid', outline: 'none' }}
                             text={body}
