@@ -28,7 +28,7 @@ const Navbar = (props) => {
                                 session !== null ?
                                     <>
                                         <Link to="/admin">
-                                            <button style={{ fontWeight: 'normal', padding: '3px' }}>{session !== null ? 'Manage Blogs' : 'Log In'}</button>
+                                            <button style={{ fontWeight: 'normal', padding: '3px' }}>{session !== null ? 'Profile' : 'Log In'}</button>
                                         </Link>
                                         <button onClick={logOut} style={{ fontWeight: 'normal', padding: '3px' }}>{session !== null ? 'Log Out' : 'Log In'}</button>
                                         <button style={{ padding: '3px' }}><Link to="/about" className="link">About Us</Link></button>
