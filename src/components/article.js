@@ -9,7 +9,6 @@ import parse from 'html-react-parser';
 const Article = (props) => {
     const { title } = useParams()
     const [data, setData] = useState([])
-    const [body, setBody] = useState('')
     const [comments, setComments] = useState([])
     const [inputComment, setInputComments] = useState('')
 
@@ -23,10 +22,7 @@ const Article = (props) => {
                 )
             `)
             .eq('title', title)
-
-        const contentState = convertFromRaw(JSON.parse(data[0].body));
-        let html = stateToHTML(contentState);
-        setBody(html)
+        console.log(data)
         setData(data)
         setComments(data[0].blog_comments)
     }
@@ -96,7 +92,7 @@ const Article = (props) => {
                             <div key={index}>
                                 <div className="title">{res.title}</div>
                                 <div className="date">{res.email}, {res.date}</div>
-                                <div className="body">{parse(body)}</div>
+                                <div className="body">{parse(res.body)}</div>
                             </div>
                         ))
                     }

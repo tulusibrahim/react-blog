@@ -375,6 +375,13 @@ html::-webkit-scrollbar-thumb:hover {
             font-size: 1.2rem;
             // text-align: justify;
             line-height: 1.6;
+
+            p {
+                a {
+                    color: #abacab;
+                    font-style: italic;
+                }
+            }
         }
     }
 }
@@ -504,16 +511,17 @@ html::-webkit-scrollbar-thumb:hover {
         align-items: flex-start;
         justify-content: space-evenly;
         flex-direction: column;
+        // background-color: red;
 
         input {
             color: #E0E1DD;
             padding: .8rem;
             height: 30px;
-            width: 80%;
+            width: 95%;
             border: none;
             outline: none;
-            border: 1px solid #E0E1DD;
-            border-radius: .5rem;
+            border-bottom: 1px solid #E0E1DD;
+            // border-radius: .5rem;
         }
 
         .title {

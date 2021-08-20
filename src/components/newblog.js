@@ -3,6 +3,11 @@ import moment from 'moment'
 import { useHistory } from "react-router-dom";
 import React, { useState, useRef, useEffect } from "react";
 import RichTextEditor from './textEditor';
+// ES module
+import Editor from 'react-medium-editor';
+require('medium-editor/dist/css/medium-editor.css');
+require('medium-editor/dist/css/themes/beagle.css');
+
 
 const NewBlog = () => {
 
@@ -59,6 +64,10 @@ const NewBlog = () => {
         // console.log(datar)
     }
 
+    // useEffect(() => {
+    //     new MediumEditor('.newblogcon')
+    // }, [])
+
 
     return (
         supabase.auth.session() == null ?
@@ -68,9 +77,17 @@ const NewBlog = () => {
                 <div className="newblogdesc">Add New Blog</div>
                 <form onSubmit={postData}>
                     <input placeholder="Title" onChange={(e => setTitle(e.target.value))} name="title" className="title" required></input>
-                    <RichTextEditor getBody={setBody} />
+                    <div style={{ width: '95%', backgroundColor: 'red' }}>
+                        <Editor
+                            style={{ width: '100%', color: 'white', borderBottom: '1px white solid', outline: 'none' }}
+                            text={body}
+                            theme="beagle"
+                            onChange={e => setBody(e)}
+                        />
+                    </div>
+                    {/* <RichTextEditor getBody={setBody} /> */}
                     {/* <input onChange={(e) => tagging(e.target.value)} placeholder="Tag"></input>
-                    <div>{tag}</div> */}
+                <div>{tag}</div> */}
                     <button type="submit" className="button" >Submit</button>
                 </form>
             </div>

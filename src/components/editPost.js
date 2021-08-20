@@ -33,7 +33,7 @@ const EditPost = (props) => {
             <form onSubmit={postEdit}>
                 <input placeholder="title" name="title" className="title" onChange={(e) => setTitle(e.target.value)} defaultValue={props.location.query.res.title}></input>
                 {/* <textarea style={{ overflow: 'auto' }} rows="10" cols="50" onChange={(e) => setBody(e.target.value)} placeholder="body" name="body" className="body" defaultValue={props.location.query.res.body}></textarea> */}
-                <RichTextEditor getBody={setBody} data={props.location.query.res.body} />
+                {/* <RichTextEditor getBody={setBody} data={props.location.query.res.body} /> */}
                 <input name="email" value={localStorage.getItem('email')} style={{ display: 'none' }}></input>
                 <input name="id" style={{ display: 'none' }} value={props.location.query.res.id}></input>
                 <button type="submit" className="button" >Update</button>

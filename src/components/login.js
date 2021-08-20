@@ -1,17 +1,7 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { supabase } from "../configs/configurations";
-import axios from "axios";
-
-// alert("Still working on it!")
-// let datee = new Date()
-// const monthNames = ["Jan", "Feb", "March", "Apr", "May", "Jun",
-//     "July", "August", "Sept", "Oct", "Nov", "Dec"
-// ];
-// let title = username
-// let body = password
-// let date = `${datee.getDate()} ${monthNames[datee.getMonth()]} ${datee.getFullYear()}`
-// let data = { title, body, date }
+import TextField from '@material-ui/core/TextField';
 
 const Login = (props) => {
 
@@ -84,6 +74,7 @@ const Login = (props) => {
                     :
                     <form onSubmit={logIn}>
                         <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} name="email" required></input>
+                        {/* <TextField label="test" variant="filled" size="small" /> */}
                         <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password" required></input>
                         <div className="formbtn">
                             <p>Don't have an account? Create one <a style={{ cursor: 'pointer' }} onClick={() => setlogin('false')}>here!</a></p>

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useHistory } from 'react-router-dom'
 import { supabase } from '../configs/configurations'
-import ShowMoreText from 'react-show-more-text';
+import parse from 'html-react-parser';
 import Masonry from 'react-masonry-css'
-import { convertFromRaw } from "draft-js";
+import TextTruncate from 'react-text-truncate';
 
 
 const Content = (props) => {
@@ -37,7 +37,7 @@ const Content = (props) => {
                     >
                         {
                             data.map((res, index) => (
-                                <div className="card" key={index}>
+                                < div className="card" key={index} >
                                     <Link className="title" to={{ pathname: `/article/${res.title}`, query: { res } }}>
                                         <div>{res.title}</div>
                                     </Link>
@@ -46,17 +46,13 @@ const Content = (props) => {
                                         <div className="date">{res.date}</div>
                                     </div>
                                     <div className="body">
-                                        <ShowMoreText
-                                            /* Default options */
-                                            lines={6}
-                                            more='Show more'
-                                            less='Show less'
-                                            anchorClass='readMore'
-                                            onClick={(res) => console.log(res)}
-                                            expanded={false}
-                                        >
-                                            {convertFromRaw(JSON.parse(res.body)).getPlainText()}
-                                        </ShowMoreText>
+                                        <TextTruncate
+                                            line={4}
+                                            element="span"
+                                            truncateText="…"
+                                            text={res.body.replace(/<[^>]*>/g, '')}
+                                            textTruncateChild={<Link className="title" style={{ fontSize: 16, fontWeight: 'bold' }} to={{ pathname: `/article/${res.title}`, query: { res } }}>read more</Link>}
+                                        />
                                     </div>
                                 </div>
                             ))
@@ -65,7 +61,7 @@ const Content = (props) => {
                     :
                     <div>No blogs :(</div>
             }
-        </div>
+        </div >
     );
 }
 

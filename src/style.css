@@ -498,6 +498,11 @@ html::-webkit-scrollbar-thumb:hover {
   line-height: 1.6;
 }
 
+.articlecon .isi .body p a {
+  color: #abacab;
+  font-style: italic;
+}
+
 .logincon {
   width: 100%;
   height: 70vh;
@@ -689,11 +694,10 @@ html::-webkit-scrollbar-thumb:hover {
   color: #E0E1DD;
   padding: .8rem;
   height: 30px;
-  width: 80%;
+  width: 95%;
   border: none;
   outline: none;
-  border: 1px solid #E0E1DD;
-  border-radius: .5rem;
+  border-bottom: 1px solid #E0E1DD;
 }
 
 .newblogcon form .title {
