@@ -7,60 +7,58 @@ const Admin = (props) => {
     const [warn, setWarn] = useState('')
 
     const deletePost = async (id) => {
-        // let ask = window.confirm('Are you sure?');
-        // if (ask == true) {
-        //     await deleteComment(id)
-        //     const { data, error } = await supabase
-        //         .from('blog')
-        //         .delete()
-        //         .match({ id: id })
+        try {
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to see the post anymore!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then(async (willDelete) => {
+                    console.log(willDelete)
+                    if (willDelete) {
+                        await deleteComment(id)
+                        const { data, error } = await supabase
+                            .from('blog')
+                            .delete()
+                            .match({ id: id })
 
-        //     if (error) alert('Failed to delete post')
-        //     getData()
-        // }
-        // else {
-        //     return
-        // }
-
-        swal({
-            title: "Are you sure?",
-            text: "Once deleted, you will not be able to see the post anymore!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-            .then(async (willDelete) => {
-                console.log(willDelete)
-                if (willDelete) {
-                    await deleteComment(id)
-                    const { data, error } = await supabase
-                        .from('blog')
-                        .delete()
-                        .match({ id: id })
-
-                    if (error) {
-                        swal("Failed delete post", {
-                            icon: "warning",
-                        });
+                        if (error) {
+                            swal("Failed delete post", {
+                                icon: "warning",
+                            });
+                        }
+                        else if (data) {
+                            swal("Success delete data", {
+                                icon: "success",
+                            });
+                        }
+                        getData()
+                    } else {
+                        return
                     }
-                    else if (data) {
-                        swal("Success delete data", {
-                            icon: "success",
-                        });
-                    }
-                    getData()
-                } else {
-                    return
-                }
+                });
+        } catch (error) {
+            swal("Something is error. Please try again", {
+                icon: "warning",
             });
+        }
     }
 
     const deleteComment = async (id) => {
-        const { data, error } = await supabase
-            .from('blog_comments')
-            .delete()
-            .match({ articleId: id })
-        if (error) alert('Failed to delete post comment')
+        try {
+            const { data, error } = await supabase
+                .from('blog_comments')
+                .delete()
+                .match({ articleId: id })
+            if (error) alert('Failed to delete post comment')
+
+        } catch (error) {
+            swal("Something is error. Please try again", {
+                icon: "warning",
+            });
+        }
     }
 
     const getData = async () => {

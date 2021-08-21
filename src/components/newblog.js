@@ -2,7 +2,7 @@ import { supabase, uuidv4 } from "../configs/configurations";
 import moment from 'moment'
 import { useHistory } from "react-router-dom";
 import React, { useState, useRef, useEffect } from "react";
-import RichTextEditor from './textEditor';
+import swal from 'sweetalert';
 // ES module
 import Editor from 'react-medium-editor';
 require('medium-editor/dist/css/medium-editor.css');
@@ -23,25 +23,32 @@ const NewBlog = () => {
     }, [body])
 
     const postData = async (e) => {
-        e.preventDefault()
-        const user = supabase.auth.user()
-        const { data, error } = await supabase
-            .from('blog')
-            .insert([
-                {
-                    id: uuidv4(),
-                    title: title,
-                    body: body,
-                    email: user.email,
-                    date: moment().format('DD MMMM YYYY'),
-                }
-            ])
-        if (error) {
-            console.log(error)
-            alert('Failed to add post')
+        // e.preventDefault()
+        if (title == '' || body == '') {
+            swal("Title or body can not be empty.", {
+                icon: "warning",
+            });
         }
         else {
-            history.push('/')
+            const user = supabase.auth.user()
+            const { data, error } = await supabase
+                .from('blog')
+                .insert([
+                    {
+                        id: uuidv4(),
+                        title: title,
+                        body: body,
+                        email: user.email,
+                        date: moment().format('DD MMMM YYYY'),
+                    }
+                ])
+            if (error) {
+                console.log(error)
+                alert('Failed to add post')
+            }
+            else {
+                history.push('/')
+            }
         }
     }
 
@@ -73,23 +80,25 @@ const NewBlog = () => {
         supabase.auth.session() == null ?
             <h1 style={{ fontSize: '2rem', fontWeight: '500', textAlign: 'center', color: 'white' }}>You need to log in first to create new post.</h1>
             :
-            <div className="newblogcon">
-                <div className="newblogdesc">Add New Blog</div>
-                <form onSubmit={postData}>
-                    <input placeholder="Title" onChange={(e => setTitle(e.target.value))} name="title" className="title" required></input>
-                    <div style={{ width: '95%' }}>
+            <div className="newblogconwrapper">
+                <div className="newblogcon">
+                    <div className="headerwrapper">
+                        {/* <div className="newblogdesc">Add New Blog</div> */}
+                        <button type="submit" className="button" onClick={() => postData()}>Submit</button>
+                    </div>
+                    <form onSubmit={postData}>
+                        <input placeholder="Title" onChange={(e => setTitle(e.target.value))} name="title" className="title" required></input>
                         <Editor
-                            style={{ width: '100%', color: 'white', borderBottom: '1px white solid', outline: 'none' }}
+                            style={{ width: '100%', paddingTop: '1rem', paddingBottom: '1rem', color: 'white', backgroundColor: '#12253a', outline: 'none' }}
                             text={body}
                             theme="beagle"
                             onChange={e => setBody(e)}
                         />
-                    </div>
-                    {/* <RichTextEditor getBody={setBody} /> */}
-                    {/* <input onChange={(e) => tagging(e.target.value)} placeholder="Tag"></input>
+                        {/* <RichTextEditor getBody={setBody} /> */}
+                        {/* <input onChange={(e) => tagging(e.target.value)} placeholder="Tag"></input>
                 <div>{tag}</div> */}
-                    <button type="submit" className="button" >Submit</button>
-                </form>
+                    </form>
+                </div>
             </div>
     );
 }

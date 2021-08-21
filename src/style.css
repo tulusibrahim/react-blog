@@ -10,7 +10,7 @@ html::-webkit-scrollbar {
 
 /* Track */
 html::-webkit-scrollbar-track {
-  background: #060c13;
+  background: #0a1520;
 }
 
 /* Handle */
@@ -340,6 +340,12 @@ html::-webkit-scrollbar-thumb:hover {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 50%;
+  left: 0px;
+  -webkit-transform: translate(0%, -50%);
+          transform: translate(0%, -50%);
 }
 
 @media screen and (max-width: 800px) {
@@ -509,8 +515,9 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .articleconwrapper .articlecon .isi .title {
-  font-size: 1.6rem;
+  font-size: 2rem;
   margin-bottom: 10px;
+  letter-spacing: .8px;
 }
 
 .articleconwrapper .articlecon .isi .date {
@@ -523,6 +530,13 @@ html::-webkit-scrollbar-thumb:hover {
   margin-bottom: 10px;
   font-size: 1.2rem;
   line-height: 1.6;
+}
+
+.articleconwrapper .articlecon .isi .body blockquote {
+  background-color: #152b43;
+  font-family: 'Fira Code', monospace;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .articleconwrapper .articlecon .isi .body p a {
@@ -668,9 +682,18 @@ html::-webkit-scrollbar-thumb:hover {
           justify-content: center;
 }
 
-.newblogcon {
-  width: 100vw;
-  height: 90vh;
+.newblogconwrapper {
+  height: 100vh;
+  background-color: #0D1B2A;
+}
+
+.newblogconwrapper .newblogcon {
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  min-height: -webkit-fit-content;
+  min-height: -moz-fit-content;
+  min-height: fit-content;
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -685,9 +708,41 @@ html::-webkit-scrollbar-thumb:hover {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  background-color: #0D1B2A;
+  padding-bottom: 20px;
 }
 
-.newblogcon .newblogdesc {
+.newblogconwrapper .newblogcon .headerwrapper {
+  width: 90%;
+  height: 5vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.newblogconwrapper .newblogcon .headerwrapper button {
+  width: 8%;
+  min-height: 100%;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: white;
+  border: 1px solid #E0E1DD;
+  background-color: #0D1B2A;
+}
+
+.newblogconwrapper .newblogcon .headerwrapper button:hover {
+  color: #808080;
+  border: 1px solid #808080;
+}
+
+.newblogconwrapper .newblogcon .newblogdesc {
   height: 5vh;
   width: 95%;
   font-size: 1.8rem;
@@ -703,8 +758,8 @@ html::-webkit-scrollbar-thumb:hover {
   color: #E0E1DD;
 }
 
-.newblogcon form {
-  width: 95%;
+.newblogconwrapper .newblogcon form {
+  width: 90%;
   height: 90%;
   position: relative;
   display: -webkit-box;
@@ -722,74 +777,55 @@ html::-webkit-scrollbar-thumb:hover {
           flex-direction: column;
 }
 
-.newblogcon form input {
+.newblogconwrapper .newblogcon form input {
   color: #E0E1DD;
-  padding: .8rem;
+  padding-top: 1rem;
   height: 30px;
-  width: 95%;
+  width: 100%;
   border: none;
   outline: none;
   border-bottom: 1px solid #E0E1DD;
   background-color: #0D1B2A;
 }
 
-.newblogcon form .title {
+.newblogconwrapper .newblogcon form .title {
   font-size: 1.7rem;
   margin-bottom: 10px;
 }
 
-.newblogcon form .title::-webkit-input-placeholder {
+.newblogconwrapper .newblogcon form .title::-webkit-input-placeholder {
   font-size: 1.7rem;
 }
 
-.newblogcon form .title:-ms-input-placeholder {
+.newblogconwrapper .newblogcon form .title:-ms-input-placeholder {
   font-size: 1.7rem;
 }
 
-.newblogcon form .title::-ms-input-placeholder {
+.newblogconwrapper .newblogcon form .title::-ms-input-placeholder {
   font-size: 1.7rem;
 }
 
-.newblogcon form .title::placeholder {
+.newblogconwrapper .newblogcon form .title::placeholder {
   font-size: 1.7rem;
 }
 
-.newblogcon form .body {
+.newblogconwrapper .newblogcon form .body {
   font-size: 1.4rem;
 }
 
-.newblogcon form .body::-webkit-input-placeholder {
+.newblogconwrapper .newblogcon form .body::-webkit-input-placeholder {
   font-size: 1.4rem;
 }
 
-.newblogcon form .body:-ms-input-placeholder {
+.newblogconwrapper .newblogcon form .body:-ms-input-placeholder {
   font-size: 1.4rem;
 }
 
-.newblogcon form .body::-ms-input-placeholder {
+.newblogconwrapper .newblogcon form .body::-ms-input-placeholder {
   font-size: 1.4rem;
 }
 
-.newblogcon form .body::placeholder {
+.newblogconwrapper .newblogcon form .body::placeholder {
   font-size: 1.4rem;
-}
-
-.newblogcon form .button {
-  width: 10%;
-  min-height: 7%;
-  border: none;
-  outline: none;
-  margin-top: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1.1rem;
-  color: white;
-  border: 1px solid #E0E1DD;
-  background-color: #0D1B2A;
-}
-
-.newblogcon form .button:hover {
-  color: #808080;
-  border: 1px solid #808080;
 }
 /*# sourceMappingURL=style.css.map */

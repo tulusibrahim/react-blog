@@ -11,7 +11,7 @@ const EditPost = (props) => {
     let history = useHistory()
 
     const postEdit = async (e) => {
-        e.preventDefault()
+        // e.preventDefault()
         const { data, error } = await supabase
             .from('blog')
             .update({ title: title ? title : props.location.query.res.title, body: body ? body : props.location.query.res.body })
@@ -23,6 +23,7 @@ const EditPost = (props) => {
             alert('Failed to update post')
         }
     }
+    //borderBottom: '1px #E0E1DD solid',
 
     useEffect(() => {
         console.log(body)
@@ -30,21 +31,25 @@ const EditPost = (props) => {
     }, [])
 
     return (
-        <div className="newblogcon">
-            <div className="newblogdesc">Edit Blog</div>
-            <form onSubmit={postEdit}>
-                <input style={{ backgroundColor: "#0D1B2A" }} placeholder="title" name="title" className="title" onChange={(e) => setTitle(e.target.value)} defaultValue={props.location.query.res.title}></input>
-                {/* <textarea style={{ overflow: 'auto' }} rows="10" cols="50" onChange={(e) => setBody(e.target.value)} placeholder="body" name="body" className="body" defaultValue={props.location.query.res.body}></textarea> */}
-                <Editor
-                    style={{ width: '100%', color: 'white', borderBottom: '1px white solid', outline: 'none' }}
-                    text={body}
-                    theme="beagle"
-                    onChange={e => setBody(e)}
-                />
-                <input name="email" value={localStorage.getItem('email')} style={{ display: 'none' }}></input>
-                <input name="id" style={{ display: 'none' }} value={props.location.query.res.id}></input>
-                <button style={{ backgroundColor: "#0D1B2A" }} type="submit" className="button" >Update</button>
-            </form>
+        <div className="newblogconwrapper">
+            <div className="newblogcon">
+                <div className="headerwrapper">
+                    {/* <div className="newblogdesc">Edit Blog</div> */}
+                    <button style={{ backgroundColor: "#0D1B2A" }} type="submit" className="button" onClick={() => postEdit()}>Update</button>
+                </div>
+                <form onSubmit={postEdit}>
+                    <input style={{ backgroundColor: "#0D1B2A" }} placeholder="title" name="title" className="title" onChange={(e) => setTitle(e.target.value)} defaultValue={props.location.query.res.title}></input>
+                    {/* <textarea style={{ overflow: 'auto' }} rows="10" cols="50" onChange={(e) => setBody(e.target.value)} placeholder="body" name="body" className="body" defaultValue={props.location.query.res.body}></textarea> */}
+                    <Editor
+                        style={{ width: '100%', paddingTop: '1rem', paddingBottom: '1rem', color: 'white', backgroundColor: '#12253a', outline: 'none' }}
+                        text={body}
+                        theme="beagle"
+                        onChange={e => setBody(e)}
+                    />
+                    <input name="email" value={localStorage.getItem('email')} style={{ display: 'none' }}></input>
+                    <input name="id" style={{ display: 'none' }} value={props.location.query.res.id}></input>
+                </form>
+            </div>
         </div>
     );
 }

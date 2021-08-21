@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase, uuidv4 } from "../configs/configurations";
 import moment from "moment";
-import { convertFromRaw } from "draft-js";
-import { stateToHTML } from 'draft-js-export-html';
+import { Link } from "react-router-dom"
 import parse from 'html-react-parser';
 
 const Article = (props) => {
@@ -11,6 +10,8 @@ const Article = (props) => {
     const [data, setData] = useState([])
     const [comments, setComments] = useState([])
     const [inputComment, setInputComments] = useState('')
+    const [session, setSession] = useState(false)
+    const [display, setDisplay] = useState('none')
 
     const getData = async () => {
         const { data, error } = await supabase
@@ -69,10 +70,12 @@ const Article = (props) => {
     }
 
     useEffect(() => {
+        setSession(false)
         setComments([])
         setData([])
         getData()
         setInputComments('')
+        setSession(supabase.auth.session())
     }, [])
 
     return (
@@ -93,7 +96,26 @@ const Article = (props) => {
                         {
                             data.map((res, index) => (
                                 <div key={index}>
-                                    <div className="title">{res.title}</div>
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                        <div className="title">{res.title}</div>
+                                        {
+                                            session &&
+                                                supabase.auth.user().email === res.email ?
+                                                <div>
+                                                    <i class="fas fa-ellipsis-v" onClick={() => display == 'none' ? setDisplay('flex') : setDisplay('none')} >
+                                                        <div style={{ display: display, transitionDelay: 1, flexDirection: 'column', position: 'absolute', right: 10, zIndex: 2, justifyContent: 'center', alignItems: 'center' }}>
+                                                            <div style={{ backgroundColor: '#12253a', padding: '10px', cursor: 'pointer' }}>
+                                                                <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white', textDecoration: 'none', fontWeight: 'normal' }} data-toggle="tooltip" title="Edit">
+                                                                    Edit post
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </i>
+                                                </div>
+                                                :
+                                                null
+                                        }
+                                    </div>
                                     <div className="date">{res.email}, {res.date}</div>
                                     <div className="body">{parse(res.body)}</div>
                                 </div>
