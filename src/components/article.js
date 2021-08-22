@@ -76,6 +76,7 @@ const Article = (props) => {
         getData()
         setInputComments('')
         setSession(supabase.auth.session())
+        document.title = title
     }, [])
 
     return (

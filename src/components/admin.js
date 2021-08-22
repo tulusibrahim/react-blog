@@ -71,6 +71,7 @@ const Admin = (props) => {
     }
 
     useEffect(() => {
+        document.title = `Profile`
         setData('')
         setWarn('')
         if (supabase.auth.session() == null) {

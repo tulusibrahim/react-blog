@@ -26,6 +26,7 @@ const EditPost = (props) => {
     //borderBottom: '1px #E0E1DD solid',
 
     useEffect(() => {
+        document.title = `Edit Post`
         console.log(body)
         setBody(props.location.query.res.body)
     }, [])

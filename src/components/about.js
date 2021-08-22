@@ -1,4 +1,10 @@
+import { useEffect } from "react";
+
 const About = () => {
+
+    useEffect(() => {
+        document.title = "About Us"
+    })
 
     return (
         <div className="about">

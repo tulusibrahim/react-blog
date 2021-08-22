@@ -71,9 +71,9 @@ const NewBlog = () => {
         // console.log(datar)
     }
 
-    // useEffect(() => {
-    //     new MediumEditor('.newblogcon')
-    // }, [])
+    useEffect(() => {
+        document.title = "New Blog"
+    }, [])
 
 
     return (
