@@ -48,7 +48,7 @@ const Content = (props) => {
                                     </div>
                                     <div className="body">
                                         <TextTruncate
-                                            line={3}
+                                            line={Math.floor(Math.random() * 5) + 1}
                                             element="span"
                                             truncateText="…"
                                             text={res.body.replace(/<[^>]*>/g, '')}
