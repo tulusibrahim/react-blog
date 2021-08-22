@@ -1,8 +1,15 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { supabase } from '../configs/configurations';
 
 const Search = () => {
-    const session = supabase.auth.session()
+    const [session, setSession] = useState(false)
+    // let all = useLocation()
+
+    useEffect(() => {
+        setSession(supabase.auth.session())
+        // console.log(all)
+    }, [])
     return (
         <div className="searchcon">
             {

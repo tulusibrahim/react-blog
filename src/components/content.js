@@ -17,7 +17,6 @@ const Content = (props) => {
 
     useEffect(async () => {
         getData()
-        console.log(supabase.auth.user())
         // const { data, error } = await supabase
         //     .from('blog')
         //     .select(`
