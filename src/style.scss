@@ -382,6 +382,21 @@ html::-webkit-scrollbar-thumb:hover {
             //     width: 100%;
             // }
 
+            .articleoption {
+                height: 20px;
+                width: 20px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 5px;
+
+
+                &:hover {
+                    background-color: #12253a;
+                }
+            }
+
             .title {
                 font-size: 2rem;
                 margin-bottom: 10px;

@@ -103,15 +103,17 @@ const Article = (props) => {
                                             session &&
                                                 supabase.auth.user().email === res.email ?
                                                 <div>
-                                                    <i class="fas fa-ellipsis-v" onClick={() => display == 'none' ? setDisplay('flex') : setDisplay('none')} >
-                                                        <div style={{ display: display, transitionDelay: 1, flexDirection: 'column', position: 'absolute', right: 10, zIndex: 2, justifyContent: 'center', alignItems: 'center' }}>
-                                                            <div style={{ backgroundColor: '#12253a', padding: '10px', cursor: 'pointer' }}>
-                                                                <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white', textDecoration: 'none', fontWeight: 'normal' }} data-toggle="tooltip" title="Edit">
-                                                                    Edit post
-                                                                </Link>
+                                                    <div class="articleoption" onClick={() => display == 'none' ? setDisplay('flex') : setDisplay('none')}>
+                                                        <i class="fas fa-ellipsis-v"  >
+                                                            <div style={{ display: display, transitionDelay: 1, flexDirection: 'column', position: 'absolute', right: 10, zIndex: 2, justifyContent: 'center', alignItems: 'center' }}>
+                                                                <div style={{ backgroundColor: '#12253a', padding: '10px', cursor: 'pointer' }}>
+                                                                    <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white', textDecoration: 'none', fontWeight: 'normal' }} data-toggle="tooltip" title="Edit">
+                                                                        Edit post
+                                                                    </Link>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </i>
+                                                        </i>
+                                                    </div>
                                                 </div>
                                                 :
                                                 null

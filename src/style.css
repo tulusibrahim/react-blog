@@ -514,6 +514,26 @@ html::-webkit-scrollbar-thumb:hover {
   background-color: #0D1B2A;
 }
 
+.articleconwrapper .articlecon .isi .articleoption {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 5px;
+}
+
+.articleconwrapper .articlecon .isi .articleoption:hover {
+  background-color: #12253a;
+}
+
 .articleconwrapper .articlecon .isi .title {
   font-size: 2rem;
   margin-bottom: 10px;
