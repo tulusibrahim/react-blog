@@ -115,7 +115,7 @@ const Admin = (props) => {
                                         <Link style={{ textDecoration: 'none', color: 'white' }} to={{ pathname: `/article/${res.title}`, query: { res } }}>
                                             <div className="title" style={{ fontSize: "1.2em", marginBottom: '3px', textDecorationLine: 'none' }}>{res.title}</div>
                                         </Link>
-                                        <div className="date" style={{ fontSize: "0.6em", color: '#a1a1a1' }}>{res.date}</div>
+                                        <div className="date" style={{ fontSize: "0.6em", color: '#a1a1a1', marginBottom: 10 }}>{res.date}</div>
                                         <div style={{ display: 'flex', maxWidth: '20%', justifyContent: 'flex-start', marginTop: '5px' }}>
                                             <div style={{ display: 'flex', width: 'fit-content', marginRight: '20px', alignItems: 'center', justifyContent: 'space-evenly' }}>
                                                 <i className="far fa-eye" style={{ marginRight: '10px' }} data-toggle="tooltip" title="Views"></i>

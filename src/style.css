@@ -81,15 +81,16 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .navbarcon .navbar .right {
-  width: 10%;
+  width: 20%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   position: relative;
 }
 
