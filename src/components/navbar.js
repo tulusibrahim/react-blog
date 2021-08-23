@@ -1,17 +1,23 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { supabase } from "../configs/configurations";
 import { useEffect, useState } from 'react';
 
 
 const Navbar = (props) => {
     const session = supabase.auth.session()
+    const [session, setSession] = useState(false)
     const [display, setDisplay] = useState('none')
+    let all = useLocation()
 
     const logOut = async () => {
         await supabase.auth.signOut()
 
         document.location.reload()
     }
+
+    useEffect(() => {
+        setSession(supabase.auth.session())
+    }, [all])
 
     useEffect(() => {
         setDisplay('none')
