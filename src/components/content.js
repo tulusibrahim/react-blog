@@ -45,8 +45,8 @@ const Content = (props) => {
                                         <div>{res.title}</div>
                                     </Link>
                                     <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                        <div className="date">{res.email}, &nbsp;</div>
-                                        <div className="date">{res.date}</div>
+                                        <div className="date">{res.email}, {res.date}</div>
+                                        {/* <div className="date">{res.date}</div> */}
                                     </div>
                                     <div className="body">
                                         <TextTruncate
