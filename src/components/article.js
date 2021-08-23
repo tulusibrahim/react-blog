@@ -4,6 +4,7 @@ import { supabase, uuidv4 } from "../configs/configurations";
 import moment from "moment";
 import { Link } from "react-router-dom"
 import parse from 'html-react-parser';
+import swal from 'sweetalert';
 
 const Article = (props) => {
     const { title } = useParams()
@@ -25,6 +26,7 @@ const Article = (props) => {
             .eq('title', title)
         console.log(data)
         setData(data)
+        updatePageViews(data[0].pageViews)
         setComments(data[0].blog_comments)
     }
 
@@ -57,16 +59,32 @@ const Article = (props) => {
                 .from('blog')
                 .update({ likes: 1 })
                 .eq('title', title)
-            if (error) alert('Failed to like')
+            if (error) {
+                swal("Failed to like", {
+                    icon: "warning",
+                });
+            }
         }
         else {
             const { data, error } = await supabase
                 .from('blog')
                 .update({ likes: dataLikes[0].likes + 1 })
                 .eq('title', title)
-            if (error) alert('Failed to like')
+            if (error) {
+                swal("Failed to like", {
+                    icon: "warning",
+                });
+            }
         }
         getData()
+    }
+
+    const updatePageViews = async (dataViews) => {
+        console.log(dataViews)
+        const { data, error } = await supabase
+            .from('blog')
+            .update({ pageViews: dataViews + 1 })
+            .eq('title', title)
     }
 
     useEffect(() => {
@@ -103,8 +121,8 @@ const Article = (props) => {
                                             session &&
                                                 supabase.auth.user().email === res.email ?
                                                 <div>
-                                                    <div class="articleoption" onClick={() => display == 'none' ? setDisplay('flex') : setDisplay('none')}>
-                                                        <i class="fas fa-ellipsis-v"  >
+                                                    <div className="articleoption" onClick={() => display == 'none' ? setDisplay('flex') : setDisplay('none')}>
+                                                        <i className="fas fa-ellipsis-v"  >
                                                             <div style={{ display: display, transitionDelay: 1, flexDirection: 'column', position: 'absolute', right: 10, zIndex: 2, justifyContent: 'center', alignItems: 'center' }}>
                                                                 <div style={{ backgroundColor: '#12253a', padding: '10px', cursor: 'pointer' }}>
                                                                     <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white', textDecoration: 'none', fontWeight: 'normal' }} data-toggle="tooltip" title="Edit">

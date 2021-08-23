@@ -44,7 +44,9 @@ const NewBlog = () => {
                 ])
             if (error) {
                 console.log(error)
-                alert('Failed to add post')
+                swal("Failed to add new post, please try again", {
+                    icon: "warning",
+                });
             }
             else {
                 history.push('/')

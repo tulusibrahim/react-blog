@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../configs/configurations";
 import { useHistory } from "react-router-dom";
+import swal from 'sweetalert';
 import Editor from 'react-medium-editor';
 require('medium-editor/dist/css/medium-editor.css');
 require('medium-editor/dist/css/themes/beagle.css');
@@ -20,7 +21,9 @@ const EditPost = (props) => {
             history.push('/admin')
         }
         else {
-            alert('Failed to update post')
+            swal("Failed to update post, please try again", {
+                icon: "warning",
+            });
         }
     }
     //borderBottom: '1px #E0E1DD solid',

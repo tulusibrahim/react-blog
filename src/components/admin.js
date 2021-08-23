@@ -52,7 +52,11 @@ const Admin = (props) => {
                 .from('blog_comments')
                 .delete()
                 .match({ articleId: id })
-            if (error) alert('Failed to delete post comment')
+            if (error) {
+                swal("Failed to delete post comment", {
+                    icon: "warning",
+                });
+            }
 
         } catch (error) {
             swal("Something is error. Please try again", {
@@ -63,10 +67,19 @@ const Admin = (props) => {
 
     const getData = async () => {
         const user = supabase.auth.user()
-        const { data, error } = await supabase.from('blog').select().eq('email', user.email)
+        const { data, error } = await supabase
+            .from('blog')
+            .select(`
+                        *,
+                        blog_comments(
+                            *
+                        )
+                    `)
+            .eq('email', user.email)
         if (data == '') {
             setWarn('Your post will appear here.')
         }
+        console.log(data)
         setData(data)
     }
 
@@ -84,7 +97,7 @@ const Admin = (props) => {
     return (
         <div>
             <div className="admin" style={{ flexDirection: 'column', width: '100%' }}>
-                <div style={{ width: '90%' }}>
+                <div style={{ width: '90%', paddingBottom: 20 }}>
                     <div className="admin" style={{ justifyContent: "space-between", paddingTop: '20px' }}>
                         <div>
                             Your posts
@@ -104,7 +117,26 @@ const Admin = (props) => {
                                             <div className="title" style={{ fontSize: "1.2em", marginBottom: '3px', textDecorationLine: 'none' }}>{res.title}</div>
                                         </Link>
                                         <div className="date" style={{ fontSize: "0.6em", color: '#a1a1a1' }}>{res.date}</div>
-                                        {/* <div className="body" style={{ fontSize: "1em" }}>{parseBody(res.body)}</div> */}
+                                        <div style={{ display: 'flex', maxWidth: '20%', justifyContent: 'flex-start', marginTop: '5px' }}>
+                                            <div style={{ display: 'flex', width: 'fit-content', marginRight: '20px', alignItems: 'center', justifyContent: 'space-evenly' }}>
+                                                <i className="far fa-eye" style={{ marginRight: '10px' }} data-toggle="tooltip" title="Views"></i>
+                                                {
+                                                    res.pageViews ? res.pageViews : '0'
+                                                }
+                                            </div>
+                                            <div style={{ display: 'flex', width: 'fit-content', marginRight: '20px', alignItems: 'center', justifyContent: 'space-evenly' }}>
+                                                <i className="far fa-heart" style={{ marginRight: '10px' }} data-toggle="tooltip" title="Likes"></i>
+                                                {
+                                                    res.likes ? res.likes : '0'
+                                                }
+                                            </div>
+                                            <div style={{ display: 'flex', width: 'fit-content', marginRight: '20px', alignItems: 'center', justifyContent: 'space-evenly' }}>
+                                                <i className="far fa-comment-dots" style={{ marginRight: '10px' }} data-toggle="tooltip" title="Comments"></i>
+                                                {
+                                                    res.blog_comments.length ? res.blog_comments.length : '0'
+                                                }
+                                            </div>
+                                        </div>
                                     </div>
                                     <div style={{ width: '10%', textAlign: 'center', display: 'flex', flexDirection: "row", justifyContent: 'space-evenly' }}>
                                         <div style={{ cursor: 'pointer' }}>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { supabase } from "../configs/configurations";
-import TextField from '@material-ui/core/TextField';
+import swal from 'sweetalert';
 
 const Login = (props) => {
 
@@ -20,7 +20,9 @@ const Login = (props) => {
         })
 
         if (error) {
-            alert("Failed to sign up")
+            swal("Failed to sign up, please try again", {
+                icon: "warning",
+            });
         }
         else {
             history.push('/')
@@ -37,7 +39,10 @@ const Login = (props) => {
             password: password,
         })
         if (error) {
-            alert("Failed to sign in")
+            // alert("Failed to sign in")
+            swal("Failed to sign in. Please try again", {
+                icon: "error",
+            });
         }
         else {
             history.push('/')
@@ -84,7 +89,7 @@ const Login = (props) => {
             }
             <p style={{ margin: '10px' }}>or login with</p>
             <div>
-                <button onClick={() => loginWithGithub()}><i class="fab fa-github"></i> Github</button>
+                <button onClick={() => loginWithGithub()}><i className="fab fa-github"></i> Github</button>
             </div>
         </div >
     );
