@@ -558,6 +558,7 @@ html::-webkit-scrollbar-thumb:hover {
   font-family: 'Fira Code', monospace;
   padding: 10px;
   border-radius: 5px;
+  word-wrap: break-word;
 }
 
 .articleconwrapper .articlecon .isi .body p a {
