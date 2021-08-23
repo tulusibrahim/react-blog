@@ -24,9 +24,28 @@ const Article = (props) => {
                 )
             `)
             .eq('title', title)
-        console.log(data)
         setData(data)
-        updatePageViews(data[0].pageViews)
+        setComments(data[0].blog_comments)
+        if (supabase.auth.session() == null) {
+            updatePageViews(data[0].pageViews)
+        }
+        else if (supabase.auth.session().user.email !== data[0].email) {
+            updatePageViews(data[0].pageViews)
+        }
+    }
+
+    const getCommentData = async () => {
+        // console.log(data[0].id)
+        const { data, error } = await supabase
+            .from('blog')
+            .select(`
+                *,
+                blog_comments(
+                    *
+                )
+            `)
+            .eq('title', title)
+
         setComments(data[0].blog_comments)
     }
 
@@ -45,7 +64,7 @@ const Article = (props) => {
                     time: moment().format('DD MMMM YYYY')
                 }
             ])
-        getData()
+        getCommentData()
     }
 
     const addLikes = async () => {
@@ -107,7 +126,7 @@ const Article = (props) => {
                     </div>
                     <div className="icon">
                         <i className="far fa-comment-dots"></i>
-                        <div>{comments.length}</div>
+                        <div>{comments ? comments.length : '0'}</div>
                     </div>
                 </div>
                 <div className="contentandcomment">
@@ -150,7 +169,7 @@ const Article = (props) => {
                         </div>
                         <div className="icon">
                             <i className="far fa-comment-dots"></i>
-                            <div>{comments.length}</div>
+                            <div>{comments ? comments.length : '0'}</div>
                         </div>
                     </div>
                     <div className="commentscon">
@@ -163,6 +182,7 @@ const Article = (props) => {
                                 :
                                 <div className="commentsection">
                                     {
+                                        comments &&
                                         comments.map((komentar, index) => (
                                             <div key={index} className="comment">
                                                 <div style={{ fontSize: 16 }}>{komentar.author}</div>

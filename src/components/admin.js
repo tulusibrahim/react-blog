@@ -79,7 +79,6 @@ const Admin = (props) => {
         if (data == '') {
             setWarn('Your post will appear here.')
         }
-        console.log(data)
         setData(data)
     }
 
