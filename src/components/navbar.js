@@ -28,7 +28,7 @@ const Navbar = (props) => {
                 <div className="title"><Link to="/" className="link" >Write</Link></div>
                 <div className="right">
                     {
-                        session !== null &&
+                        session &&
                         <div style={{ fontSize: 12, backgroundColor: '#399930', padding: 4, borderRadius: 5 }}>
                             {
                                 supabase.auth.user().email
