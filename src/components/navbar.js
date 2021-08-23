@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 
 
 const Navbar = (props) => {
-    const session = supabase.auth.session()
     const [session, setSession] = useState(false)
     const [display, setDisplay] = useState('none')
     let all = useLocation()
