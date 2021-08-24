@@ -233,6 +233,8 @@ html::-webkit-scrollbar-thumb:hover {
 
 .cardcon .card .title {
   font-size: 1.4rem;
+  font-weight: bolder;
+  letter-spacing: 1px;
   font-family: 'Lato', sans-serif !important;
   text-decoration: none;
   color: #b8b8b8;
@@ -539,6 +541,7 @@ html::-webkit-scrollbar-thumb:hover {
   font-size: 2rem;
   margin-bottom: 10px;
   letter-spacing: .8px;
+  font-weight: bolder;
 }
 
 .articleconwrapper .articlecon .isi .date {

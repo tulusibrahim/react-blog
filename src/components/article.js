@@ -156,7 +156,7 @@ const Article = (props) => {
                                                 null
                                         }
                                     </div>
-                                    <div className="date">{res.email}, {res.date}</div>
+                                    <div className="date">{(res.email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '')}, {res.date}</div>
                                     <div className="body">{parse(res.body)}</div>
                                 </div>
                             ))

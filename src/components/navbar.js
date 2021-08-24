@@ -31,7 +31,7 @@ const Navbar = (props) => {
                         session &&
                         <div style={{ fontSize: 12, backgroundColor: '#399930', padding: 4, borderRadius: 5 }}>
                             {
-                                supabase.auth.user().email
+                                (supabase.auth.user().email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '')
                             }
                         </div>
                     }

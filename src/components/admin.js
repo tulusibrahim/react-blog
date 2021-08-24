@@ -101,9 +101,9 @@ const Admin = (props) => {
                         <div>
                             Your posts
                         </div>
-                        <div>
+                        {/* <div>
                             {supabase.auth.session() && supabase.auth.user().email}
-                        </div>
+                        </div> */}
                     </div>
                     {
                         data == '' ?
@@ -143,7 +143,7 @@ const Admin = (props) => {
                                                 <i className="far fa-edit"></i>
                                             </Link>
                                         </div>
-                                        <div onClick={() => deletePost(res.id)} style={{ cursor: 'pointer' }} data-toggle="tooltip" title="Delete">
+                                        <div onClick={() => deletePost(res.id)} style={{ cursor: 'pointer', color: '#dc3545' }} data-toggle="tooltip" title="Delete">
                                             <i className="far fa-trash-alt"></i>
                                         </div>
                                     </div>

@@ -45,7 +45,7 @@ const Content = (props) => {
                                         <div>{res.title}</div>
                                     </Link>
                                     <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                        <div className="date">{res.email}, {res.date}</div>
+                                        <div className="date">{(res.email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '').replace('@email.com', '')}, {res.date}</div>
                                         {/* <div className="date">{res.date}</div> */}
                                     </div>
                                     <div className="body">
