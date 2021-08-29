@@ -35,27 +35,26 @@ const Navbar = (props) => {
                             }
                         </div>
                     }
-                    <i className="far fa-user-circle fa-lg" onClick={() => display == 'none' ? setDisplay('flex') : setDisplay('none')} style={{ marginLeft: 10 }}>
-                        <div style={{ display: display, transitionDelay: 1, flexDirection: 'column', position: 'absolute', right: 10, top: 25, zIndex: 2, justifyContent: 'center', alignItems: 'center' }}>
-                            {
-                                session !== null ?
-                                    <>
-                                        <Link to="/admin">
-                                            <button style={{ fontWeight: 'normal', padding: '3px', backgroundColor: "#12253a", minWidth: "70px" }}>{session !== null ? 'Profile' : 'Log in'}</button>
-                                        </Link>
-                                        <button onClick={logOut} style={{ fontWeight: 'normal', padding: '3px', backgroundColor: "#12253a", minWidth: "70px" }}>{session !== null ? 'Log out' : 'Log in'}</button>
-                                        <button style={{ padding: '3px', backgroundColor: "#12253a", minWidth: "70px" }}><Link to="/about" className="link">About us</Link></button>
-                                    </>
-                                    :
-                                    <>
-                                        <Link to="/login">
-                                            <button style={{ fontWeight: 'normal', padding: '3px', backgroundColor: "#12253a", minWidth: "70px" }}>{session !== null ? 'Log out' : 'Log in'} </button>
-                                        </Link>
-                                        <button style={{ padding: '3px', backgroundColor: "#12253a", minWidth: "70px" }}><Link to="/about" className="link">About us</Link></button>
-                                    </>
-                            }
-                        </div>
-                    </i>
+                    <i className="far fa-user-circle fa-lg" onClick={() => display == 'none' ? setDisplay('flex') : setDisplay('none')} style={{ marginLeft: 10 }}> </i>
+                    <div style={{ display: display, transitionDelay: 1, flexDirection: 'column', position: 'absolute', right: 10, top: 25, zIndex: 2, justifyContent: 'center', alignItems: 'center' }}>
+                        {
+                            session !== null ?
+                                <>
+                                    <Link to="/profile">
+                                        <button style={{ fontWeight: 'normal', padding: '2px', backgroundColor: "#12253a", minWidth: "70px" }}>{session !== null ? 'Profile' : 'Log in'}</button>
+                                    </Link>
+                                    <button onClick={logOut} style={{ fontWeight: 'normal', padding: '2px', backgroundColor: "#12253a", minWidth: "70px" }}>{session !== null ? 'Log out' : 'Log in'}</button>
+                                    <button style={{ padding: '2px', backgroundColor: "#12253a", minWidth: "70px" }}><Link to="/about" className="link">About us</Link></button>
+                                </>
+                                :
+                                <>
+                                    <Link to="/login">
+                                        <button style={{ fontWeight: 'normal', padding: '2px', backgroundColor: "#12253a", minWidth: "70px" }}>{session !== null ? 'Log out' : 'Log in'} </button>
+                                    </Link>
+                                    <button style={{ padding: '2px', backgroundColor: "#12253a", minWidth: "70px" }}><Link to="/about" className="link">About us</Link></button>
+                                </>
+                        }
+                    </div>
                 </div>
             </div>
         </div>

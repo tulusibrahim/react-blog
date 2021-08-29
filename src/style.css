@@ -588,34 +588,6 @@ html::-webkit-scrollbar-thumb:hover {
           flex-direction: column;
 }
 
-.logincon p {
-  color: white;
-}
-
-.logincon input {
-  background-color: #0D1B2A;
-}
-
-.logincon button {
-  width: 30vw;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  padding: 5px;
-  border: 1px white solid;
-  outline: none;
-  border-radius: .3rem;
-  color: white;
-  cursor: pointer;
-  background-color: #0D1B2A;
-}
-
-@media screen and (min-width: 565px) {
-  .logincon button {
-    width: 120px;
-  }
-}
-
 .logincon form {
   height: 80%;
   width: 50vw;
@@ -633,6 +605,7 @@ html::-webkit-scrollbar-thumb:hover {
           flex-direction: column;
   text-align: center;
   border-radius: .6rem;
+  color: white;
 }
 
 .logincon form .formbtn {
@@ -648,45 +621,6 @@ html::-webkit-scrollbar-thumb:hover {
   -webkit-box-direction: normal;
       -ms-flex-direction: 'column';
           flex-direction: 'column';
-}
-
-.logincon form .formbtn p {
-  margin: 5px;
-}
-
-.logincon form p {
-  color: white;
-}
-
-.logincon form p a {
-  color: #778DA9;
-  text-decoration: none;
-}
-
-.logincon form input {
-  color: #E0E1DD;
-  height: 30px;
-  border: 1px white solid;
-  outline: none;
-}
-
-.logincon form button {
-  width: 30vw;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  padding: 5px;
-  border: 1px white solid;
-  outline: none;
-  border-radius: .3rem;
-  color: white;
-  cursor: pointer;
-}
-
-@media screen and (min-width: 565px) {
-  .logincon form button {
-    width: 120px;
-  }
 }
 
 .admin {
@@ -705,6 +639,25 @@ html::-webkit-scrollbar-thumb:hover {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.admin .sorting {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.admin .sorting:hover {
+  background-color: #152b43;
 }
 
 .newblogconwrapper {

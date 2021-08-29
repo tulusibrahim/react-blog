@@ -185,7 +185,7 @@ const Article = (props) => {
                                         comments &&
                                         comments.map((komentar, index) => (
                                             <div key={index} className="comment">
-                                                <div style={{ fontSize: 16 }}>{komentar.author}</div>
+                                                <div style={{ fontSize: 16 }}>{(komentar.author).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '').replace('@test', '').replace('@test.com', '')}</div>
                                                 <div style={{ fontSize: 20 }}>{komentar.comment}</div>
                                             </div>
                                         ))

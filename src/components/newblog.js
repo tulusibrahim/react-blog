@@ -3,6 +3,7 @@ import moment from 'moment'
 import { useHistory } from "react-router-dom";
 import React, { useState, useRef, useEffect } from "react";
 import swal from 'sweetalert';
+import { Input } from "@chakra-ui/react"
 // ES module
 import Editor from 'react-medium-editor';
 require('medium-editor/dist/css/medium-editor.css');
@@ -89,8 +90,9 @@ const NewBlog = () => {
                         <button type="submit" className="button" onClick={() => postData()}>Submit</button>
                     </div>
                     <form onSubmit={postData}>
-                        <input placeholder="Title" onChange={(e => setTitle(e.target.value))} name="title" className="title" required></input>
-                        <Editor
+                        {/* <input placeholder="Title" onChange={(e => setTitle(e.target.value))} name="title" className="title" required></input> */}
+                        <Input variant="flushed" placeholder="Title" mb={'10px'} color="white" onChange={(e => setTitle(e.target.value))} />
+                        < Editor
                             style={{ width: '100%', paddingTop: '1rem', paddingBottom: '1rem', color: 'white', backgroundColor: '#12253a', outline: 'none' }}
                             text={body}
                             theme="beagle"

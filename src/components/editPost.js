@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../configs/configurations";
 import { useHistory } from "react-router-dom";
 import swal from 'sweetalert';
+import { Input } from "@chakra-ui/react"
 import Editor from 'react-medium-editor';
 require('medium-editor/dist/css/medium-editor.css');
 require('medium-editor/dist/css/themes/beagle.css');
@@ -18,7 +19,7 @@ const EditPost = (props) => {
             .update({ title: title ? title : props.location.query.res.title, body: body ? body : props.location.query.res.body })
             .match({ title: props.location.query.res.title })
         if (data) {
-            history.push('/admin')
+            history.push('/profile')
         }
         else {
             swal("Failed to update post, please try again", {
@@ -42,7 +43,8 @@ const EditPost = (props) => {
                     <button style={{ backgroundColor: "#0D1B2A" }} type="submit" className="button" onClick={() => postEdit()}>Update</button>
                 </div>
                 <form onSubmit={postEdit}>
-                    <input style={{ backgroundColor: "#0D1B2A" }} placeholder="title" name="title" className="title" onChange={(e) => setTitle(e.target.value)} defaultValue={props.location.query.res.title}></input>
+                    {/* <input style={{ backgroundColor: "#0D1B2A" }} placeholder="title" name="title" className="title" onChange={(e) => setTitle(e.target.value)} defaultValue={props.location.query.res.title}></input> */}
+                    <Input variant="flushed" placeholder="Title" mb={'10px'} color="white" onChange={(e => setTitle(e.target.value))} defaultValue={props.location.query.res.title} />
                     {/* <textarea style={{ overflow: 'auto' }} rows="10" cols="50" onChange={(e) => setBody(e.target.value)} placeholder="body" name="body" className="body" defaultValue={props.location.query.res.body}></textarea> */}
                     <Editor
                         style={{ width: '100%', paddingTop: '1rem', paddingBottom: '1rem', color: 'white', backgroundColor: '#12253a', outline: 'none' }}
