@@ -24,7 +24,7 @@ const Navbar = (props) => {
 
     useEffect(() => {
         setSession(supabase.auth.session())
-        setProfilePic('')
+        // setProfilePic('')
         session &&
             getProfilePic()
     }, [all])

@@ -198,26 +198,14 @@ const Admin = (props) => {
 
         if (files && files.length) {
             console.log(files[0])
-
-            if (profilePic === '') {
-                // alert("bikin baru")
-                let result = await supabase
-                    .storage
-                    .from('blog')
-                    .update(`profilePic/${userId}.png`, files[0])
-                console.log(result)
-            }
-            else {
-                // alert("update")
-                const { data, error } = await supabase
-                    .storage
-                    .from('blog')
-                    .upload(`profilePic/${userId}.png`, files[0])
-                console.log(data)
-                console.log(error)
-                toastRef.current = toast({ description: "Success upload photo", status: "success" })
-
-            }
+            // alert("update")
+            const { data, error } = await supabase
+                .storage
+                .from('blog')
+                .upload(`profilePic/${userId}.png`, files[0], { upsert: true })
+            console.log(data)
+            console.log(error)
+            toastRef.current = toast({ description: "Success upload photo", status: "success" })
         }
     };
 
