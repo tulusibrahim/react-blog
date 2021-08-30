@@ -3,7 +3,7 @@ import { supabase } from "../configs/configurations"
 import { Link } from "react-router-dom"
 import moment from "moment";
 import swal from 'sweetalert';
-import { AiOutlineHeart, AiOutlineComment, AiOutlineEye, AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai'
+import { AiOutlineHeart, AiOutlineComment, AiOutlineEye, AiOutlineEdit, AiOutlineDelete, AiOutlineCloudUpload } from 'react-icons/ai'
 import { FaSort } from 'react-icons/fa'
 import { useToast, Tabs, TabList, TabPanels, Tab, TabPanel, Menu, MenuList, MenuItem, MenuButton, Button, Flex, Input, Image, InputGroup, InputLeftAddon, Box, useBreakpointValue, InputRightElement, color, Text, PopoverTrigger, PopoverContent, PopoverBody, Popover, PopoverArrow, PopoverCloseButton, PopoverHeader } from "@chakra-ui/react"
 import { CheckIcon } from "@chakra-ui/icons";
@@ -16,6 +16,9 @@ const Admin = (props) => {
     const [profilePic, setProfilePic] = useState('')
     const [username, setUsername] = useState('')
     const [bio, setBio] = useState('')
+    const [sortState, setSortState] = useState('')
+    const [image, setImage] = useState("");
+    const inputFile = useRef(null);
     let direction = useBreakpointValue({ base: 'column', md: 'row' })
     let sizeInput = useBreakpointValue({ base: '100%', md: '50%' })
     let toast = useToast()
@@ -97,14 +100,27 @@ const Admin = (props) => {
         setData(data)
     }
 
-    const handleSorting = (sort) => {
-        switch (sort) {
-            case 'new':
-                let sortedData = data.map((a, b) => {
-                    console.log(b.date)
-                })
-            // console.log(moment(data[8].date).format('MM dd yy'))
-            // setData(sortedData)
+    const handleSorting = async (sort) => {
+        const user = supabase.auth.user()
+        if (sort === 'az') {
+            setSortState('az')
+            let result = await supabase
+                .from('blog')
+                .select(`*, blog_comments(*)`)
+                .eq('email', user.email)
+                .order('title', { ascending: true })
+            console.log(result)
+            setData(result.data)
+        }
+        else if (sort === 'za') {
+            setSortState('za')
+            let result = await supabase
+                .from('blog')
+                .select(`*, blog_comments(*)`)
+                .eq('email', user.email)
+                .order('title', { ascending: false })
+            console.log(result)
+            setData(result.data)
         }
     }
 
@@ -119,12 +135,18 @@ const Admin = (props) => {
     }
 
     const getProfilePicture = async () => {
+        setProfilePic('')
+        let userId = supabase.auth.user().id
+        console.log(userId)
         let { data, error } = await supabase
             .storage
             .from('blog')
-            .getPublicUrl('blog-profilePic/tests.jpg')
-        console.log(data)
+            .getPublicUrl(`profilePic/${userId}.png`)
+        console.log(data.publicURL)
         console.log(error)
+        // console.log(result)
+        // console.log(data)
+        // console.log(error)
         setProfilePic(data.publicURL)
     }
 
@@ -169,13 +191,53 @@ const Admin = (props) => {
         }
     }
 
+    const handleFileUpload = async e => {
+        toastRef.current = toast({ description: "Loading...", status: "info" })
+        const { files } = e.target;
+        const userId = supabase.auth.user().id
+
+        if (files && files.length) {
+            console.log(files[0])
+
+            if (profilePic === '') {
+                // alert("bikin baru")
+                let result = await supabase
+                    .storage
+                    .from('blog')
+                    .update(`profilePic/${userId}.png`, files[0])
+                console.log(result)
+            }
+            else {
+                // alert("update")
+                const { data, error } = await supabase
+                    .storage
+                    .from('blog')
+                    .upload(`profilePic/${userId}.png`, files[0])
+                console.log(data)
+                console.log(error)
+                toastRef.current = toast({ description: "Success upload photo", status: "success" })
+
+            }
+        }
+    };
+
     useEffect(async () => {
         document.title = `Profile`
+        // const { data, error } = await supabase
+        //     .storage
+        //     .from('blog')
+        //     .list('profilePic', {
+        //         limit: 100,
+        //         offset: 0
+        //     })
+        // console.log(data)
         setUsername('')
         setBio('')
         setData('')
+        setSortState('')
         setWarn('')
         setProfile('')
+        setProfilePic('')
         if (supabase.auth.session() == null) {
             setWarn("Login in to see your post")
         } else {
@@ -208,19 +270,19 @@ const Admin = (props) => {
                                         <div className="sorting">
                                             <Menu >
                                                 <MenuButton backgroundColor="#1c3857" _active={{ backgroundColor: '#1c3857' }} outline="none" _hover={{ backgroundColor: '#152b43' }} as={Button} leftIcon={<FaSort />}>
-                                                    {/* <FaSort /> */}
-                                                    Sort
+                                                    {
+                                                        sortState === 'az' ? 'A - Z' : sortState === 'za' ? 'Z - A' : 'Sort'
+                                                    }
                                                 </MenuButton>
-                                                <MenuList backgroundColor="#0D1B2A" >
-                                                    <MenuItem backgroundColor="#0D1B2A" _hover={{ backgroundColor: '#152b43' }} onClick={() => handleSorting('new')}>Newest</MenuItem>
-                                                    <MenuItem backgroundColor="#0D1B2A" _hover={{ backgroundColor: '#152b43' }} onClick={() => handleSorting('old')}>Oldest</MenuItem>
-                                                    <MenuItem backgroundColor="#0D1B2A" _hover={{ backgroundColor: '#152b43' }} onClick={() => handleSorting('az')}>A - Z</MenuItem>
+                                                <MenuList bg="#0D1B2A" >
+                                                    <MenuItem _focus={{ backgroundColor: '#152b43' }} onClick={() => handleSorting('az')}>A - Z</MenuItem>
+                                                    <MenuItem _focus={{ backgroundColor: '#152b43' }} onClick={() => handleSorting('za')}>Z - A</MenuItem>
                                                 </MenuList>
                                             </Menu>
                                         </div>
                                     </div>
                                     {
-
+                                        data &&
                                         data.map(res => (
                                             <div className="" key={res.id} style={{ paddingTop: 12, display: 'flex', paddingBottom: 12, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottom: '.1px #838383 solid' }}>
                                                 <div className="isi" style={{ width: '90%' }}>
@@ -272,14 +334,15 @@ const Admin = (props) => {
                         </div>
                     </TabPanel>
                     <TabPanel>
-                        {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '75vh', fontWeight: 'bolder', fontSize: 36, color: 'white' }}>
-                        Coming Soon!
-                    </div> */}
                         <Flex justifyContent="center">
                             <Flex color="white" h="75vh" alignItems="center" justifyContent="center" w="90%">
                                 <Flex direction={direction} alignItems="center" justifyContent="space-evenly" h="70%" w="90%" >
-                                    <Flex h="100%" alignItems="center" >
-                                        <Image borderRadius="full" boxSize="150px" src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}`} onError={() => setProfilePic('')}></Image>
+                                    <Flex h="100%" alignItems="center" justify="center" direction="column" >
+                                        <Image mb='10px' borderRadius="full" boxSize="150px" src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}`} onError={() => setProfilePic('')}></Image>
+                                        <Button onClick={() => inputFile.current.click()} m="10px" fontWeight="normal" colorScheme="blackAlpha" rightIcon={<AiOutlineCloudUpload size="20px" />}>
+                                            Upload photo
+                                        </Button>
+                                        <input onChange={handleFileUpload} type="file" style={{ display: 'none' }} ref={inputFile}></input>
                                     </Flex>
                                     <Flex h="60%" w={sizeInput} alignItems="center" justifyContent="space-between" direction="column">
                                         <Popover boundary="scrollParent" placement="top-start">
