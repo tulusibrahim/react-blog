@@ -548,6 +548,15 @@ html::-webkit-scrollbar-thumb:hover {
   font-size: .85rem;
   margin-bottom: 10px;
   color: grey;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 
 .articleconwrapper .articlecon .isi .body {

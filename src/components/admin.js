@@ -131,17 +131,17 @@ const Admin = (props) => {
             .select('*')
             .eq('email', userEmail)
         setProfile(data[0])
-        getProfilePicture()
+        // getProfilePicture()
     }
 
     const getProfilePicture = async () => {
         setProfilePic('')
         let userId = supabase.auth.user().id
-        console.log(userId)
+        let path = `profilePic/${userId}`
         let { data, error } = await supabase
             .storage
             .from('blog')
-            .getPublicUrl(`profilePic/${userId}.png`)
+            .getPublicUrl(path)
         console.log(data.publicURL)
         console.log(error)
         // console.log(result)
@@ -202,7 +202,7 @@ const Admin = (props) => {
             const { data, error } = await supabase
                 .storage
                 .from('blog')
-                .upload(`profilePic/${userId}.png`, files[0], { upsert: true })
+                .upload(`profilePic/${userId}`, files[0], { upsert: true })
             console.log(data)
             console.log(error)
             toastRef.current = toast({ description: "Success upload photo", status: "success" })
@@ -326,11 +326,19 @@ const Admin = (props) => {
                             <Flex color="white" h="75vh" alignItems="center" justifyContent="center" w="90%">
                                 <Flex direction={direction} alignItems="center" justifyContent="space-evenly" h="70%" w="90%" >
                                     <Flex h="100%" alignItems="center" justify="center" direction="column" >
-                                        <Image mb='10px' borderRadius="full" boxSize="150px" src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}`} onError={() => setProfilePic('')}></Image>
-                                        <Button onClick={() => inputFile.current.click()} m="10px" fontWeight="normal" colorScheme="blackAlpha" rightIcon={<AiOutlineCloudUpload size="20px" />}>
+                                        <Popover boundary="scrollParent" placement="top-start">
+                                            <PopoverTrigger>
+                                                <Image mb='10px' borderRadius="full" boxSize="150px" src={`https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} onError={() => setProfilePic('')}></Image>
+                                            </PopoverTrigger>
+                                            <PopoverContent borderRadius={10} bg="blackAlpha.700" border="none">
+                                                <PopoverHeader fontWeight="bold">Information!</PopoverHeader>
+                                                <PopoverBody>Currently uploading new avatar is not supported yet :(</PopoverBody>
+                                            </PopoverContent>
+                                        </Popover>
+                                        {/* <Button onClick={() => inputFile.current.click()} m="10px" fontWeight="normal" colorScheme="blackAlpha" rightIcon={<AiOutlineCloudUpload size="20px" />}>
                                             Upload photo
                                         </Button>
-                                        <input onChange={handleFileUpload} type="file" style={{ display: 'none' }} ref={inputFile}></input>
+                                        <input onChange={handleFileUpload} type="file" style={{ display: 'none' }} ref={inputFile}></input> */}
                                     </Flex>
                                     <Flex h="60%" w={sizeInput} alignItems="center" justifyContent="space-between" direction="column">
                                         <Popover boundary="scrollParent" placement="top-start">

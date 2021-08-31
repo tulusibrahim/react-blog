@@ -5,6 +5,7 @@ import moment from "moment";
 import { Link } from "react-router-dom"
 import parse from 'html-react-parser';
 import swal from 'sweetalert';
+import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 
 const Article = (props) => {
     const { title } = useParams()
@@ -140,23 +141,36 @@ const Article = (props) => {
                                             session &&
                                                 supabase.auth.user().email === res.email ?
                                                 <div>
-                                                    <div className="articleoption" onClick={() => display == 'none' ? setDisplay('flex') : setDisplay('none')}>
-                                                        <i className="fas fa-ellipsis-v"  >
-                                                            <div style={{ display: display, transitionDelay: 1, flexDirection: 'column', position: 'absolute', right: 10, zIndex: 2, justifyContent: 'center', alignItems: 'center' }}>
-                                                                <div style={{ backgroundColor: '#12253a', padding: '10px', cursor: 'pointer' }}>
-                                                                    <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white', textDecoration: 'none', fontWeight: 'normal' }} data-toggle="tooltip" title="Edit">
-                                                                        Edit post
-                                                                    </Link>
-                                                                </div>
+                                                    {/* <div className="articleoption" onClick={() => display == 'none' ? setDisplay('flex') : setDisplay('none')}> */}
+                                                    <Menu>
+                                                        <MenuButton>
+                                                            <div className="articleoption" >
+                                                                <i className="fas fa-ellipsis-v"  ></i>
                                                             </div>
-                                                        </i>
-                                                    </div>
+                                                        </MenuButton>
+                                                        <MenuList bg="#0D1B2A" borderColor="GrayText">
+                                                            <MenuItem _focus={{ bg: "#1c3857" }}>
+                                                                <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white', textDecoration: 'none', fontWeight: 'normal' }} data-toggle="tooltip" title="Edit">
+                                                                    Edit post
+                                                                </Link>
+                                                            </MenuItem>
+                                                        </MenuList>
+                                                        {/* <div style={{ display: display, transitionDelay: 1, flexDirection: 'column', position: 'absolute', right: 10, zIndex: 2, justifyContent: 'center', alignItems: 'center' }}>
+                                                            <div style={{ backgroundColor: '#12253a', padding: '10px', cursor: 'pointer' }}>
+                                                            </div>
+                                                        </div> */}
+
+                                                    </Menu>
                                                 </div>
+                                                // </div>
                                                 :
                                                 null
                                         }
                                     </div>
-                                    <div className="date">{(res.email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '')}, {res.date}</div>
+                                    <div className="date">
+                                        <img src={`https://ui-avatars.com/api/?name=${res.email}&length=1`} width="25px" style={{ borderRadius: '50px', marginRight: '10px' }}></img>
+                                        {(res.email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '')}, {res.date}
+                                    </div>
                                     <div className="body">{parse(res.body)}</div>
                                 </div>
                             ))

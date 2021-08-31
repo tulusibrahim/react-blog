@@ -11,10 +11,10 @@ const Navbar = (props) => {
     const [profilePic, setProfilePic] = useState('')
     let all = useLocation()
 
-    const getProfilePic = async () => {
-        let profilePic = await supabase.storage.from('blog').getPublicUrl(`profilePic/${supabase.auth.user().id}.png`)
-        profilePic.data.publicURL ? setProfilePic(profilePic.data.publicURL) : setProfilePic('')
-    }
+    // const getProfilePic = async () => {
+    //     let profilePic = await supabase.storage.from('blog').getPublicUrl(`profilePic/${supabase.auth.user().id}.png`)
+    //     profilePic.data.publicURL ? setProfilePic(profilePic.data.publicURL) : setProfilePic('')
+    // }
 
     const logOut = async () => {
         await supabase.auth.signOut()
@@ -25,8 +25,8 @@ const Navbar = (props) => {
     useEffect(() => {
         setSession(supabase.auth.session())
         // setProfilePic('')
-        session &&
-            getProfilePic()
+        // session &&
+        //     getProfilePic()
     }, [all])
 
     useEffect(() => {
@@ -50,7 +50,9 @@ const Navbar = (props) => {
                         <MenuButton>
                             {
                                 session ?
-                                    <Image src={profilePic ? `${profilePic}` : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}`} borderRadius="full" boxSize="30px" ml='10px'></Image>
+                                    <div style={{ width: '30px', marginLeft: '10px', borderRadius: '50px' }}>
+                                        <img src={`https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} style={{ width: '100%', borderRadius: '50px' }}></img>
+                                    </div>
                                     :
                                     <AiOutlineUser size="30px" />
                             }
