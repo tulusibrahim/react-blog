@@ -1,7 +1,8 @@
 import { Link, useLocation } from 'react-router-dom'
 import { supabase } from "../configs/configurations";
 import { useEffect, useState } from 'react';
-import { Image, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import { Box, Image, Menu, MenuButton, MenuItem, MenuList, useBreakpointValue } from '@chakra-ui/react';
+import { createBreakpoints } from "@chakra-ui/theme-tools"
 import { AiOutlineUser } from 'react-icons/ai';
 
 
@@ -10,11 +11,12 @@ const Navbar = (props) => {
     const [display, setDisplay] = useState('none')
     const [profilePic, setProfilePic] = useState('')
     let all = useLocation()
+    let imageSize = createBreakpoints({ base: '30px', sm: '30px', md: '30px', lg: '30px' })
 
-    // const getProfilePic = async () => {
-    //     let profilePic = await supabase.storage.from('blog').getPublicUrl(`profilePic/${supabase.auth.user().id}.png`)
-    //     profilePic.data.publicURL ? setProfilePic(profilePic.data.publicURL) : setProfilePic('')
-    // }
+    const getProfilePic = async () => {
+        let profilePic = await supabase.storage.from('blog').getPublicUrl(`profilePic/${supabase.auth.user().id}`)
+        profilePic.data.publicURL ? setProfilePic(profilePic.data.publicURL) : setProfilePic('')
+    }
 
     const logOut = async () => {
         await supabase.auth.signOut()
@@ -37,7 +39,7 @@ const Navbar = (props) => {
         <div className="navbarcon">
             <div className="navbar">
                 <div className="title"><Link to="/" className="link" >Write</Link></div>
-                <div className="right">
+                <Box className="right" h="10vh" w={['60%', '40%', '30%', '20%']} d="flex" alignItems="center" justifyContent={session ? "space-evenly" : 'flex-end'}>
                     {
                         session &&
                         <div style={{ fontSize: 12, backgroundColor: '#399930', padding: 4, borderRadius: 5 }}>
@@ -47,12 +49,13 @@ const Navbar = (props) => {
                         </div>
                     }
                     <Menu>
-                        <MenuButton>
+                        <MenuButton >
                             {
                                 session ?
-                                    <div style={{ width: '30px', marginLeft: '10px', borderRadius: '50px' }}>
-                                        <img src={`https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} style={{ width: '100%', borderRadius: '50px' }}></img>
-                                    </div>
+                                    <Image src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} boxSize={['30px', '30px', '30px', '30px']} ml="10px" borderRadius="50%"></Image>
+                                    // <div style={{ width: '30px', marginLeft: '10px' }}>
+                                    //     <img src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} style={{ width: '100%', borderRadius: '50px' }}></img>
+                                    // </div>
                                     :
                                     <AiOutlineUser size="30px" />
                             }
@@ -81,7 +84,7 @@ const Navbar = (props) => {
                             }
                         </MenuList>
                     </Menu>
-                </div>
+                </Box>
             </div>
         </div>
     );

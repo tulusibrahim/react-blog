@@ -19,8 +19,6 @@ const Admin = (props) => {
     const [sortState, setSortState] = useState('')
     const [image, setImage] = useState("");
     const inputFile = useRef(null);
-    let direction = useBreakpointValue({ base: 'column', md: 'row' })
-    let sizeInput = useBreakpointValue({ base: '100%', md: '50%' })
     let toast = useToast()
     let toastRef = useRef()
 
@@ -131,7 +129,7 @@ const Admin = (props) => {
             .select('*')
             .eq('email', userEmail)
         setProfile(data[0])
-        // getProfilePicture()
+        getProfilePicture()
     }
 
     const getProfilePicture = async () => {
@@ -324,11 +322,11 @@ const Admin = (props) => {
                     <TabPanel>
                         <Flex justifyContent="center">
                             <Flex color="white" h="75vh" alignItems="center" justifyContent="center" w="90%">
-                                <Flex direction={direction} alignItems="center" justifyContent="space-evenly" h="70%" w="90%" >
+                                <Flex direction={['column', 'column', 'row', 'row']} alignItems="center" justifyContent="space-evenly" h="70%" w="90%" >
                                     <Flex h="100%" alignItems="center" justify="center" direction="column" >
                                         <Popover boundary="scrollParent" placement="top-start">
                                             <PopoverTrigger>
-                                                <Image mb='10px' borderRadius="full" boxSize="150px" src={`https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} onError={() => setProfilePic('')}></Image>
+                                                <Image mb='10px' borderRadius="full" boxSize="150px" src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} onError={() => setProfilePic('')}></Image>
                                             </PopoverTrigger>
                                             <PopoverContent borderRadius={10} bg="blackAlpha.700" border="none">
                                                 <PopoverHeader fontWeight="bold">Information!</PopoverHeader>
@@ -340,7 +338,7 @@ const Admin = (props) => {
                                         </Button>
                                         <input onChange={handleFileUpload} type="file" style={{ display: 'none' }} ref={inputFile}></input> */}
                                     </Flex>
-                                    <Flex h="60%" w={sizeInput} alignItems="center" justifyContent="space-between" direction="column">
+                                    <Flex h="60%" w={['100%', '100%', '70%', '50%']} alignItems="center" justifyContent="space-between" direction="column">
                                         <Popover boundary="scrollParent" placement="top-start">
                                             <PopoverTrigger>
                                                 <InputGroup mb={'10px'}>

@@ -20,11 +20,11 @@ const Article = (props) => {
             .from('blog')
             .select(`
                 *,
-                blog_comments(
-                    *
-                )
+                blog_comments(*),
+                blog_users(*)
             `)
             .eq('title', title)
+        console.log(data)
         setData(data)
         setComments(data[0].blog_comments)
         if (supabase.auth.session() == null) {
@@ -169,7 +169,7 @@ const Article = (props) => {
                                     </div>
                                     <div className="date">
                                         <img src={`https://ui-avatars.com/api/?name=${res.email}&length=1`} width="25px" style={{ borderRadius: '50px', marginRight: '10px' }}></img>
-                                        {(res.email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '')}, {res.date}
+                                        {res.blog_users ? res.blog_users.nickname : (res.email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '')}, {res.date}
                                     </div>
                                     <div className="body">{parse(res.body)}</div>
                                 </div>
