@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { supabase } from "../configs/configurations";
 import swal from 'sweetalert';
-import { Input, InputLeftAddon, InputGroup, InputLeftElement, Button, InputRightElement } from "@chakra-ui/react"
+import { Input, InputLeftAddon, InputGroup, InputLeftElement, Button, InputRightElement, Box } from "@chakra-ui/react"
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 const Login = (props) => {
@@ -74,8 +74,8 @@ const Login = (props) => {
                     <form onSubmit={signUp}>
                         {/* <input placeholder="Email" type="email" onChange={(e) => setEmail(e.target.value)} name="email"></input> */}
                         {/* <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password"></input> */}
-                        <Input variant="flushed" placeholder="Email" width="40%" color="white" onChange={(e) => setEmail(e.target.value)} required />
-                        <InputGroup width="40%">
+                        <Input variant="flushed" placeholder="Email" width={['100%', '70%', '60%', '60%']} color="white" onChange={(e) => setEmail(e.target.value)} required />
+                        <InputGroup width={['100%', '70%', '60%', '60%']}>
                             <Input variant="flushed" placeholder="Password" type={show ? "text" : "password"} color="white" onChange={(e) => setPassword(e.target.value)} required />
                             <InputRightElement >
                                 <Button h="1.75rem" variant="outline" size="sm" colorScheme="whiteAlpha" onClick={() => setShow(!show)}>
@@ -83,18 +83,18 @@ const Login = (props) => {
                                 </Button>
                             </InputRightElement>
                         </InputGroup>
-                        <div className="formbtn">
+                        <Box className="formbtn" width={['100%', '70%', '60%', '60%']}>
                             <p>Have an account? Login <a style={{ cursor: 'pointer', color: '#536f8d' }} onClick={() => setlogin('true')}>here!</a></p>
                             {/* <button>Sign Up</button> */}
                             <Button variant="outline" marginTop="10px" colorScheme="whiteAlpha" _hover={{ backgroundColor: 'black', color: 'white' }} type="submit" fontWeight="normal">Sign Up</Button>
-                        </div>
+                        </Box>
                     </form>
                     :
                     <form onSubmit={logIn}>
                         {/* <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} name="email" required></input> */}
                         {/* <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password" required></input> */}
-                        <Input variant="flushed" placeholder="Email" width="40%" color="white" onChange={(e) => setEmail(e.target.value)} required />
-                        <InputGroup width="40%">
+                        <Input variant="flushed" placeholder="Email" width={['100%', '70%', '60%', '60%']} color="white" onChange={(e) => setEmail(e.target.value)} required />
+                        <InputGroup width={['100%', '70%', '60%', '60%']}>
                             <Input variant="flushed" placeholder="Password" type={show ? "text" : "text"} color="white" onChange={(e) => setPassword(e.target.value)} required />
                             <InputRightElement >
                                 <Button h="1.75rem" variant="outline" size="sm" colorScheme="whiteAlpha" onClick={() => setShow(!show)}>
@@ -102,13 +102,13 @@ const Login = (props) => {
                                 </Button>
                             </InputRightElement>
                         </InputGroup>
-                        <div className="formbtn">
+                        <Box className="formbtn" width={['100%', '70%', '60%', '60%']}>
                             <p>Don't have an account? Create one
                                 <a style={{ cursor: 'pointer', color: '#536f8d' }} onClick={() => setlogin('false')}> here!</a>
                             </p>
                             {/* <button>Log In</button> */}
                             <Button variant="outline" marginTop="10px" colorScheme="whiteAlpha" _hover={{ backgroundColor: 'black', color: 'white' }} type="submit" fontWeight="normal">Log In</Button>
-                        </div>
+                        </Box>
                     </form>
             }
             <p style={{ margin: '10px', color: 'white' }}>or login with</p>
