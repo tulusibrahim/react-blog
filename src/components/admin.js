@@ -35,10 +35,12 @@ const Admin = (props) => {
                     console.log(willDelete)
                     if (willDelete) {
                         await deleteComment(id)
+                        await deleteTag(id)
                         const { data, error } = await supabase
                             .from('blog')
                             .delete()
                             .match({ id: id })
+                        console.log(error)
 
                         if (error) {
                             swal("Failed delete post", {
@@ -70,6 +72,25 @@ const Admin = (props) => {
                 .match({ articleId: id })
             if (error) {
                 swal("Failed to delete post comment", {
+                    icon: "warning",
+                });
+            }
+
+        } catch (error) {
+            swal("Something is error. Please try again", {
+                icon: "warning",
+            });
+        }
+    }
+
+    const deleteTag = async (id) => {
+        try {
+            const { data, error } = await supabase
+                .from('blog_postTag')
+                .delete()
+                .match({ post_id: id })
+            if (error) {
+                swal("Failed to delete post tag", {
                     icon: "warning",
                 });
             }

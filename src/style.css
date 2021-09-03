@@ -495,7 +495,6 @@ html::-webkit-scrollbar-thumb:hover {
 
 .articleconwrapper .articlecon .isi {
   width: 100%;
-  padding: 10px;
   margin-top: 20px;
   height: -webkit-fit-content;
   height: -moz-fit-content;
@@ -755,9 +754,7 @@ html::-webkit-scrollbar-thumb:hover {
   padding-top: 1rem;
   height: 30px;
   width: 100%;
-  border: none;
   outline: none;
-  border-bottom: 1px solid #E0E1DD;
   background-color: #0D1B2A;
 }
 

@@ -11,7 +11,7 @@ const Content = (props) => {
     let history = useHistory()
 
     const getData = async () => {
-        const { data, error } = await supabase.from('blog').select()
+        const { data, error } = await supabase.from('blog').select().eq('isDraft', 'false')
         setData(data)
     }
 

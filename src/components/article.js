@@ -5,12 +5,13 @@ import moment from "moment";
 import { Link } from "react-router-dom"
 import parse from 'html-react-parser';
 import swal from 'sweetalert';
-import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import { Flex, Menu, MenuButton, MenuItem, MenuList, Tag } from "@chakra-ui/react";
 
 const Article = (props) => {
     const { title } = useParams()
     const [data, setData] = useState([])
     const [comments, setComments] = useState([])
+    const [tags, setTags] = useState([])
     const [inputComment, setInputComments] = useState('')
     const [session, setSession] = useState(false)
     const [display, setDisplay] = useState('none')
@@ -21,12 +22,14 @@ const Article = (props) => {
             .select(`
                 *,
                 blog_comments(*),
-                blog_users(*)
+                blog_users(*),
+                blog_tags(*)
             `)
             .eq('title', title)
         console.log(data)
         setData(data)
         setComments(data[0].blog_comments)
+        setTags(data[0].blog_tags)
         if (supabase.auth.session() == null) {
             updatePageViews(data[0].pageViews)
         }
@@ -186,6 +189,13 @@ const Article = (props) => {
                             <div>{comments ? comments.length : '0'}</div>
                         </div>
                     </div>
+                    <Flex w="100%" justify="flex-start">
+                        {
+                            tags.map(res => (
+                                <Tag mr="10px" colorScheme="telegram">{res.name}</Tag>
+                            ))
+                        }
+                    </Flex>
                     <div className="commentscon">
                         <h2>Comments</h2>
                         {

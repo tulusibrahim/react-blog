@@ -52,7 +52,7 @@ const Navbar = (props) => {
                         <MenuButton >
                             {
                                 session ?
-                                    <Image src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} boxSize={['30px', '30px', '30px', '30px']} ml="10px" borderRadius="50%"></Image>
+                                    <Image src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} boxSize={['30px', '30px', '30px', '30px']} borderRadius="50%"></Image>
                                     // <div style={{ width: '30px', marginLeft: '10px' }}>
                                     //     <img src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} style={{ width: '100%', borderRadius: '50px' }}></img>
                                     // </div>

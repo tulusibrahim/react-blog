@@ -25,6 +25,7 @@
     "react-scripts": "4.0.2",
     "react-text-truncate": "^0.17.0",
     "sweetalert": "^2.1.2",
+    "use-debounce": "^7.0.0",
     "uuid": "^8.3.2",
     "web-vitals": "^1.1.0"
   },
