@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { supabase } from "../configs/configurations";
 import swal from 'sweetalert';
-import { Input, InputLeftAddon, InputGroup, InputLeftElement, Button, InputRightElement, Box } from "@chakra-ui/react"
+import { Input, Text, InputGroup, FormControl, Button, InputRightElement, Box, Flex } from "@chakra-ui/react"
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 const Login = (props) => {
@@ -68,54 +68,68 @@ const Login = (props) => {
     }, [])
 
     return (
-        <div className="logincon">
+        <Flex direction="column" alignItems="center" justify="space-evenly" w="100%" h="90vh">
             {
                 login == 'false' ?
-                    <form onSubmit={signUp}>
-                        {/* <input placeholder="Email" type="email" onChange={(e) => setEmail(e.target.value)} name="email"></input> */}
-                        {/* <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password"></input> */}
-                        <Input variant="flushed" placeholder="Email" width={['100%', '70%', '60%', '60%']} color="white" onChange={(e) => setEmail(e.target.value)} required />
-                        <InputGroup width={['100%', '70%', '60%', '60%']}>
-                            <Input variant="flushed" placeholder="Password" type={show ? "text" : "password"} color="white" onChange={(e) => setPassword(e.target.value)} required />
-                            <InputRightElement >
-                                <Button h="1.75rem" variant="outline" size="sm" colorScheme="whiteAlpha" onClick={() => setShow(!show)}>
-                                    {show ? <ViewOffIcon /> : <ViewIcon />}
-                                </Button>
-                            </InputRightElement>
-                        </InputGroup>
-                        <Box className="formbtn" width={['100%', '70%', '60%', '60%']}>
-                            <p>Have an account? Login <a style={{ cursor: 'pointer', color: '#536f8d' }} onClick={() => setlogin('true')}>here!</a></p>
-                            {/* <button>Sign Up</button> */}
-                            <Button variant="outline" marginTop="10px" colorScheme="whiteAlpha" _hover={{ backgroundColor: 'black', color: 'white' }} type="submit" fontWeight="normal">Sign Up</Button>
-                        </Box>
-                    </form>
+                    <FormControl onSubmit={signUp} h="80%">
+                        <Flex h="100%" direction="column">
+                            <Flex height="80%" justifyContent="space-evenly" alignItems="center" direction="column">
+                                <Input variant="flushed" placeholder="Email" width={['93%', '70%', '50%', '30%']} color="white" onChange={(e) => setEmail(e.target.value)} required />
+                                <InputGroup width={['93%', '70%', '50%', '30%']}>
+                                    <Input variant="flushed" placeholder="Password" type={show ? "text" : "password"} color="white" onChange={(e) => setPassword(e.target.value)} required />
+                                    <InputRightElement >
+                                        <Button h="1.75rem" variant="outline" size="sm" colorScheme="whiteAlpha" onClick={() => setShow(!show)}>
+                                            {show ? <ViewOffIcon /> : <ViewIcon />}
+                                        </Button>
+                                    </InputRightElement>
+                                </InputGroup>
+                                <Box textAlign="center" width={['93%', '70%', '50%', '30%']}>
+                                    {/* <p>Have an account? Login <a style={{ cursor: 'pointer', color: '#536f8d' }} onClick={() => setlogin('true')}>here!</a></p> */}
+                                    {/* <button>Sign Up</button> */}
+                                    <Text color="white">Have an account? Login
+                                        <a style={{ cursor: 'pointer', color: '#536f8d' }} onClick={() => setlogin('true')}> here!</a>
+                                    </Text>
+                                    <Button variant="outline" marginTop="10px" colorScheme="whiteAlpha" _hover={{ backgroundColor: 'black', color: 'white' }} type="submit" fontWeight="normal">Sign Up</Button>
+                                </Box>
+                            </Flex>
+                            <Flex height="20%" direction="column" justify="center" alignItems="center">
+                                <Text color="white" mb="10px">or login with</Text>
+                                <Box>
+                                    <Button variant="outline" fontWeight="normal" colorScheme="whiteAlpha" _hover={{ backgroundColor: 'black', color: 'white' }} onClick={() => loginWithGithub()}><i className="fab fa-github"></i>&nbsp;Github</Button>
+                                </Box>
+                            </Flex>
+                        </Flex>
+                    </FormControl>
                     :
-                    <form onSubmit={logIn}>
-                        {/* <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} name="email" required></input> */}
-                        {/* <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password" required></input> */}
-                        <Input variant="flushed" placeholder="Email" width={['100%', '70%', '60%', '60%']} color="white" onChange={(e) => setEmail(e.target.value)} required />
-                        <InputGroup width={['100%', '70%', '60%', '60%']}>
-                            <Input variant="flushed" placeholder="Password" type={show ? "text" : "text"} color="white" onChange={(e) => setPassword(e.target.value)} required />
-                            <InputRightElement >
-                                <Button h="1.75rem" variant="outline" size="sm" colorScheme="whiteAlpha" onClick={() => setShow(!show)}>
-                                    {show ? <ViewOffIcon /> : <ViewIcon />}
-                                </Button>
-                            </InputRightElement>
-                        </InputGroup>
-                        <Box className="formbtn" width={['100%', '70%', '60%', '60%']}>
-                            <p>Don't have an account? Create one
-                                <a style={{ cursor: 'pointer', color: '#536f8d' }} onClick={() => setlogin('false')}> here!</a>
-                            </p>
-                            {/* <button>Log In</button> */}
-                            <Button variant="outline" marginTop="10px" colorScheme="whiteAlpha" _hover={{ backgroundColor: 'black', color: 'white' }} type="submit" fontWeight="normal">Log In</Button>
-                        </Box>
-                    </form>
+                    <FormControl onSubmit={logIn} h="80%" >
+                        <Flex h="100%" direction="column">
+                            <Flex height="80%" justifyContent="space-evenly" alignItems="center" direction="column">
+                                <Input variant="flushed" placeholder="Email" width={['93%', '70%', '50%', '30%']} color="white" onChange={(e) => setEmail(e.target.value)} required />
+                                <InputGroup width={['93%', '70%', '50%', '30%']}>
+                                    <Input variant="flushed" placeholder="Password" type={show ? "text" : "text"} color="white" onChange={(e) => setPassword(e.target.value)} required />
+                                    <InputRightElement >
+                                        <Button h="1.75rem" variant="outline" size="sm" colorScheme="whiteAlpha" onClick={() => setShow(!show)}>
+                                            {show ? <ViewOffIcon /> : <ViewIcon />}
+                                        </Button>
+                                    </InputRightElement>
+                                </InputGroup>
+                                <Box textAlign="center" width={['93%', '70%', '50%', '30%']}>
+                                    <Text color="white">Don't have an account? Create one
+                                        <a style={{ cursor: 'pointer', color: '#536f8d' }} onClick={() => setlogin('false')}> here!</a>
+                                    </Text>
+                                    <Button variant="outline" marginTop="10px" colorScheme="whiteAlpha" _hover={{ backgroundColor: 'black', color: 'white' }} type="submit" fontWeight="normal">Log In</Button>
+                                </Box>
+                            </Flex>
+                            <Flex height="20%" direction="column" justify="center" alignItems="center">
+                                <Text color="white" mb="10px">or login with</Text>
+                                <Box>
+                                    <Button variant="outline" fontWeight="normal" colorScheme="whiteAlpha" _hover={{ backgroundColor: 'black', color: 'white' }} onClick={() => loginWithGithub()}><i className="fab fa-github"></i>&nbsp;Github</Button>
+                                </Box>
+                            </Flex>
+                        </Flex>
+                    </FormControl>
             }
-            <p style={{ margin: '10px', color: 'white' }}>or login with</p>
-            <div>
-                <Button variant="outline" fontWeight="normal" colorScheme="whiteAlpha" _hover={{ backgroundColor: 'black', color: 'white' }} onClick={() => loginWithGithub()}><i className="fab fa-github"></i>&nbsp;Github</Button>
-            </div>
-        </div >
+        </Flex >
     );
 };
 

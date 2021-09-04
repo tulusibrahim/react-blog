@@ -578,7 +578,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 .logincon form {
   height: 80%;
-  width: 50vw;
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
