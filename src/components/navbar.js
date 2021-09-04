@@ -3,7 +3,10 @@ import { supabase } from "../configs/configurations";
 import { useEffect, useState } from 'react';
 import { Box, Image, Menu, MenuButton, MenuItem, MenuList, useBreakpointValue } from '@chakra-ui/react';
 import { createBreakpoints } from "@chakra-ui/theme-tools"
-import { AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineAlert, AiOutlineLogin, AiOutlineLogout, AiOutlineUser } from 'react-icons/ai';
+import { BiUser } from 'react-icons/bi'
+import { BsPen } from 'react-icons/bs'
+import { GrAlert } from 'react-icons/gr'
 
 
 const Navbar = (props) => {
@@ -40,15 +43,17 @@ const Navbar = (props) => {
             <div className="navbar">
                 <div className="title"><Link to="/" className="link" >Write</Link></div>
                 <Box className="right" h="10vh" w={['60%', '40%', '30%', '20%']} d="flex" alignItems="center" justifyContent={session ? "space-evenly" : 'flex-end'}>
-                    {
-                        session &&
-                        <div style={{ fontSize: 12, backgroundColor: '#399930', padding: 4, borderRadius: 5 }}>
-                            {
-                                (supabase.auth.user().email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '')
-                            }
-                        </div>
-                    }
                     <Menu>
+                        <MenuButton>
+                            {
+                                session &&
+                                <Box fontSize="12px" bg="#399930" p="4px" borderRadius="5px">
+                                    {
+                                        (supabase.auth.user().email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '')
+                                    }
+                                </Box>
+                            }
+                        </MenuButton>
                         <MenuButton >
                             {
                                 session ?
@@ -57,28 +62,31 @@ const Navbar = (props) => {
                                     //     <img src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} style={{ width: '100%', borderRadius: '50px' }}></img>
                                     // </div>
                                     :
-                                    <AiOutlineUser size="30px" />
+                                    <BiUser size="25px" />
                             }
                         </MenuButton>
-                        <MenuList bg="#0D1B2A" borderColor="GrayText">
+                        <MenuList bg="#0D1B2A" borderColor="GrayText" >
                             {
                                 session !== null ?
                                     <>
                                         <Link to="/profile">
-                                            <MenuItem _focus={{ bg: "#1c3857" }}>Profile</MenuItem>
+                                            <MenuItem _focus={{ bg: "#1c3857" }} style={{ fontWeight: "normal" }} ><BiUser style={{ marginRight: '10px' }} />Profile</MenuItem>
                                         </Link>
-                                        <MenuItem _focus={{ bg: "#1c3857" }} onClick={logOut}>Log out</MenuItem>
+                                        <Link to="/new">
+                                            <MenuItem _focus={{ bg: "#1c3857" }} style={{ fontWeight: "normal" }}><BsPen style={{ marginRight: '10px' }} /> Write new</MenuItem>
+                                        </Link>
+                                        <MenuItem _focus={{ bg: "#1c3857" }} onClick={logOut} style={{ fontWeight: "normal" }}><AiOutlineLogout style={{ marginRight: '10px' }} /> Log out</MenuItem>
                                         <Link to="/about">
-                                            <MenuItem _focus={{ bg: "#1c3857" }}>About us</MenuItem>
+                                            <MenuItem _focus={{ bg: "#1c3857" }} style={{ fontWeight: "normal" }}><AiOutlineAlert style={{ marginRight: '10px' }} />About us</MenuItem>
                                         </Link>
                                     </>
                                     :
                                     <>
                                         <Link to="/login">
-                                            <MenuItem _focus={{ bg: "#1c3857" }}>Log in</MenuItem>
+                                            <MenuItem _focus={{ bg: "#1c3857" }} style={{ fontWeight: "normal" }}><AiOutlineLogin style={{ marginRight: '10px' }} /> Log in</MenuItem>
                                         </Link>
                                         <Link to="/about">
-                                            <MenuItem _focus={{ bg: "#1c3857" }}>About us</MenuItem>
+                                            <MenuItem _focus={{ bg: "#1c3857" }} style={{ fontWeight: "normal" }}><AiOutlineAlert style={{ marginRight: '10px' }} />About us</MenuItem>
                                         </Link>
                                     </>
                             }

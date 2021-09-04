@@ -136,12 +136,6 @@ html::-webkit-scrollbar-thumb:hover {
           justify-content: flex-end;
 }
 
-@media screen and (max-width: 800px) {
-  .searchcon .search {
-    display: none;
-  }
-}
-
 .searchcon .search button {
   height: 100%;
   width: -webkit-fit-content;

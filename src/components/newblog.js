@@ -1,6 +1,6 @@
 import { supabase, uuidv4 } from "../configs/configurations";
 import moment from 'moment'
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, Prompt } from "react-router-dom";
 import React, { useState, useRef, useEffect } from "react";
 import swal from 'sweetalert';
 import {
@@ -153,7 +153,7 @@ const NewBlog = () => {
             const result = await supabase
                 .from('blog_tags')
                 .select('*')
-                .eq('name', parsedWord)
+                .eq('name', `#${parsedWord}`)
 
             if (result.data.length == 0) {
                 let postTag = await supabase.from('blog_tags').insert({ name: `#${parsedWord}` })
@@ -193,6 +193,7 @@ const NewBlog = () => {
             <h1 style={{ fontSize: '2rem', fontWeight: '500', textAlign: 'center', color: 'white' }}>You need to log in first to create new post.</h1>
             :
             <div className="newblogconwrapper">
+                <Prompt message="Sure want to leave? Changes will not be saved." when={title == '' && body == ''} />
                 <div className="newblogcon">
                     <Flex w="90%" mt="20px" justify="flex-end" alignItems="center">
                         <Text color="whiteAlpha.700">{saveStatus}</Text>

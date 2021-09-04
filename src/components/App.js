@@ -12,6 +12,7 @@ import Logout from "./logout";
 import NotResponsive from "./notResponsive";
 import EditPost from "./editPost";
 import { ChakraProvider } from "@chakra-ui/react"
+import Topic from './topics';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
               <Route path="/edit" component={EditPost}></Route>
               <Route path="/logout" component={Logout}></Route>
               <Route path="/notresponsive" component={NotResponsive}></Route>
+              <Route path="/topic/:topic" component={Topic}></Route>
               <Route component={PageNotFound}></Route>
             </Switch>
           </div>

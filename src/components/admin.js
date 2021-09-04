@@ -5,7 +5,7 @@ import moment from "moment";
 import swal from 'sweetalert';
 import { AiOutlineHeart, AiOutlineComment, AiOutlineEye, AiOutlineEdit, AiOutlineDelete, AiOutlineCloudUpload } from 'react-icons/ai'
 import { FaSort } from 'react-icons/fa'
-import { useToast, Tabs, TabList, TabPanels, Tab, TabPanel, Menu, MenuList, MenuItem, MenuButton, Button, Flex, Input, Image, InputGroup, InputLeftAddon, Box, useBreakpointValue, InputRightElement, color, Text, PopoverTrigger, PopoverContent, PopoverBody, Popover, PopoverArrow, PopoverCloseButton, PopoverHeader } from "@chakra-ui/react"
+import { useToast, Tabs, TabList, TabPanels, Tab, TabPanel, Menu, MenuList, MenuItem, MenuButton, Button, Flex, Input, Image, InputGroup, InputLeftAddon, Box, useBreakpointValue, InputRightElement, color, Text, PopoverTrigger, PopoverContent, PopoverBody, Popover, PopoverArrow, PopoverCloseButton, PopoverHeader, Badge } from "@chakra-ui/react"
 import { CheckIcon } from "@chakra-ui/icons";
 
 
@@ -106,13 +106,10 @@ const Admin = (props) => {
         const user = supabase.auth.user()
         const { data, error } = await supabase
             .from('blog')
-            .select(`
-                        *,
-                        blog_comments(
-                            *
-                        )
-                    `)
+            .select(`*,blog_comments(*),blog_tags(*)`)
             .eq('email', user.email)
+            .order('title', { ascending: true })
+        console.log(data)
         if (data == '') {
             setWarn('Your post will appear here.')
         }
@@ -138,6 +135,16 @@ const Admin = (props) => {
                 .select(`*, blog_comments(*)`)
                 .eq('email', user.email)
                 .order('title', { ascending: false })
+            console.log(result)
+            setData(result.data)
+        }
+        else if (sort === 'draft') {
+            setSortState('draft')
+            let result = await supabase
+                .from('blog')
+                .select(`*, blog_comments(*)`)
+                .eq('email', user.email)
+                .order('isDraft', { ascending: false })
             console.log(result)
             setData(result.data)
         }
@@ -227,6 +234,160 @@ const Admin = (props) => {
             toastRef.current = toast({ description: "Success upload photo", status: "success" })
         }
     };
+    //TODO: bikin draft section di kiri,=
+
+    const PostTab = () => {
+        return (
+            <div>
+                <div className="admin" style={{ flexDirection: 'column', width: '100%' }}>
+                    <div style={{ width: '90%', paddingBottom: 20 }}>
+                        <div className="admin" style={{ justifyContent: "space-between", paddingTop: '20px' }}>
+                            <div>
+                                Your posts
+                            </div>
+                            <div className="sorting">
+                                <Menu >
+                                    <MenuButton backgroundColor="#1c3857" _active={{ backgroundColor: '#1c3857' }} outline="none" _hover={{ backgroundColor: '#152b43' }} as={Button} leftIcon={<FaSort />}>
+                                        {
+                                            sortState === 'az' ? 'A - Z' : sortState === 'za' ? 'Z - A' : sortState === 'draft' ? 'Draft' : 'Sort'
+                                        }
+                                    </MenuButton>
+                                    <MenuList bg="#0D1B2A" >
+                                        <MenuItem _focus={{ backgroundColor: '#152b43' }} onClick={() => handleSorting('az')}>A - Z</MenuItem>
+                                        <MenuItem _focus={{ backgroundColor: '#152b43' }} onClick={() => handleSorting('za')}>Z - A</MenuItem>
+                                        <MenuItem _focus={{ backgroundColor: '#152b43' }} onClick={() => handleSorting('draft')}>Draft first</MenuItem>
+                                    </MenuList>
+                                </Menu>
+                            </div>
+                        </div>
+                        {
+                            data &&
+                            data.map(res => (
+                                <Flex key={res.id} pt="12px" pb="12px" justifyContent="space-between" align="center" borderBottom='.1px #838383 solid' >
+                                    <Box w="90%" >
+                                        {
+                                            res.isDraft == "true" ?
+                                                <Box fontSize="1.2em" mb="3px" >
+                                                    {res.title}<Badge ml="10px" colorScheme="green" >Draft</Badge>
+                                                </Box>
+                                                :
+                                                <Link style={{ textDecoration: 'none', color: 'white' }} to={{ pathname: `/article/${res.title}`, query: { res } }}>
+                                                    <Box fontSize="1.2em" mb="3px">
+                                                        {res.title}
+                                                    </Box>
+                                                </Link>
+                                        }
+                                        <Box fontSize="0.6em" color="#a1a1a1" mb="10px" >{res.date}</Box>
+                                        {
+                                            res.isDraft !== 'true' &&
+                                            <div style={{ display: 'flex', maxWidth: '20%', justifyContent: 'flex-start', marginTop: '5px' }}>
+                                                <div style={{ display: 'flex', width: 'fit-content', marginRight: '20px', alignItems: 'center', justifyContent: 'space-evenly' }}>
+                                                    {/* <i className="far fa-eye" style={{ marginRight: '10px' }} data-toggle="tooltip" title="Views"></i> */}
+                                                    <AiOutlineEye style={{ marginRight: '10px' }} />
+                                                    {
+                                                        res.pageViews ? res.pageViews : '0'
+                                                    }
+                                                </div>
+                                                <div style={{ display: 'flex', width: 'fit-content', marginRight: '20px', alignItems: 'center', justifyContent: 'space-evenly' }}>
+                                                    {/* <i className="far fa-heart" style={{ marginRight: '10px' }} data-toggle="tooltip" title="Likes"></i> */}
+                                                    <AiOutlineHeart style={{ marginRight: '10px' }} />
+                                                    {
+                                                        res.likes ? res.likes : '0'
+                                                    }
+                                                </div>
+                                                <div style={{ display: 'flex', width: 'fit-content', marginRight: '20px', alignItems: 'center', justifyContent: 'space-evenly' }}>
+                                                    {/* <i className="far fa-comment-dots" style={{ marginRight: '10px' }} data-toggle="tooltip" title="Comments"></i> */}
+                                                    <AiOutlineComment style={{ marginRight: '10px' }} />
+                                                    {
+                                                        res.blog_comments.length ? res.blog_comments.length : '0'
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </Box>
+                                    {
+                                        res.isDraft == "true" ?
+                                            <Flex alignItems="center" justifyContent="space-evenly" w="18%">
+                                                <Link to={{ pathname: '/edit', query: { res } }}>
+                                                    <Button colorScheme="green" fontWeight="normal">Continue</Button>
+                                                </Link>
+                                                <Box onClick={() => deletePost(res.id)} cursor="pointer" color="#dc3545" data-toggle="tooltip" title="Delete">
+                                                    <AiOutlineDelete size="1.3em" />
+                                                </Box>
+                                            </Flex>
+                                            :
+                                            <Flex alignItems="center" justifyContent="space-evenly" w="10%">
+                                                <Box cursor="pointer">
+                                                    <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white' }} data-toggle="tooltip" title="Edit">
+                                                        <AiOutlineEdit size="1.3em" />
+                                                    </Link>
+                                                </Box>
+                                                <Box cursor="pointer" color="#dc3545" onClick={() => deletePost(res.id)} data-toggle="tooltip" title="Delete">
+                                                    <AiOutlineDelete size="1.3em" />
+                                                </Box>
+                                            </Flex>
+                                    }
+                                </Flex>
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    const ProfileTab = () => {
+        return (
+            <Flex justifyContent="center">
+                <Flex color="white" h="75vh" alignItems="center" justifyContent="center" w="90%">
+                    <Flex direction={['column', 'column', 'row', 'row']} alignItems="center" justifyContent="space-evenly" h="70%" w="90%" >
+                        <Flex h="100%" alignItems="center" justify="center" direction="column" >
+                            <Popover boundary="scrollParent" placement="top-start">
+                                <PopoverTrigger>
+                                    <Image mb='10px' borderRadius="full" boxSize="150px" src={`https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} onError={() => setProfilePic('')}></Image>
+                                </PopoverTrigger>
+                                <PopoverContent borderRadius={10} bg="blackAlpha.700" border="none">
+                                    <PopoverHeader fontWeight="bold">Information!</PopoverHeader>
+                                    <PopoverBody>Currently uploading new avatar is not supported yet :(</PopoverBody>
+                                </PopoverContent>
+                            </Popover>
+                            {/* <Button onClick={() => inputFile.current.click()} m="10px" fontWeight="normal" colorScheme="blackAlpha" rightIcon={<AiOutlineCloudUpload size="20px" />}>
+                                            Upload photo
+                                        </Button>
+                                        <input onChange={handleFileUpload} type="file" style={{ display: 'none' }} ref={inputFile}></input> */}
+                        </Flex>
+                        <Flex h="60%" w={['100%', '100%', '70%', '50%']} alignItems="center" justifyContent="space-between" direction="column">
+                            <Popover boundary="scrollParent" placement="top-start">
+                                <PopoverTrigger>
+                                    <InputGroup mb={'10px'}>
+                                        <InputLeftAddon bg="none" children="Email" fontSize={14} color="grey" />
+                                        <Input variant="outline" value={supabase.auth.user().email} readOnly></Input>
+                                    </InputGroup>
+                                </PopoverTrigger>
+                                <PopoverContent borderRadius={10} bg="blackAlpha.700" border="none">
+                                    <PopoverHeader fontWeight="bold">Information!</PopoverHeader>
+                                    <PopoverBody>Currently changing email is not supported yet :(</PopoverBody>
+                                </PopoverContent>
+                            </Popover>
+                            <InputGroup mb={'10px'}>
+                                <InputLeftAddon bg="none" children="Bio" fontSize={14} color="grey" />
+                                <Input variant="outline" placeholder="Bio" defaultValue={profile.bio ? profile.bio : ''} onChange={e => setBio(e.target.value)}></Input>
+                                <InputRightElement onClick={() => updateProfile('bio')} display={bio ? null : 'none'} children={<CheckIcon />} />
+                            </InputGroup>
+                            <Box w="100%">
+                                <InputGroup mb={'10px'}>
+                                    <InputLeftAddon bg="none" children="Username" fontSize={14} color="grey" />
+                                    <Input variant="outline" placeholder="Username" defaultValue={profile.nickname ? profile.nickname : ''} onChange={e => setUsername(e.target.value)}></Input>
+                                    <InputRightElement onClick={() => updateProfile('username')} display={username ? null : 'none'} children={<CheckIcon />} />
+                                </InputGroup>
+                                <Text fontSize="sm" fontStyle="italic" textAlign="left" w="100%">*This username will appear in your blog post</Text>
+                            </Box>
+                        </Flex>
+                    </Flex>
+                </Flex>
+            </Flex >
+        )
+    }
 
     useEffect(async () => {
         document.title = `Profile`
@@ -261,134 +422,15 @@ const Admin = (props) => {
             :
             <Tabs variant="line" size="md" isFitted >
                 <TabList color="white">
-                    <Tab>Manage Blogs</Tab>
+                    <Tab>Manage Posts</Tab>
                     <Tab>Manage Profile</Tab>
                 </TabList>
-
                 <TabPanels>
                     <TabPanel>
-                        <div>
-                            <div className="admin" style={{ flexDirection: 'column', width: '100%' }}>
-                                <div style={{ width: '90%', paddingBottom: 20 }}>
-                                    <div className="admin" style={{ justifyContent: "space-between", paddingTop: '20px' }}>
-                                        <div>
-                                            Your posts
-                                        </div>
-                                        <div className="sorting">
-                                            <Menu >
-                                                <MenuButton backgroundColor="#1c3857" _active={{ backgroundColor: '#1c3857' }} outline="none" _hover={{ backgroundColor: '#152b43' }} as={Button} leftIcon={<FaSort />}>
-                                                    {
-                                                        sortState === 'az' ? 'A - Z' : sortState === 'za' ? 'Z - A' : 'Sort'
-                                                    }
-                                                </MenuButton>
-                                                <MenuList bg="#0D1B2A" >
-                                                    <MenuItem _focus={{ backgroundColor: '#152b43' }} onClick={() => handleSorting('az')}>A - Z</MenuItem>
-                                                    <MenuItem _focus={{ backgroundColor: '#152b43' }} onClick={() => handleSorting('za')}>Z - A</MenuItem>
-                                                </MenuList>
-                                            </Menu>
-                                        </div>
-                                    </div>
-                                    {
-                                        data &&
-                                        data.map(res => (
-                                            <div className="" key={res.id} style={{ paddingTop: 12, display: 'flex', paddingBottom: 12, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', borderBottom: '.1px #838383 solid' }}>
-                                                <div className="isi" style={{ width: '90%' }}>
-                                                    <Link style={{ textDecoration: 'none', color: 'white' }} to={{ pathname: `/article/${res.title}`, query: { res } }}>
-                                                        <div className="title" style={{ fontSize: "1.2em", marginBottom: '3px', textDecorationLine: 'none' }}>{res.title}</div>
-                                                    </Link>
-                                                    <div className="date" style={{ fontSize: "0.6em", color: '#a1a1a1', marginBottom: 10 }}>{res.date}</div>
-                                                    <div style={{ display: 'flex', maxWidth: '20%', justifyContent: 'flex-start', marginTop: '5px' }}>
-                                                        <div style={{ display: 'flex', width: 'fit-content', marginRight: '20px', alignItems: 'center', justifyContent: 'space-evenly' }}>
-                                                            {/* <i className="far fa-eye" style={{ marginRight: '10px' }} data-toggle="tooltip" title="Views"></i> */}
-                                                            <AiOutlineEye style={{ marginRight: '10px' }} />
-                                                            {
-                                                                res.pageViews ? res.pageViews : '0'
-                                                            }
-                                                        </div>
-                                                        <div style={{ display: 'flex', width: 'fit-content', marginRight: '20px', alignItems: 'center', justifyContent: 'space-evenly' }}>
-                                                            {/* <i className="far fa-heart" style={{ marginRight: '10px' }} data-toggle="tooltip" title="Likes"></i> */}
-                                                            <AiOutlineHeart style={{ marginRight: '10px' }} />
-                                                            {
-                                                                res.likes ? res.likes : '0'
-                                                            }
-                                                        </div>
-                                                        <div style={{ display: 'flex', width: 'fit-content', marginRight: '20px', alignItems: 'center', justifyContent: 'space-evenly' }}>
-                                                            {/* <i className="far fa-comment-dots" style={{ marginRight: '10px' }} data-toggle="tooltip" title="Comments"></i> */}
-                                                            <AiOutlineComment style={{ marginRight: '10px' }} />
-                                                            {
-                                                                res.blog_comments.length ? res.blog_comments.length : '0'
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div style={{ width: '10%', textAlign: 'center', display: 'flex', flexDirection: "row", justifyContent: 'space-evenly' }}>
-                                                    <div style={{ cursor: 'pointer' }}>
-                                                        <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white' }} data-toggle="tooltip" title="Edit">
-                                                            {/* <i className="far fa-edit"></i> */}
-                                                            <AiOutlineEdit size="1.3em" />
-                                                        </Link>
-                                                    </div>
-                                                    <div onClick={() => deletePost(res.id)} style={{ cursor: 'pointer', color: '#dc3545' }} data-toggle="tooltip" title="Delete">
-                                                        {/* <i className="far fa-trash-alt"></i> */}
-                                                        <AiOutlineDelete size="1.3em" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))
-                                    }
-                                </div>
-                            </div>
-                        </div>
+                        <PostTab />
                     </TabPanel>
                     <TabPanel>
-                        <Flex justifyContent="center">
-                            <Flex color="white" h="75vh" alignItems="center" justifyContent="center" w="90%">
-                                <Flex direction={['column', 'column', 'row', 'row']} alignItems="center" justifyContent="space-evenly" h="70%" w="90%" >
-                                    <Flex h="100%" alignItems="center" justify="center" direction="column" >
-                                        <Popover boundary="scrollParent" placement="top-start">
-                                            <PopoverTrigger>
-                                                <Image mb='10px' borderRadius="full" boxSize="150px" src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} onError={() => setProfilePic('')}></Image>
-                                            </PopoverTrigger>
-                                            <PopoverContent borderRadius={10} bg="blackAlpha.700" border="none">
-                                                <PopoverHeader fontWeight="bold">Information!</PopoverHeader>
-                                                <PopoverBody>Currently uploading new avatar is not supported yet :(</PopoverBody>
-                                            </PopoverContent>
-                                        </Popover>
-                                        {/* <Button onClick={() => inputFile.current.click()} m="10px" fontWeight="normal" colorScheme="blackAlpha" rightIcon={<AiOutlineCloudUpload size="20px" />}>
-                                            Upload photo
-                                        </Button>
-                                        <input onChange={handleFileUpload} type="file" style={{ display: 'none' }} ref={inputFile}></input> */}
-                                    </Flex>
-                                    <Flex h="60%" w={['100%', '100%', '70%', '50%']} alignItems="center" justifyContent="space-between" direction="column">
-                                        <Popover boundary="scrollParent" placement="top-start">
-                                            <PopoverTrigger>
-                                                <InputGroup mb={'10px'}>
-                                                    <InputLeftAddon bg="none" children="Email" fontSize={14} color="grey" />
-                                                    <Input variant="outline" value={supabase.auth.user().email} readOnly></Input>
-                                                </InputGroup>
-                                            </PopoverTrigger>
-                                            <PopoverContent borderRadius={10} bg="blackAlpha.700" border="none">
-                                                <PopoverHeader fontWeight="bold">Information!</PopoverHeader>
-                                                <PopoverBody>Currently changing email is not supported yet :(</PopoverBody>
-                                            </PopoverContent>
-                                        </Popover>
-                                        <InputGroup mb={'10px'}>
-                                            <InputLeftAddon bg="none" children="Bio" fontSize={14} color="grey" />
-                                            <Input variant="outline" placeholder="Bio" defaultValue={profile.bio ? profile.bio : ''} onChange={e => setBio(e.target.value)}></Input>
-                                            <InputRightElement onClick={() => updateProfile('bio')} display={bio ? null : 'none'} children={<CheckIcon />} />
-                                        </InputGroup>
-                                        <Box w="100%">
-                                            <InputGroup mb={'10px'}>
-                                                <InputLeftAddon bg="none" children="Username" fontSize={14} color="grey" />
-                                                <Input variant="outline" placeholder="Username" defaultValue={profile.nickname ? profile.nickname : ''} onChange={e => setUsername(e.target.value)}></Input>
-                                                <InputRightElement onClick={() => updateProfile('username')} display={username ? null : 'none'} children={<CheckIcon />} />
-                                            </InputGroup>
-                                            <Text fontSize="sm" fontStyle="italic" textAlign="left" w="100%">*This username will appear in your blog post</Text>
-                                        </Box>
-                                    </Flex>
-                                </Flex>
-                            </Flex>
-                        </Flex >
+                        <ProfileTab />
                     </TabPanel>
                 </TabPanels>
             </Tabs>
