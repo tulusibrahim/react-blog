@@ -37,9 +37,9 @@ const Search = () => {
                     <Flex wrap="wrap">
                         {
                             dataTag.map((res, index) => (
-                                <Link to={{ pathname: `/topic/${(res.name).replace("#", '')}` }}>
-                                    <Box key={index} m="5px" bg="green.600" p="5px" borderRadius="5px">{res.name}</Box>
-                                </Link>
+                                // <Link to={{ pathname: `/topic/${(res.name).replace("#", '')}` }}>
+                                <Box onClick={() => toast({ description: 'Still working on it!', status: 'info', isClosable: true })} key={index} m="5px" bg="green.600" p="5px" borderRadius="5px">{res.name}</Box>
+                                // </Link>
                             ))
                         }
                     </Flex>
