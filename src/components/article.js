@@ -152,11 +152,11 @@ const Article = (props) => {
                                                             </div>
                                                         </MenuButton>
                                                         <MenuList bg="#0D1B2A" borderColor="GrayText">
-                                                            <MenuItem _focus={{ bg: "#1c3857" }}>
-                                                                <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white', textDecoration: 'none', fontWeight: 'normal' }} data-toggle="tooltip" title="Edit">
+                                                            <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white', textDecoration: 'none', fontWeight: 'normal' }} data-toggle="tooltip" title="Edit">
+                                                                <MenuItem _focus={{ bg: "#1c3857" }}>
                                                                     Edit post
-                                                                </Link>
-                                                            </MenuItem>
+                                                                </MenuItem>
+                                                            </Link>
                                                         </MenuList>
                                                         {/* <div style={{ display: display, transitionDelay: 1, flexDirection: 'column', position: 'absolute', right: 10, zIndex: 2, justifyContent: 'center', alignItems: 'center' }}>
                                                             <div style={{ backgroundColor: '#12253a', padding: '10px', cursor: 'pointer' }}>

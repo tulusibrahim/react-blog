@@ -9,12 +9,13 @@ const Topic = () => {
 
     const getData = async () => {
         let result = await supabase.from('blog_tags').select('*,blog(*)').eq('name', `#${param.topic}`)
-        setData(result.data[0].blog)
+        let removeDuplicateValue = Object.values(result.data[0].blog.reduce((acc, current) => Object.assign(acc, { [current.id]: current }), {}))
+        setData(removeDuplicateValue)
     }
 
     useEffect(() => {
-        getData()
         setData([])
+        getData()
         document.title = `Topic - ${(param.topic).replace('#', '')}`
     }, [])
 
@@ -23,7 +24,7 @@ const Topic = () => {
             <Flex w="90%" direction="row" wrap="wrap" justify="space-around">
                 {
                     data.map(res => (
-                        <Box p="10px" m="10px" w="45%" className="card" borderRadius="5px" boxShadow="2px 2px 4px #060f18,-2px -2px 4px #152b43;">
+                        <Box p="10px" m="10px" w={['100%', '100%', '100%', "45%"]} className="card" borderRadius="5px" boxShadow="2px 2px 4px #060f18,-2px -2px 4px #152b43;">
                             <Link to={{ pathname: `/article/${res.title}` }}>
                                 <Box fontSize="24px">{res.title}</Box>
                             </Link>

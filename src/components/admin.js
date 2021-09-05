@@ -3,10 +3,11 @@ import { supabase } from "../configs/configurations"
 import { Link } from "react-router-dom"
 import moment from "moment";
 import swal from 'sweetalert';
-import { AiOutlineHeart, AiOutlineComment, AiOutlineEye, AiOutlineEdit, AiOutlineDelete, AiOutlineCloudUpload } from 'react-icons/ai'
+import { AiOutlineHeart, AiOutlineComment, AiOutlineEye, AiOutlineEdit, AiOutlineDelete, AiOutlineCloudUpload, AiOutlineEyeInvisible } from 'react-icons/ai'
 import { FaSort } from 'react-icons/fa'
 import { useToast, Tabs, TabList, TabPanels, Tab, TabPanel, Menu, MenuList, MenuItem, MenuButton, Button, Flex, Input, Image, InputGroup, InputLeftAddon, Box, useBreakpointValue, InputRightElement, color, Text, PopoverTrigger, PopoverContent, PopoverBody, Popover, PopoverArrow, PopoverCloseButton, PopoverHeader, Badge } from "@chakra-ui/react"
 import { CheckIcon } from "@chakra-ui/icons";
+import { BsPen, BsThreeDotsVertical } from "react-icons/bs";
 
 
 const Admin = (props) => {
@@ -236,6 +237,22 @@ const Admin = (props) => {
     };
     //TODO: bikin draft section di kiri,=
 
+    const unpublishPost = async (data) => {
+        swal({ title: 'Confirmation', text: `Are you sure want to unpublish ${data.title}?`, buttons: true, icon: 'warning' })
+            .then(async result => {
+                console.log(result)
+                if (result) {
+                    let unpublish = await supabase.from('blog').update({ isDraft: 'true' }).eq('id', data.id)
+                    console.log(unpublish)
+                    unpublish.data && toast({ description: 'Post unpublished', status: 'success' })
+                    getData()
+                }
+                else {
+                    return
+                }
+            })
+    }
+
     const PostTab = () => {
         return (
             <div>
@@ -245,9 +262,9 @@ const Admin = (props) => {
                             <div>
                                 Your posts
                             </div>
-                            <div className="sorting">
+                            <div >
                                 <Menu >
-                                    <MenuButton backgroundColor="#1c3857" _active={{ backgroundColor: '#1c3857' }} outline="none" _hover={{ backgroundColor: '#152b43' }} as={Button} leftIcon={<FaSort />}>
+                                    <MenuButton p="10px" backgroundColor="#1c3857" _active={{ backgroundColor: '#1c3857' }} outline="none" _hover={{ backgroundColor: '#152b43' }} as={Button} leftIcon={<FaSort />}>
                                         {
                                             sortState === 'az' ? 'A - Z' : sortState === 'za' ? 'Z - A' : sortState === 'draft' ? 'Draft' : 'Sort'
                                         }
@@ -263,7 +280,7 @@ const Admin = (props) => {
                         {
                             data &&
                             data.map(res => (
-                                <Flex key={res.id} pt="12px" pb="12px" justifyContent="space-between" align="center" borderBottom='.1px #838383 solid' >
+                                <Flex key={res.id} pt="12px" pb="12px" justifyContent="space-between" align="center" borderBottom='0.1px #535353 solid' >
                                     <Box w="90%" >
                                         {
                                             res.isDraft == "true" ?
@@ -307,25 +324,75 @@ const Admin = (props) => {
                                     </Box>
                                     {
                                         res.isDraft == "true" ?
-                                            <Flex alignItems="center" justifyContent="space-evenly" w="18%">
-                                                <Link to={{ pathname: '/edit', query: { res } }}>
-                                                    <Button colorScheme="green" fontWeight="normal">Continue</Button>
-                                                </Link>
-                                                <Box onClick={() => deletePost(res.id)} cursor="pointer" color="#dc3545" data-toggle="tooltip" title="Delete">
-                                                    <AiOutlineDelete size="1.3em" />
-                                                </Box>
-                                            </Flex>
-                                            :
-                                            <Flex alignItems="center" justifyContent="space-evenly" w="10%">
-                                                <Box cursor="pointer">
-                                                    <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white' }} data-toggle="tooltip" title="Edit">
-                                                        <AiOutlineEdit size="1.3em" />
+                                            <>
+                                                <Flex display={['none', 'none', 'flex', 'flex']} alignItems="center" justifyContent="space-evenly" w="18%">
+                                                    <Link to={{ pathname: '/edit', query: { res } }}>
+                                                        <Button colorScheme="green" fontWeight="normal">Continue</Button>
                                                     </Link>
+                                                    <Box onClick={() => deletePost(res.id)} cursor="pointer" color="#dc3545" data-toggle="tooltip" title="Delete">
+                                                        <AiOutlineDelete size="1.3em" />
+                                                    </Box>
+                                                </Flex>
+                                                <Box display={['block', 'block', 'none', 'none']}>
+                                                    <Menu>
+                                                        <MenuButton>
+                                                            <BsThreeDotsVertical />
+                                                        </MenuButton>
+                                                        <MenuList bg="#0D1B2A">
+                                                            <MenuItem _focus={{ backgroundColor: '#152b43' }}>
+                                                                <Link to={{ pathname: '/edit', query: { res } }} style={{ display: 'flex', alignItems: 'center' }}>
+                                                                    {/* <Button colorScheme="green" fontWeight="normal" leftIcon={<BsPen />}>Continue</Button> */}
+                                                                    <BsPen style={{ marginRight: '10px' }} />Continue
+                                                                </Link>
+                                                            </MenuItem>
+                                                            <MenuItem _focus={{ backgroundColor: '#152b43' }}>
+                                                                <Flex onClick={() => deletePost(res.id)} cursor="pointer" data-toggle="tooltip" title="Delete">
+                                                                    <AiOutlineDelete size="1.3em" color="#dc3545" style={{ marginRight: '10px' }} /> Delete
+                                                                </Flex>
+                                                            </MenuItem>
+                                                        </MenuList>
+                                                    </Menu>
                                                 </Box>
-                                                <Box cursor="pointer" color="#dc3545" onClick={() => deletePost(res.id)} data-toggle="tooltip" title="Delete">
-                                                    <AiOutlineDelete size="1.3em" />
+                                            </>
+                                            :
+                                            <>
+                                                <Flex display={['none', 'none', 'flex', 'flex']} alignItems="center" justifyContent="space-evenly" w="14%">
+                                                    <AiOutlineEyeInvisible data-toggle="tooltip" title="Unpublish" cursor="pointer" onClick={() => unpublishPost(res)} />
+                                                    <Box cursor="pointer">
+                                                        <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white' }} data-toggle="tooltip" title="Edit">
+                                                            <AiOutlineEdit size="1.3em" />
+                                                        </Link>
+                                                    </Box>
+                                                    <Box cursor="pointer" color="#dc3545" onClick={() => deletePost(res.id)} data-toggle="tooltip" title="Delete">
+                                                        <AiOutlineDelete size="1.3em" />
+                                                    </Box>
+                                                </Flex>
+                                                <Box display={['block', 'block', 'none', 'none']}>
+                                                    <Menu>
+                                                        <MenuButton>
+                                                            <BsThreeDotsVertical />
+                                                        </MenuButton>
+                                                        <MenuList bg="#0D1B2A">
+                                                            <MenuItem _focus={{ backgroundColor: '#152b43' }} display="flex">
+                                                                <AiOutlineEyeInvisible style={{ marginRight: '10px' }} data-toggle="tooltip" title="Unpublish" cursor="pointer" onClick={() => unpublishPost(res)} />
+                                                                Unpublish
+                                                            </MenuItem>
+                                                            <MenuItem _focus={{ backgroundColor: '#152b43' }}>
+                                                                <Box cursor="pointer">
+                                                                    <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white', display: 'flex' }} data-toggle="tooltip" title="Edit">
+                                                                        <AiOutlineEdit style={{ marginRight: '10px' }} size="1.3em" /> Edit
+                                                                    </Link>
+                                                                </Box>
+                                                            </MenuItem>
+                                                            <MenuItem _focus={{ backgroundColor: '#152b43' }}>
+                                                                <Box display="flex" cursor="pointer" color="#dc3545" onClick={() => deletePost(res.id)} data-toggle="tooltip" title="Delete">
+                                                                    <AiOutlineDelete style={{ marginRight: '10px' }} size="1.3em" /> Delete
+                                                                </Box>
+                                                            </MenuItem>
+                                                        </MenuList>
+                                                    </Menu>
                                                 </Box>
-                                            </Flex>
+                                            </>
                                     }
                                 </Flex>
                             ))

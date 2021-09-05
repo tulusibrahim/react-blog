@@ -17,17 +17,6 @@ const Content = (props) => {
 
     useEffect(async () => {
         getData()
-        supabase.auth.session() &&
-            console.log(supabase.auth.user())
-        // console.log(supabase.auth.session().user.email)
-        // const { data, error } = await supabase
-        //     .from('blog')
-        //     .select(`
-        //         *,
-        //         blog_comments(
-        //             author
-        //         )
-        //     `)
     }, [])
 
     return (
@@ -46,7 +35,6 @@ const Content = (props) => {
                                     </Link>
                                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                                         <div className="date">{(res.email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '').replace('@email.com', '')}, {res.date}</div>
-                                        {/* <div className="date">{res.date}</div> */}
                                     </div>
                                     <div className="body">
                                         <TextTruncate

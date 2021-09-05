@@ -1,3 +1,4 @@
+import { Box, Flex } from "@chakra-ui/layout";
 import { useEffect } from "react";
 
 const About = () => {
@@ -7,10 +8,10 @@ const About = () => {
     }, [])
 
     return (
-        <div className="about">
-            <div>About Us</div>
-            <div>Made with passion, since 21 Feb 2021</div>
-        </div>
+        <Flex width="100%" height="90vh" textAlign="center" color="white" direction="column" justify="center" align="center">
+            <Box>About Us</Box>
+            <Box>Made with passion, since 21 Feb 2021.</Box>
+        </Flex>
     );
 }
 

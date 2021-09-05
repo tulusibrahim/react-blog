@@ -19,9 +19,10 @@ const Search = () => {
         setSession(supabase.auth.session())
         getDataTag()
     }, [all])
+    //onClick={() => toast({ description: 'Still working on it!', status: 'info', isClosable: true })}
     return (
         <Flex w="100%" h="20vh" justify="center">
-            <Flex w="95%" h="100%" color="white" justify="center" direction="column" align="flex-start">
+            <Flex w={['90%', '90%', '95%', '95%']} h="100%" color="white" justify="center" direction="column" align="flex-start">
                 {/* {
                 session &&
                 <div className="search">
@@ -33,13 +34,13 @@ const Search = () => {
                 <Text fontSize="32px" fontWeight="bold">
                     Topics
                 </Text>
-                <Flex >
-                    <Flex wrap="wrap">
+                <Flex w="100%">
+                    <Flex overflow="auto">
                         {
                             dataTag.map((res, index) => (
-                                // <Link to={{ pathname: `/topic/${(res.name).replace("#", '')}` }}>
-                                <Box onClick={() => toast({ description: 'Still working on it!', status: 'info', isClosable: true })} key={index} m="5px" bg="green.600" p="5px" borderRadius="5px">{res.name}</Box>
-                                // </Link>
+                                <Link to={{ pathname: `/topic/${(res.name).replace("#", '')}` }}>
+                                    <Box key={index} m="5px" bg="green.600" p="5px" borderRadius="5px">{(res.name).replace("#", '')}</Box>
+                                </Link>
                             ))
                         }
                     </Flex>

@@ -38,6 +38,26 @@ html::-webkit-scrollbar-thumb:hover {
     }
 }
 
+.cardtopic {
+    width: auto;
+    padding: 10px;
+    margin: 10px;
+    margin-bottom: 20px;
+    height: fit-content;
+    max-height: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    border: 1px solid #161f30;
+    color: #415A77;
+    border-radius: .5rem;
+    line-height: 1.5rem;
+    box-shadow: 2px 2px 4px #060f18,
+        -2px -2px 4px #152b43;
+    // rgb(143, 143, 143);
+    transition: .3s;
+}
+
 .navbarcon {
     width: 100%;
     height: 10vh;
@@ -433,6 +453,7 @@ html::-webkit-scrollbar-thumb:hover {
                     a {
                         color: #abacab;
                         font-style: italic;
+                        text-decoration: underline
                     }
                 }
             }

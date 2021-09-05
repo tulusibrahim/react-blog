@@ -13,13 +13,19 @@ const Navbar = (props) => {
     const [session, setSession] = useState(false)
     const [display, setDisplay] = useState('none')
     const [profilePic, setProfilePic] = useState('')
+    const [nickName, setNickName] = useState('')
     let all = useLocation()
-    let imageSize = createBreakpoints({ base: '30px', sm: '30px', md: '30px', lg: '30px' })
 
     const getProfilePic = async () => {
         let profilePic = await supabase.storage.from('blog').getPublicUrl(`profilePic/${supabase.auth.user().id}`)
         profilePic.data.publicURL ? setProfilePic(profilePic.data.publicURL) : setProfilePic('')
     }
+
+    const getUsername = async () => {
+        let result = await supabase.from('blog_users').select('nickname').eq('id', supabase.auth.session().user.id)
+        setNickName(result.data[0].nickName)
+    }
+
 
     const logOut = async () => {
         await supabase.auth.signOut()
@@ -29,12 +35,14 @@ const Navbar = (props) => {
 
     useEffect(() => {
         setSession(supabase.auth.session())
+
         // setProfilePic('')
-        // session &&
-        //     getProfilePic()
+        session &&
+            getUsername()
     }, [all])
 
     useEffect(() => {
+        setNickName('')
         setDisplay('none')
     }, [])
 
@@ -47,9 +55,12 @@ const Navbar = (props) => {
                         <MenuButton>
                             {
                                 session &&
-                                <Box fontSize="12px" bg="#399930" p="4px" borderRadius="5px">
+                                <Box fontSize="12px" fontWeight="normal" bg="#399930" p="4px" borderRadius="5px">
                                     {
-                                        (supabase.auth.user().email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '')
+                                        nickName ?
+                                            nickName
+                                            :
+                                            (supabase.auth.user().email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '')
                                     }
                                 </Box>
                             }
