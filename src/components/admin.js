@@ -257,7 +257,7 @@ const Admin = (props) => {
         return (
             <div>
                 <div className="admin" style={{ flexDirection: 'column', width: '100%' }}>
-                    <div style={{ width: '100%', paddingBottom: 20 }}>
+                    <Box pb="20px" w={'100%', '95%', '95%', '95%'} >
                         <div className="admin" style={{ justifyContent: "space-between", paddingTop: '20px' }}>
                             <div>
                                 Your posts
@@ -397,7 +397,7 @@ const Admin = (props) => {
                                 </Flex>
                             ))
                         }
-                    </div>
+                    </Box>
                 </div>
             </div>
         )

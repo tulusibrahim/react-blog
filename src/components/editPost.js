@@ -56,7 +56,6 @@ const EditPost = (props) => {
             .update({
                 title: title ? title : props.location.query.res.title,
                 body: body ? body : props.location.query.res.body,
-                isDraft: 'true'
             })
             .eq('id', savedId)
         // console.log(update)

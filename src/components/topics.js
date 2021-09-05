@@ -24,6 +24,7 @@ const Topic = () => {
             <Flex w="90%" direction="row" wrap="wrap" justify="space-around">
                 {
                     data.map(res => (
+                        res.isDraft !== 'true' &&
                         <Box p="10px" m="10px" w={['100%', '100%', '100%', "45%"]} className="card" borderRadius="5px" boxShadow="2px 2px 4px #060f18,-2px -2px 4px #152b43;">
                             <Link to={{ pathname: `/article/${res.title}` }}>
                                 <Box fontSize="24px">{res.title}</Box>
