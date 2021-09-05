@@ -122,26 +122,6 @@ const NewBlog = () => {
         }
     }
 
-    const postTag = async () => {
-        const getPostId = await supabase.from('blog').select('id').eq('title', title)
-        // console.log(getPostId)
-
-        alltag.map(async (res, index) => {
-            // console.log(res)
-            const getTagId = await supabase.from('blog_tags').select('id').eq('name', res)
-            // console.log(getTagId)
-            let post = await supabase.from('blog_postTag').insert([{ post_id: savedId, tag_id: getTagId.data[0].id }])
-            console.log(post)
-            if (index == alltag.length - 1) {
-                // onclose
-                postDataFinal()
-            }
-        })
-    }
-
-    //usedebounce atau pake settimeout buat update perubahan di body
-    //bikin function untuk save data kosong di useeffect/perrtama kali render, baru abistu di update
-
     const checkTag = async (data) => {
         let parsedWord = data.target.value.replaceAll(" ", "").toLowerCase()
         console.log(parsedWord)
@@ -149,41 +129,57 @@ const NewBlog = () => {
             toast({ description: 'Please input tag name', status: 'info', isClosable: true })
         }
         else if (parsedWord) {
+            setTag('')
             console.log(parsedWord)
-            const result = await supabase
-                .from('blog_tags')
-                .select('*')
-                .eq('name', `#${parsedWord}`)
+            const result = await supabase.from('blog_tags').select('*').eq('name', `#${parsedWord}`)
 
-            if (result.data.length == 0) {
-                let postTag = await supabase.from('blog_tags').insert({ name: `#${parsedWord}` })
-
-                postTag.error && toast({ description: 'Failed to add tag', status: 'error' })
-
-                alltag ? setAllTag(oldTag => [...oldTag, `#${parsedWord}`]) : setAllTag(`#${parsedWord}`);
-                setTag('')
+            if (result.data.length) {
+                // console.log('udh ada tag')
+                const insertTag = await supabase.from('blog_postTag').select('*').match({ post_id: savedId, tag_id: result.data[0].id })
+                // console.log(insertTag)
+                if (insertTag.data.length == 0) {
+                    let postTag = await supabase.from('blog_postTag').insert([{ post_id: savedId, tag_id: result.data[0].id }])
+                    alltag ? setAllTag(oldTag => [...oldTag, { name: `#${parsedWord}` }]) : setAllTag({ name: `#${parsedWord}` });
+                }
+                else {
+                    toast({ description: 'Tag already exist', status: 'warning', isClosable: true })
+                }
             }
             else {
-                alltag ? setAllTag(oldTag => [...oldTag, `#${parsedWord}`]) : setAllTag(`#${parsedWord}`);
-                setTag('')
+                // console.log('blm ada tag')
+                let postTag = await supabase.from('blog_tags').insert({ name: `#${parsedWord}` })
+                // console.log(postTag)
+                postTag.error && toast({ description: 'Failed to add tag', status: 'error' })
+
+                const insertTag = await supabase.from('blog_postTag').select('*').match({ post_id: savedId, tag_id: postTag.data[0].id })
+                // console.log(insertTag)
+                if (insertTag.data.length == 0) {
+                    let insertTag = await supabase.from('blog_postTag').insert([{ post_id: savedId, tag_id: postTag.data[0].id }])
+                    alltag ? setAllTag(oldTag => [...oldTag, { name: `#${parsedWord}` }]) : setAllTag({ name: `#${parsedWord}` });
+                }
+                else {
+                    toast({ description: 'Tag already exist', status: 'warning', isClosable: true })
+                }
             }
         }
     }
 
     const removeOneTag = async (data) => {
-        let filteredArray = alltag.filter(res => res !== data)
-        setAllTag(filteredArray)
+        let getTagId = await supabase.from('blog_tags').select().eq('name', data.name)
+        let deleteTag = await supabase.from('blog_postTag').delete().match({ post_id: savedId, tag_id: getTagId.data[0].id })
+        let result = await supabase.from('blog').select('*,blog_tags(*)').eq('id', savedId)
+        setAllTag(result.data[0].blog_tags)
     }
 
     // window.onpopstate = () =>
     //     history.location.pathname == '/new' &&
 
     useEffect(() => {
+        document.title = "New Blog"
         setSavedId('')
         setBody('')
         setTitle('')
         setSaveStatus()
-        document.title = "New Blog"
         setUpload(false)
     }, [])
 
@@ -222,13 +218,13 @@ const NewBlog = () => {
                                     alltag == '' ?
                                         <Text color="whiteAlpha.500" fontSize={20} >No tags yet...</Text>
                                         :
-                                        alltag.map((res, index) => <Tag cursor="pointer" key={index} m="5px" variant="subtle" colorScheme="telegram">{res}<TagRightIcon onClick={() => removeOneTag(res)} as={CloseIcon} boxSize="10px" /></Tag>)
+                                        alltag.map((res, index) => <Tag cursor="pointer" key={index} m="5px" variant="subtle" colorScheme="telegram">{res.name}<TagRightIcon onClick={() => removeOneTag(res)} as={CloseIcon} boxSize="10px" /></Tag>)
                                 }
                             </Flex>
                             <Input variant="flushed" color="whiteAlpha.900" placeholder="Tags" mt="20px" onKeyUp={(e) => e.keyCode == 13 && checkTag(e)} value={tag} onChange={e => setTag(e.target.value)}></Input>
                         </ModalBody>
                         <ModalFooter>
-                            <Button onClick={postTag} variant="solid" colorScheme="gray">Publish!</Button>
+                            <Button onClick={postDataFinal} variant="solid" colorScheme="gray">Publish!</Button>
                         </ModalFooter>
                     </ModalContent>
                 </Modal>

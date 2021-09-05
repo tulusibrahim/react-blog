@@ -71,7 +71,7 @@ const Login = (props) => {
         <Flex direction="column" alignItems="center" justify="space-evenly" w="100%" h="90vh">
             {
                 login == 'false' ?
-                    <form onSubmit={signUp} style={{ height: '80%' }}>
+                    <form onSubmit={signUp} style={{ height: '80%', width: '100%' }}>
                         <Flex h="100%" direction="column">
                             <Flex height="80%" justifyContent="space-evenly" alignItems="center" direction="column">
                                 <Input variant="flushed" placeholder="Email" width={['93%', '70%', '50%', '30%']} color="white" onChange={(e) => setEmail(e.target.value)} required />
@@ -101,12 +101,12 @@ const Login = (props) => {
                         </Flex>
                     </form>
                     :
-                    <form onSubmit={logIn} style={{ height: '80%' }}>
+                    <form onSubmit={logIn} style={{ height: '80%', width: '100%' }}>
                         <Flex h="100%" direction="column">
                             <Flex height="80%" justifyContent="space-evenly" alignItems="center" direction="column">
                                 <Input variant="flushed" placeholder="Email" width={['93%', '70%', '50%', '30%']} color="white" onChange={(e) => setEmail(e.target.value)} required />
                                 <InputGroup width={['93%', '70%', '50%', '30%']}>
-                                    <Input variant="flushed" placeholder="Password" type={show ? "text" : "text"} color="white" onChange={(e) => setPassword(e.target.value)} required />
+                                    <Input variant="flushed" placeholder="Password" type={show ? "text" : "password"} color="white" onChange={(e) => setPassword(e.target.value)} required />
                                     <InputRightElement >
                                         <Button h="1.75rem" variant="outline" size="sm" colorScheme="whiteAlpha" onClick={() => setShow(!show)}>
                                             {show ? <ViewOffIcon /> : <ViewIcon />}
