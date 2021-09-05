@@ -257,7 +257,7 @@ const Admin = (props) => {
         return (
             <div>
                 <div className="admin" style={{ flexDirection: 'column', width: '100%' }}>
-                    <div style={{ width: '90%', paddingBottom: 20 }}>
+                    <div style={{ width: '100%', paddingBottom: 20 }}>
                         <div className="admin" style={{ justifyContent: "space-between", paddingTop: '20px' }}>
                             <div>
                                 Your posts
@@ -339,14 +339,14 @@ const Admin = (props) => {
                                                             <BsThreeDotsVertical />
                                                         </MenuButton>
                                                         <MenuList bg="#0D1B2A">
-                                                            <MenuItem _focus={{ backgroundColor: '#152b43' }}>
-                                                                <Link to={{ pathname: '/edit', query: { res } }} style={{ display: 'flex', alignItems: 'center' }}>
+                                                            <Link to={{ pathname: '/edit', query: { res } }} style={{ display: 'flex', alignItems: 'center' }}>
+                                                                <MenuItem _focus={{ backgroundColor: '#152b43' }}>
                                                                     {/* <Button colorScheme="green" fontWeight="normal" leftIcon={<BsPen />}>Continue</Button> */}
                                                                     <BsPen style={{ marginRight: '10px' }} />Continue
-                                                                </Link>
-                                                            </MenuItem>
-                                                            <MenuItem _focus={{ backgroundColor: '#152b43' }}>
-                                                                <Flex onClick={() => deletePost(res.id)} cursor="pointer" data-toggle="tooltip" title="Delete">
+                                                                </MenuItem>
+                                                            </Link>
+                                                            <MenuItem _focus={{ backgroundColor: '#152b43' }} onClick={() => deletePost(res.id)}>
+                                                                <Flex cursor="pointer" data-toggle="tooltip" title="Delete">
                                                                     <AiOutlineDelete size="1.3em" color="#dc3545" style={{ marginRight: '10px' }} /> Delete
                                                                 </Flex>
                                                             </MenuItem>
@@ -373,19 +373,19 @@ const Admin = (props) => {
                                                             <BsThreeDotsVertical />
                                                         </MenuButton>
                                                         <MenuList bg="#0D1B2A">
-                                                            <MenuItem _focus={{ backgroundColor: '#152b43' }} display="flex">
-                                                                <AiOutlineEyeInvisible style={{ marginRight: '10px' }} data-toggle="tooltip" title="Unpublish" cursor="pointer" onClick={() => unpublishPost(res)} />
+                                                            <MenuItem _focus={{ backgroundColor: '#152b43' }} display="flex" onClick={() => unpublishPost(res)} >
+                                                                <AiOutlineEyeInvisible style={{ marginRight: '10px' }} data-toggle="tooltip" title="Unpublish" cursor="pointer" />
                                                                 Unpublish
                                                             </MenuItem>
-                                                            <MenuItem _focus={{ backgroundColor: '#152b43' }}>
-                                                                <Box cursor="pointer">
-                                                                    <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white', display: 'flex' }} data-toggle="tooltip" title="Edit">
+                                                            <Box cursor="pointer">
+                                                                <Link to={{ pathname: '/edit', query: { res } }} style={{ color: 'white', display: 'flex' }} data-toggle="tooltip" title="Edit">
+                                                                    <MenuItem _focus={{ backgroundColor: '#152b43' }}>
                                                                         <AiOutlineEdit style={{ marginRight: '10px' }} size="1.3em" /> Edit
-                                                                    </Link>
-                                                                </Box>
-                                                            </MenuItem>
-                                                            <MenuItem _focus={{ backgroundColor: '#152b43' }}>
-                                                                <Box display="flex" cursor="pointer" color="#dc3545" onClick={() => deletePost(res.id)} data-toggle="tooltip" title="Delete">
+                                                                    </MenuItem>
+                                                                </Link>
+                                                            </Box>
+                                                            <MenuItem _focus={{ backgroundColor: '#152b43' }} onClick={() => deletePost(res.id)} >
+                                                                <Box display="flex" cursor="pointer" color="#dc3545" data-toggle="tooltip" title="Delete">
                                                                     <AiOutlineDelete style={{ marginRight: '10px' }} size="1.3em" /> Delete
                                                                 </Box>
                                                             </MenuItem>
