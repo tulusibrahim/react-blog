@@ -20,12 +20,19 @@ const Topic = () => {
     }, [])
 
     return (
-        <Flex w="100%" h="fit-content" mt="10vh" justify="center" color="white">
-            <Flex w="90%" direction="row" wrap="wrap" justify="space-around">
+        <Flex w="100%" h="fit-content" mt="20px" direction="column" align="center" color="white">
+            <Box w={['90%', '90%', '90%', "95%"]} mb="10px" mt="10px" textAlign="left">
+                <Text fontSize="20px" fontWeight="bold" width="fit-content" borderRadius="50px" p="8px" bg="green.600">
+                    {
+                        param.topic
+                    }
+                </Text>
+            </Box>
+            <Flex w="100%" direction="row" wrap="wrap" justify="space-around">
                 {
-                    data.map(res => (
+                    data.map((res, key) => (
                         res.isDraft !== 'true' &&
-                        <Box p="10px" m="10px" w={['100%', '100%', '100%', "45%"]} className="card" borderRadius="5px" boxShadow="2px 2px 4px #060f18,-2px -2px 4px #152b43;">
+                        <Box key={key} p="10px" m="10px" w={['90%', '90%', '90%', "45%"]} className="card" borderRadius="5px" boxShadow="2px 2px 4px #060f18,-2px -2px 4px #152b43;">
                             <Link to={{ pathname: `/article/${res.title}` }}>
                                 <Box fontSize="24px">{res.title}</Box>
                             </Link>

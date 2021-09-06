@@ -68,20 +68,22 @@ const Navbar = (props) => {
             <div className="navbar">
                 <div className="title"><Link to="/" className="link" >Write</Link></div>
                 <Box className="right" h="10vh" w={['60%', '40%', '30%', '20%']} d="flex" alignItems="center" justifyContent={session ? "space-evenly" : 'flex-end'}>
+                    {
+                        session &&
+                        <Box fontSize="12px" fontWeight="normal" bg="#399930" p="4px" borderRadius="4px">
+                            <Link to={{ pathname: `/${nickName}` }}>
+                                {
+                                    nickName ?
+                                        nickName
+                                        :
+                                        (supabase.auth.user().email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '')
+                                }
+                            </Link>
+                        </Box>
+                    }
                     <Menu>
-                        <MenuButton>
-                            {
-                                session &&
-                                <Box fontSize="12px" fontWeight="normal" bg="#399930" p="4px" borderRadius="4px">
-                                    {
-                                        nickName ?
-                                            nickName
-                                            :
-                                            (supabase.auth.user().email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '')
-                                    }
-                                </Box>
-                            }
-                        </MenuButton>
+                        {/* <MenuButton> */}
+                        {/* </MenuButton> */}
                         <MenuButton >
                             {
                                 session ?

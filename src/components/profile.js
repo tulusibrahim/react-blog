@@ -54,9 +54,11 @@ const Profile = (props) => {
             <Flex align="center" justify="space-evenly" w="95%" h="fit-content" direction="column">
                 <Flex align="center" w="100%" justify="space-evenly" direction={['row', 'row', 'column', 'column']} mb="20px">
                     <Image boxSize={["50px", "60px", "80px", "100px"]} borderRadius="50px" src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} />
-                    <Text p="5px" fontSize={["20px", "24px", "24px", "28px"]} wordBreak="break-all">{profile.nickname}</Text>
+                    <Flex align={["flex-start", "flex-start", "center", "center"]} direction="column">
+                        <Text fontSize={["20px", "24px", "24px", "28px"]} ml="5px" wordBreak="break-all">{profile.nickname}</Text>
+                        <Text fontStyle="italic" fontSize={["12px", "16px", "18px", "20px"]} ml="5px">{profile.bio}</Text>
+                    </Flex>
                 </Flex>
-                <Text fontStyle="italic" fontSize={["14px", "16px", "18px", "20px"]} textAlign="center">{profile.bio}</Text>
                 <Flex direction="column" align="center" w="100%">
                     {
                         data.map(res => (
@@ -68,7 +70,7 @@ const Profile = (props) => {
                                 <Text fontSize={["10px", "10px", "12px", "12px"]} color="#716F81">{res.date}</Text>
                                 <Text noOfLines={3} fontSize={["14px", "14px", "16px", "16px"]} color="#C8C6C6">{res.body.replace(/<[^>]*>/g, '')}</Text>
                                 <Box>
-                                    <Text fontSize={["14px", "14px", "16px", "16px"]}>{res.likes ? res.likes : '0'} &nbsp;❤</Text>
+                                    <Text fontSize={["14px", "14px", "16px", "16px"]}>❤&nbsp; {res.likes ? res.likes : '0'} </Text>
                                 </Box>
                             </Box>
                         ))
