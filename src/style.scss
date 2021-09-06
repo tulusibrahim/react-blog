@@ -428,7 +428,8 @@ html::-webkit-scrollbar-thumb:hover {
 
             .date {
                 font-size: .85rem;
-                margin-bottom: 10px;
+                margin-bottom: 15px;
+                margin-top: 10px;
                 color: grey;
                 display: flex;
                 align-items: center;
@@ -437,7 +438,6 @@ html::-webkit-scrollbar-thumb:hover {
 
             .body {
                 margin-bottom: 10px;
-                font-size: 1.2rem;
                 // text-align: justify;
                 line-height: 1.6;
 
@@ -449,7 +449,22 @@ html::-webkit-scrollbar-thumb:hover {
                     word-wrap: break-word;
                 }
 
+                h2 {
+                    font-size: 1.5em;
+                    margin-left: 0;
+                    margin-right: 0;
+                    font-weight: bold;
+                }
+
+                h3 {
+                    font-size: 1.17em;
+                    margin-left: 0;
+                    margin-right: 0;
+                    font-weight: bold;
+                }
+
                 p {
+
                     a {
                         color: #abacab;
                         font-style: italic;

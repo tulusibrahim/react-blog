@@ -39,7 +39,7 @@ const Search = () => {
                         {
                             dataTag.map((res, index) => (
                                 <Link to={{ pathname: `/topic/${(res.name).replace("#", '')}` }}>
-                                    <Box key={index} m="5px" bg="green.600" p="5px" borderRadius="5px">{(res.name).replace("#", '')}</Box>
+                                    <Box _hover={{ bgColor: 'green.700' }} key={index} m="5px" bg="green.600" p="8px" borderRadius="50px">{(res.name).replace("#", '')}</Box>
                                 </Link>
                             ))
                         }

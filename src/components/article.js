@@ -5,7 +5,7 @@ import moment from "moment";
 import { Link } from "react-router-dom"
 import parse from 'html-react-parser';
 import swal from 'sweetalert';
-import { Flex, Menu, MenuButton, MenuItem, MenuList, Tag } from "@chakra-ui/react";
+import { Flex, Menu, MenuButton, MenuItem, MenuList, Tag, Text } from "@chakra-ui/react";
 
 const Article = (props) => {
     const { title } = useParams()
@@ -14,7 +14,7 @@ const Article = (props) => {
     const [tags, setTags] = useState([])
     const [inputComment, setInputComments] = useState('')
     const [session, setSession] = useState(false)
-    const [display, setDisplay] = useState('none')
+    const [profilePic, setProfilePic] = useState('')
 
     const getData = async () => {
         const { data, error } = await supabase
@@ -26,15 +26,29 @@ const Article = (props) => {
                 blog_tags(*)
             `)
             .eq('title', title)
-        console.log(data)
+        console.log(data[0].body)
         setData(data)
         setComments(data[0].blog_comments)
         setTags(data[0].blog_tags)
+
+        if (data[0].blog_users) {
+            getProfilePic(data[0].blog_users.id)
+        }
+
         if (supabase.auth.session() == null) {
             updatePageViews(data[0].pageViews)
         }
         else if (supabase.auth.session().user.email !== data[0].email) {
             updatePageViews(data[0].pageViews)
+        }
+    }
+
+    const getProfilePic = async (id) => {
+        console.log(id)
+        let profilePic = await supabase.storage.from('blog').download(`profilePic/${id}`)
+        if (profilePic.data) {
+            let image = URL.createObjectURL(profilePic.data)
+            setProfilePic(image)
         }
     }
 
@@ -116,6 +130,7 @@ const Article = (props) => {
         setData([])
         getData()
         setInputComments('')
+        setProfilePic('')
         setSession(supabase.auth.session())
         document.title = title
     }, [])
@@ -139,7 +154,7 @@ const Article = (props) => {
                             data.map((res, index) => (
                                 <div key={index}>
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                        <div className="title">{res.title}</div>
+                                        <Text fontSize={["24px", "28px", "28px", "32px"]} fontWeight="semibold">{res.title}</Text>
                                         {
                                             session &&
                                                 supabase.auth.user().email === res.email ?
@@ -171,10 +186,25 @@ const Article = (props) => {
                                         }
                                     </div>
                                     <div className="date">
-                                        <img src={`https://ui-avatars.com/api/?name=${res.email}&length=1`} width="25px" style={{ borderRadius: '50px', marginRight: '10px' }}></img>
-                                        {res.blog_users ? res.blog_users.nickname : (res.email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '')}, {res.date}
+                                        <img src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${res.email}&length=1`} width="25px" style={{ borderRadius: '50px', marginRight: '10px' }}></img>
+                                        {
+                                            res.blog_users ?
+                                                <>
+                                                    <Link to={{ pathname: `/${res.blog_users.nickname}`, query: { res } }}>
+                                                        <Text fontSize={["14px", "15px", "15px", "16px"]} >{res.blog_users.nickname}, &nbsp;</Text>
+                                                    </Link>
+                                                    <Text fontSize={["14px", "15px", "15px", "16px"]} >{res.date}</Text>
+                                                </>
+                                                :
+                                                <>
+                                                    {/* <Link to={{ pathname: `/${(res.email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '')}`, query: { res } }}> */}
+                                                    <Text fontSize={["14px", "15px", "15px", "16px"]}>{(res.email).replace('@gmail.com', '').replace('@yahoo.com', '').replace('@hotmail.com', '')}, &nbsp;</Text>
+                                                    {/* </Link> */}
+                                                    <Text fontSize={["14px", "15px", "15px", "16px"]}>{res.date}</Text>
+                                                </>
+                                        }
                                     </div>
-                                    <div className="body">{parse(res.body)}</div>
+                                    <Text className="body" fontSize={["16px", "17px", "17px", "18px"]}>{parse(res.body)}</Text>
                                 </div>
                             ))
                         }
@@ -189,10 +219,12 @@ const Article = (props) => {
                             <div>{comments ? comments.length : '0'}</div>
                         </div>
                     </div>
-                    <Flex w="100%" justify="flex-start">
+                    <Flex w="100%" justify="flex-start" mt="10px" wrap="wrap">
                         {
                             tags.map(res => (
-                                <Tag mr="10px" colorScheme="telegram">{res.name}</Tag>
+                                <Link to={{ pathname: `/topic/${(res.name).replace("#", '')}` }}>
+                                    <Tag m="5px" colorScheme="telegram" _hover={{ bgColor: '#115091', color: 'white', transition: '.2s' }}>{res.name}</Tag>
+                                </Link>
                             ))
                         }
                     </Flex>

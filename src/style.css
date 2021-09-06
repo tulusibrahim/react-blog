@@ -547,7 +547,8 @@ html::-webkit-scrollbar-thumb:hover {
 
 .articleconwrapper .articlecon .isi .date {
   font-size: .85rem;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  margin-top: 10px;
   color: grey;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -562,7 +563,6 @@ html::-webkit-scrollbar-thumb:hover {
 
 .articleconwrapper .articlecon .isi .body {
   margin-bottom: 10px;
-  font-size: 1.2rem;
   line-height: 1.6;
 }
 
@@ -572,6 +572,20 @@ html::-webkit-scrollbar-thumb:hover {
   padding: 10px;
   border-radius: 5px;
   word-wrap: break-word;
+}
+
+.articleconwrapper .articlecon .isi .body h2 {
+  font-size: 1.5em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.articleconwrapper .articlecon .isi .body h3 {
+  font-size: 1.17em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
 }
 
 .articleconwrapper .articlecon .isi .body p a {

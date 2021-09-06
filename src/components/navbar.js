@@ -7,6 +7,7 @@ import { AiOutlineAlert, AiOutlineLogin, AiOutlineLogout, AiOutlineUser } from '
 import { BiUser } from 'react-icons/bi'
 import { BsPen } from 'react-icons/bs'
 import { GrAlert } from 'react-icons/gr'
+import swal from 'sweetalert';
 
 
 const Navbar = (props) => {
@@ -17,33 +18,49 @@ const Navbar = (props) => {
     let all = useLocation()
 
     const getProfilePic = async () => {
-        let profilePic = await supabase.storage.from('blog').getPublicUrl(`profilePic/${supabase.auth.user().id}`)
-        profilePic.data.publicURL ? setProfilePic(profilePic.data.publicURL) : setProfilePic('')
+        let profilePic = await supabase.storage.from('blog').download(`profilePic/${supabase.auth.user().id}`)
+        if (profilePic.data) {
+            let image = URL.createObjectURL(profilePic.data)
+            setProfilePic(image)
+        }
     }
 
     const getUsername = async () => {
         let result = await supabase.from('blog_users').select('nickname').eq('id', supabase.auth.session().user.id)
-        setNickName(result.data[0].nickName)
+        setNickName(result.data[0].nickname)
     }
 
 
     const logOut = async () => {
-        await supabase.auth.signOut()
-
-        document.location.reload()
+        swal({
+            title: "Sure want to log out?",
+            // text: "Once deleted, you will not be able to see the post anymore!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then(async res => {
+                if (res) {
+                    await supabase.auth.signOut()
+                    document.location.reload()
+                }
+            })
     }
 
     useEffect(() => {
         setSession(supabase.auth.session())
 
         // setProfilePic('')
-        session &&
+        if (session) {
+            setNickName('')
             getUsername()
+            getProfilePic()
+        }
     }, [all])
 
     useEffect(() => {
-        setNickName('')
         setDisplay('none')
+        setSession(supabase.auth.session())
     }, [])
 
     return (
@@ -55,7 +72,7 @@ const Navbar = (props) => {
                         <MenuButton>
                             {
                                 session &&
-                                <Box fontSize="12px" fontWeight="normal" bg="#399930" p="4px" borderRadius="5px">
+                                <Box fontSize="12px" fontWeight="normal" bg="#399930" p="4px" borderRadius="4px">
                                     {
                                         nickName ?
                                             nickName

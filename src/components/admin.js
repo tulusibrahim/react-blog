@@ -110,7 +110,7 @@ const Admin = (props) => {
             .select(`*,blog_comments(*),blog_tags(*)`)
             .eq('email', user.email)
             .order('title', { ascending: true })
-        console.log(data)
+        // console.log(data)
         if (data == '') {
             setWarn('Your post will appear here.')
         }
@@ -168,13 +168,14 @@ const Admin = (props) => {
         let { data, error } = await supabase
             .storage
             .from('blog')
-            .getPublicUrl(path)
-        console.log(data.publicURL)
-        console.log(error)
-        // console.log(result)
-        // console.log(data)
-        // console.log(error)
-        setProfilePic(data.publicURL)
+            .download(path)
+        console.log(data)
+
+        if (data) {
+            let image = URL.createObjectURL(data)
+            console.log(image)
+            setProfilePic(image)
+        }
     }
 
     const updateProfile = async (data) => {
@@ -229,13 +230,44 @@ const Admin = (props) => {
             const { data, error } = await supabase
                 .storage
                 .from('blog')
-                .upload(`profilePic/${userId}`, files[0], { upsert: true })
+                .upload(`profilePic/${userId}`, files[0], { upsert: true, contentType: 'image/png' })
             console.log(data)
             console.log(error)
-            toastRef.current = toast({ description: "Success upload photo", status: "success" })
+            if (data) {
+                toastRef.current = toast({ description: "Success upload photo", status: "success" })
+                getProfile()
+            }
+            else {
+                error && toast({ description: "Failed upload photo. Please try again", status: "warning" })
+            }
         }
     };
-    //TODO: bikin draft section di kiri,=
+
+    const deletePhoto = async () => {
+        swal({
+            title: "Confirmation",
+            text: "Are you sure want to delete this post?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then(async result => {
+                if (result) {
+                    let userId = supabase.auth.user().id
+                    let path = `profilePic/${userId}`
+                    let deletePhoto = await supabase.storage.from('blog').remove([path])
+                    console.log(deletePhoto)
+                    if (deletePhoto.data) {
+                        toast({ description: 'Successfully delete photo', status: 'success' })
+                        setProfilePic('')
+                        getProfile()
+                    }
+                    else {
+                        toast({ description: 'Failed delete photo. Please try again', status: 'error' })
+                    }
+                }
+            })
+    }
 
     const unpublishPost = async (data) => {
         swal({ title: 'Confirmation', text: `Are you sure want to unpublish ${data.title}?`, buttons: true, icon: 'warning' })
@@ -407,23 +439,22 @@ const Admin = (props) => {
         return (
             <Flex justifyContent="center">
                 <Flex color="white" h="75vh" alignItems="center" justifyContent="center" w="90%">
-                    <Flex direction={['column', 'column', 'row', 'row']} alignItems="center" justifyContent="space-evenly" h="70%" w="90%" >
-                        <Flex h="100%" alignItems="center" justify="center" direction="column" >
-                            <Popover boundary="scrollParent" placement="top-start">
-                                <PopoverTrigger>
-                                    <Image mb='10px' borderRadius="full" boxSize="150px" src={`https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} onError={() => setProfilePic('')}></Image>
-                                </PopoverTrigger>
-                                <PopoverContent borderRadius={10} bg="blackAlpha.700" border="none">
-                                    <PopoverHeader fontWeight="bold">Information!</PopoverHeader>
-                                    <PopoverBody>Currently uploading new avatar is not supported yet :(</PopoverBody>
-                                </PopoverContent>
-                            </Popover>
-                            {/* <Button onClick={() => inputFile.current.click()} m="10px" fontWeight="normal" colorScheme="blackAlpha" rightIcon={<AiOutlineCloudUpload size="20px" />}>
-                                            Upload photo
-                                        </Button>
-                                        <input onChange={handleFileUpload} type="file" style={{ display: 'none' }} ref={inputFile}></input> */}
+                    <Flex direction={['column', 'column', 'row', 'row']} alignItems="center" justifyContent="space-evenly" h="100%" w="95%" >
+                        <Flex h={['30%', '40%', '50%', '100%']} alignItems="center" justify="center" direction="column" >
+                            <Box>
+                                <Image mb='10px' borderRadius="full" boxSize={['120px', '140px', '160px', '180px']} src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} onError={() => setProfilePic('')}></Image>
+                            </Box>
+                            <Box>
+                                <Button onClick={() => inputFile.current.click()} m="4px" p="12px" fontWeight="normal" colorScheme="blackAlpha" rightIcon={<AiOutlineCloudUpload size="20px" />}>
+                                    Upload photo
+                                </Button>
+                                {/* <Button onClick={() => deletePhoto()} m="4px" p="12px" fontWeight="normal" colorScheme="blackAlpha" rightIcon={<AiOutlineDelete size="20px" />}>
+                                    Delete
+                                </Button> */}
+                            </Box>
+                            <input onChange={handleFileUpload} type="file" style={{ display: 'none' }} ref={inputFile}></input>
                         </Flex>
-                        <Flex h="60%" w={['100%', '100%', '70%', '50%']} alignItems="center" justifyContent="space-between" direction="column">
+                        <Flex h={['50%', '50%', '50%', '50%']} w={['100%', '100%', '70%', '50%']} alignItems="center" justifyContent="space-between" direction="column">
                             <Popover boundary="scrollParent" placement="top-start">
                                 <PopoverTrigger>
                                     <InputGroup mb={'10px'}>
