@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react"
 import { supabase } from "../configs/configurations"
 import { Link } from "react-router-dom"
-import moment from "moment";
 import swal from 'sweetalert';
 import { AiOutlineHeart, AiOutlineComment, AiOutlineEye, AiOutlineEdit, AiOutlineDelete, AiOutlineCloudUpload, AiOutlineEyeInvisible } from 'react-icons/ai'
 import { FaSort } from 'react-icons/fa'
-import { useToast, Tabs, TabList, TabPanels, Tab, TabPanel, Menu, MenuList, MenuItem, MenuButton, Button, Flex, Input, Image, InputGroup, InputLeftAddon, Box, useBreakpointValue, InputRightElement, color, Text, PopoverTrigger, PopoverContent, PopoverBody, Popover, PopoverArrow, PopoverCloseButton, PopoverHeader, Badge } from "@chakra-ui/react"
+import { useToast, Tabs, TabList, TabPanels, Tab, TabPanel, Menu, MenuList, MenuItem, MenuButton, Button, Flex, Input, Image, InputGroup, InputLeftAddon, Box, InputRightElement, Text, PopoverTrigger, PopoverContent, PopoverBody, Popover, PopoverHeader, Badge } from "@chakra-ui/react"
 import { CheckIcon } from "@chakra-ui/icons";
 import { BsPen, BsThreeDotsVertical } from "react-icons/bs";
 
@@ -18,7 +17,6 @@ const Admin = (props) => {
     const [username, setUsername] = useState('')
     const [bio, setBio] = useState('')
     const [sortState, setSortState] = useState('')
-    const [image, setImage] = useState("");
     const inputFile = useRef(null);
     let toast = useToast()
     let toastRef = useRef()
@@ -169,51 +167,63 @@ const Admin = (props) => {
             .storage
             .from('blog')
             .download(path)
-        console.log(data)
+        // console.log(data)
 
         if (data) {
             let image = URL.createObjectURL(data)
-            console.log(image)
+            // console.log(image)
             setProfilePic(image)
         }
     }
 
-    const updateProfile = async (data) => {
-        toastRef.current = toast({ description: "Loading...", status: "info" })
+    const updateProfile = async (which, value) => {
+        if (!toastRef.current) {
+            toastRef.current = toast({ description: "Loading...", status: "info" })
+        }
 
-        if (data === 'bio') {
+        if (which === 'bio') {
             let { data, error } = await supabase
                 .from('blog_users')
-                .update({ bio: bio })
+                .update({ bio: value })
                 .eq('id', supabase.auth.user().id)
 
             if (data) {
-                setBio('')
-                if (toastRef.current) {
-                    toast.update(toastRef.current, { description: "Success update bio", status: "success", isClosable: true })
-                }
+                toast.update(toastRef.current, { description: "Success update bio", status: "success", isClosable: true })
             }
             else if (error) {
-                if (toastRef.current) {
-                    toast.update(toastRef.current, { description: "Failed update bio", status: "error", isClosable: true })
-                }
+                toast({ description: "Failed update bio, please try again.", status: "error", isClosable: true })
             }
         }
-        else if (data === 'username') {
-            let { data, error } = await supabase
-                .from('blog_users')
-                .update({ nickname: username })
-                .eq('id', supabase.auth.user().id)
-
-            if (data) {
-                setUsername('')
-                if (toastRef.current) {
-                    toast.update(toastRef.current, { description: "Success update username", status: "success", isClosable: true })
-                }
+        else if (which === 'username') {
+            if (value.toLowerCase() == profile.nickname) {
+                return null
             }
-            else if (error) {
-                if (toastRef.current) {
-                    toast.update(toastRef.current, { description: "Failed update username", status: "error", isClosable: true })
+            else if (value.toLowerCase() === '') {
+                toast({ description: "Username cannot be blank.", status: "error", isClosable: true })
+            }
+            else {
+                let check = await supabase.from('blog_users').select().eq('nickname', value.toLowerCase())
+
+                if (check.data.length) {
+                    toast({ description: "Username has been taken.", status: "error", isClosable: true })
+                }
+                else {
+                    let { data, error } = await supabase
+                        .from('blog_users')
+                        .update({ nickname: value.toLowerCase() })
+                        .eq('id', supabase.auth.user().id)
+
+                    if (data) {
+                        if (toastRef.current) {
+                            toast.update(toastRef.current, { description: "Success update username", status: "success", isClosable: true })
+                        }
+                        else {
+                            toast({ description: "Success update username", status: "success", isClosable: true })
+                        }
+                    }
+                    else if (error) {
+                        toast({ description: "Failed to update, please try again.", status: "error", isClosable: true })
+                    }
                 }
             }
         }
@@ -242,32 +252,6 @@ const Admin = (props) => {
             }
         }
     };
-
-    const deletePhoto = async () => {
-        swal({
-            title: "Confirmation",
-            text: "Are you sure want to delete this post?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-            .then(async result => {
-                if (result) {
-                    let userId = supabase.auth.user().id
-                    let path = `profilePic/${userId}`
-                    let deletePhoto = await supabase.storage.from('blog').remove([path])
-                    console.log(deletePhoto)
-                    if (deletePhoto.data) {
-                        toast({ description: 'Successfully delete photo', status: 'success' })
-                        setProfilePic('')
-                        getProfile()
-                    }
-                    else {
-                        toast({ description: 'Failed delete photo. Please try again', status: 'error' })
-                    }
-                }
-            })
-    }
 
     const unpublishPost = async (data) => {
         swal({ title: 'Confirmation', text: `Are you sure want to unpublish ${data.title}?`, buttons: true, icon: 'warning' })
@@ -469,17 +453,16 @@ const Admin = (props) => {
                             </Popover>
                             <InputGroup mb={'10px'}>
                                 <InputLeftAddon bg="none" children="Bio" fontSize={14} color="grey" />
-                                <Input variant="outline" placeholder="Bio" defaultValue={profile.bio ? profile.bio : ''} onChange={e => setBio(e.target.value)}></Input>
+                                <Input autoFocus variant="outline" placeholder="Bio" defaultValue={profile.bio ? profile.bio : ''} onChange={e => updateProfile('bio', e.target.value)}></Input>
                                 <InputRightElement onClick={() => updateProfile('bio')} display={bio ? null : 'none'} children={<CheckIcon />} />
                             </InputGroup>
-                            <Box w="100%">
-                                <InputGroup mb={'10px'}>
-                                    <InputLeftAddon bg="none" children="Username" fontSize={14} color="grey" />
-                                    <Input variant="outline" placeholder="Username" defaultValue={profile.nickname ? profile.nickname : ''} onChange={e => setUsername(e.target.value)}></Input>
-                                    <InputRightElement onClick={() => updateProfile('username')} display={username ? null : 'none'} children={<CheckIcon />} />
-                                </InputGroup>
-                                <Text fontSize="sm" fontStyle="italic" textAlign="left" w="100%">*This username will appear in your blog post</Text>
-                            </Box>
+                            <InputGroup>
+                                <InputLeftAddon bg="none" children="Username" fontSize={14} color="grey" />
+                                <Input autoFocus textTransform="lowercase" variant="outline" placeholder="Username" defaultValue={profile.nickname ? profile.nickname : ''} onChange={e => updateProfile('username', e.target.value)}></Input>
+                                <InputRightElement onClick={() => updateProfile('username')} display={username ? null : 'none'} children={<CheckIcon />} />
+                            </InputGroup>
+                            <Text fontSize="sm" fontStyle="italic" textAlign="left" w="100%">*This username will appear in your blog post</Text>
+
                         </Flex>
                     </Flex>
                 </Flex>
@@ -489,14 +472,6 @@ const Admin = (props) => {
 
     useEffect(async () => {
         document.title = `Profile`
-        // const { data, error } = await supabase
-        //     .storage
-        //     .from('blog')
-        //     .list('profilePic', {
-        //         limit: 100,
-        //         offset: 0
-        //     })
-        // console.log(data)
         setUsername('')
         setBio('')
         setData('')

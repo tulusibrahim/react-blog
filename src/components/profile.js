@@ -38,22 +38,31 @@ const Profile = (props) => {
         }
     }
 
+    // useEffect(() => {
+    //     document.title = user
+    //     if (supabase.auth.session()) {
+    //         // console.log(props)
+    //         setSavedId('')
+    //         setProfilePic('')
+    //         getProfile()
+    //         // getData()
+    //     }
+    // }, [])
+
     useEffect(() => {
         document.title = user
-        if (supabase.auth.session()) {
-            // console.log(props)
-            setSavedId('')
-            setProfilePic('')
-            getProfile()
-            // getData()
-        }
-    }, [])
+        // console.log(props)
+        setSavedId('')
+        setProfilePic('')
+        getProfile()
+        // getData()
+    }, [user])
 
     return (
-        <Flex w="100%" h="100%" mt="20px" justify="center" color="white">
-            <Flex align="center" justify="space-evenly" w="95%" h="fit-content" direction="column">
+        <Flex w="100%" h="100%" mt="20px" justify="center" color="white" >
+            <Flex align="center" justify="space-evenly" w="95%" h="fit-content" mb="20px" direction="column">
                 <Flex align="center" w="100%" justify="space-evenly" direction={['row', 'row', 'column', 'column']} mb="20px">
-                    <Image boxSize={["50px", "60px", "80px", "100px"]} borderRadius="50px" src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} />
+                    <Image boxSize={["50px", "60px", "80px", "100px"]} borderRadius="50px" src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${profile.nickname}&length=1`} />
                     <Flex align={["flex-start", "flex-start", "center", "center"]} direction="column">
                         <Text fontSize={["20px", "24px", "24px", "28px"]} ml="5px" wordBreak="break-all">{profile.nickname}</Text>
                         <Text fontStyle="italic" fontSize={["12px", "16px", "18px", "20px"]} ml="5px">{profile.bio}</Text>

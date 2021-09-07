@@ -25,7 +25,7 @@ const Article = (props) => {
                 blog_users(*),
                 blog_tags(*)
             `)
-            .eq('title', title)
+            .match({ title: title, isDraft: 'false' })
         console.log(data[0].body)
         setData(data)
         setComments(data[0].blog_comments)
