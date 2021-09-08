@@ -461,7 +461,7 @@ const Admin = (props) => {
                                 <Input autoFocus textTransform="lowercase" variant="outline" placeholder="Username" defaultValue={profile.nickname ? profile.nickname : ''} onChange={e => updateProfile('username', e.target.value)}></Input>
                                 <InputRightElement onClick={() => updateProfile('username')} display={username ? null : 'none'} children={<CheckIcon />} />
                             </InputGroup>
-                            <Text fontSize="sm" fontStyle="italic" textAlign="left" w="100%">*This username will appear in your blog post</Text>
+                            <Text fontSize="sm" fontStyle="italic" textAlign="left" w="100%">*This username will appear in your blog post, profile page. Username must be unique.</Text>
 
                         </Flex>
                     </Flex>

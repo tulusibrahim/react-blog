@@ -1,5 +1,5 @@
 import { Image } from '@chakra-ui/image';
-import { Box, Flex, Text } from '@chakra-ui/layout';
+import { Box, Center, Flex, Text } from '@chakra-ui/layout';
 import { Button, useToast } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
@@ -22,11 +22,15 @@ const Profile = (props) => {
         let profile = await supabase.from('blog_users').select("*,blog(*)").match({ nickname: user })
         console.log(profile)
         setProfile(profile.data[0])
-        setData(profile.data[0].blog)
+        // setData(profile.data[0].blog)
         setSavedId(profile.data[0].id)
         getProfilePic(profile.data[0].id)
         getFollowers(profile.data[0].id)
         getFollowing(profile.data[0].id)
+
+        let filteredArray = profile.data[0].blog.filter(res => res.isDraft !== 'true')
+        console.log(filteredArray)
+        setData(filteredArray)
 
         if (supabase.auth.session()) {
             isFollow(profile.data[0].id)
@@ -145,12 +149,12 @@ const Profile = (props) => {
                         <Text fontSize={["20px", "24px", "24px", "28px"]} ml="5px" wordBreak="break-all">{profile.nickname}</Text>
                         <Text fontStyle="italic" fontSize={["12px", "16px", "18px", "20px"]} ml="5px">{profile.bio}</Text>
                         <Flex>
-                            {/* <Link to={{ pathname: `/${profile.nickname}/following` }}> */}
-                            <Text ml="5px" fontSize={["12px", "16px", "18px", "20px"]}>{following} Following • </Text>
-                            {/* </Link> */}
-                            {/* <Link to={{ pathname: `/${profile.nickname}/followers` }}> */}
-                            <Text ml="5px" fontSize={["12px", "16px", "18px", "20px"]}>{followers} Followers</Text>
-                            {/* </Link> */}
+                            <Link to={{ pathname: `/${profile.nickname}/following` }}>
+                                <Text ml="5px" fontSize={["12px", "16px", "18px", "20px"]}>{following} Following • </Text>
+                            </Link>
+                            <Link to={{ pathname: `/${profile.nickname}/followers` }}>
+                                <Text ml="5px" fontSize={["12px", "16px", "18px", "20px"]}>{followers} Followers</Text>
+                            </Link>
                         </Flex>
                         {
                             showBtnFollow &&
@@ -160,19 +164,23 @@ const Profile = (props) => {
                 </Flex>
                 <Flex direction="column" align="center" w="100%">
                     {
-                        data.map(res => (
-                            res.isDraft !== 'true' &&
-                            < Box w={["95%", "95%", "75%", "70%"]} p="10px" mt="5px" mb="5px" borderRadius=".5rem" border="1px #161f30 solid" _hover={{ boxShadow: '0px 0px 5px #305a88' }} boxShadow="2px 2px 4px #060f18, -2px -2px 4px #152b43">
-                                <Link to={{ pathname: `/article/${res.title}`, query: { res } }}>
-                                    <Text fontSize={["16px", "16px", "18px", "20px"]}>{res.title}</Text>
-                                </Link>
-                                <Text fontSize={["10px", "10px", "12px", "12px"]} color="#716F81">{res.date}</Text>
-                                <Text noOfLines={3} fontSize={["14px", "14px", "16px", "16px"]} color="#C8C6C6">{res.body.replace(/<[^>]*>/g, '')}</Text>
-                                <Box>
-                                    <Text fontSize={["14px", "14px", "16px", "16px"]}>❤&nbsp; {res.likes ? res.likes : '0'} </Text>
+                        data == '' ?
+                            <Center color="white" h="50px" w="100%">No post from {user}.</Center>
+                            :
+                            data.map(res => (
+                                // res.isDraft !== 'true' ?
+                                < Box w={["95%", "95%", "75%", "70%"]} p="10px" mt="5px" mb="5px" borderRadius=".5rem" border="1px #161f30 solid" _hover={{ boxShadow: '0px 0px 5px #305a88' }} boxShadow="2px 2px 4px #060f18, -2px -2px 4px #152b43">
+                                    <Link to={{ pathname: `/article/${res.title}`, query: { res } }}>
+                                        <Text fontSize={["16px", "16px", "18px", "20px"]}>{res.title}</Text>
+                                    </Link>
+                                    <Text fontSize={["10px", "10px", "12px", "12px"]} color="#716F81">{res.date}</Text>
+                                    <Text noOfLines={3} fontSize={["14px", "14px", "16px", "16px"]} color="#C8C6C6">{res.body.replace(/<[^>]*>/g, '')}</Text>
+                                    <Box>
+                                        <Text fontSize={["14px", "14px", "16px", "16px"]}>❤&nbsp; {res.likes ? res.likes : '0'} </Text>
+                                    </Box>
                                 </Box>
-                            </Box>
-                        ))
+                            ))
+
                     }
                 </Flex>
             </Flex>

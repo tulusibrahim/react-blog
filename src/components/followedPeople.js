@@ -27,8 +27,8 @@ const FollowedPeople = () => {
                         toast({ description: 'Failed to get follower' })
                     }
                     else {
-                        // followers ? setFollowers(old => [...old, getfollower.data]) : setFollowers(getfollower.data)
-                        setFollowers(getfollower.data)
+                        followers ? setFollowers(old => [...old, getfollower.data[0]]) : setFollowers(getfollower.data[0])
+                        // setFollowers(getfollower.data)
                     }
                 })
             }
@@ -55,7 +55,7 @@ const FollowedPeople = () => {
                     supabase.auth.session() == null ?
                         <Center >Login to see followed people.</Center>
                         :
-                        <Flex w="100%" justify="center">
+                        <Flex w="100%" justify="center" direction="column">
                             {
                                 followers == '' ?
                                     <Box color="white" fontStyle="italic">
@@ -64,7 +64,7 @@ const FollowedPeople = () => {
                                     :
                                     followers.map((res, key) => (
                                         <Link to={{ pathname: `/${res.nickname}` }} style={{ width: '95%' }}>
-                                            <Flex key={key} p="10px" borderRadius="5px" bg="#152b43" align="center"  >
+                                            <Flex key={key} p="10px" borderRadius="5px" bg="#152b43" align="center" my="5px">
                                                 <Image src={`https://bbgnpwbarxehpmmnyfgq.supabase.in/storage/v1/object/public/blog/profilePic/${res.id}` ?
                                                     `https://bbgnpwbarxehpmmnyfgq.supabase.in/storage/v1/object/public/blog/profilePic/${res.id}`
                                                     :
