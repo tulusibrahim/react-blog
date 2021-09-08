@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import Content from "./content";
+import Home from "./home";
 import Navbar from "./navbar";
-import Search from "./search";
+// import Search from "./search";
 import About from "./about";
 import Article from "./article";
 import PageNotFound from "./pageNotFound";
@@ -14,6 +14,7 @@ import EditPost from "./editPost";
 import { ChakraProvider } from "@chakra-ui/react"
 import Topic from './topics';
 import Profile from './profile';
+import Friends from './friends';
 
 
 function App() {
@@ -26,8 +27,8 @@ function App() {
             <Navbar />
             <Switch>
               <Route exact path="/" >
-                <Search />
-                <Content />
+                {/* <Search /> */}
+                <Home />
               </Route>
               <Route path="/about" component={About}></Route>
               <Route path="/article/:title" component={Article}></Route>
@@ -38,6 +39,7 @@ function App() {
               <Route path="/logout" component={Logout}></Route>
               <Route path="/notresponsive" component={NotResponsive}></Route>
               <Route path="/topic/:topic" component={Topic}></Route>
+              <Route exact path="/:user/:friends" component={Friends}></Route>
               <Route path="/:user" component={Profile}></Route>
               <Route component={PageNotFound}></Route>
             </Switch>

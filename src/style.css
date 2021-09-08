@@ -254,6 +254,26 @@ html::-webkit-scrollbar-thumb:hover {
   color: #abacab;
 }
 
+.category::-webkit-scrollbar {
+  height: 10px;
+}
+
+/* Track */
+.category::-webkit-scrollbar-track {
+  background: #0b1622;
+}
+
+/* Handle */
+.category::-webkit-scrollbar-thumb {
+  background: #425c77;
+  border-radius: 50px;
+}
+
+/* Handle on hover */
+.category::-webkit-scrollbar-thumb:hover {
+  background: #35495f;
+}
+
 .about {
   height: 90vh;
   display: -webkit-box;

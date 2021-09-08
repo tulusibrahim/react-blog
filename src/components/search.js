@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom'
 import { supabase } from '../configs/configurations';
 
-const Search = () => {
+const Topic = () => {
     const [session, setSession] = useState(false)
     const [dataTag, setDataTag] = useState([])
     let all = useLocation()
@@ -21,8 +21,8 @@ const Search = () => {
     }, [all])
     //onClick={() => toast({ description: 'Still working on it!', status: 'info', isClosable: true })}
     return (
-        <Flex w="100%" h="20vh" justify="center">
-            <Flex w={['90%', '90%', '95%', '95%']} h="100%" color="white" justify="center" direction="column" align="flex-start">
+        <Flex w="100%" h="20vh" justify="center" >
+            <Flex w={['95%', '95%', '95%', '95%']} h="100%" color="white" justify="center" direction="column" align="flex-start">
                 {/* {
                 session &&
                 <div className="search">
@@ -35,7 +35,7 @@ const Search = () => {
                     Topics
                 </Text>
                 <Flex w="100%">
-                    <Flex overflow="auto">
+                    <Flex overflow="auto" className="category">
                         {
                             dataTag.map((res, index) => (
                                 <Link to={{ pathname: `/topic/${(res.name).replace("#", '')}` }}>
@@ -50,4 +50,4 @@ const Search = () => {
     );
 }
 
-export default Search;
+export default Topic;

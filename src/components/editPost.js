@@ -189,10 +189,10 @@ const EditPost = (props) => {
                                     alltag.map((res, index) => <Tag cursor="pointer" key={index} m="5px" variant="subtle" colorScheme="telegram">{res.name}<TagRightIcon onClick={() => removeOneTag(res)} as={CloseIcon} boxSize="10px" /></Tag>)
                             }
                         </Flex>
-                        <Input variant="flushed" color="whiteAlpha.900" placeholder="Tags" mt="20px" onKeyUp={(e) => e.keyCode == 13 && checkTag(e)} value={tag} onChange={e => setTag(e.target.value)}></Input>
+                        <Input variant="flushed" color="whiteAlpha.900" textTransform="lowercase" placeholder="Tags" mt="20px" onKeyUp={(e) => e.keyCode == 13 && checkTag(e)} value={tag} onChange={e => setTag(e.target.value)}></Input>
                     </ModalBody>
                     <ModalFooter>
-                        <Button onClick={postDataFinal} variant="solid" colorScheme="gray">
+                        <Button onClick={postDataFinal} variant="solid" colorScheme="messenger">
                             {
                                 props.location.query.res.isDraft == 'true' ?
                                     'Publish!'
