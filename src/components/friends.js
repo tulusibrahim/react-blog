@@ -99,10 +99,8 @@ const Friends = () => {
                                     <Link to={{ pathname: `/${res.nickname}` }}>
                                         <Flex align="center">
                                             <Image
-                                                src={`https://bbgnpwbarxehpmmnyfgq.supabase.in/storage/v1/object/public/blog/profilePic/${res.id}` ?
-                                                    `https://bbgnpwbarxehpmmnyfgq.supabase.in/storage/v1/object/public/blog/profilePic/${res.id}`
-                                                    :
-                                                    `https://ui-avatars.com/api/?name=${res.nickname}&length=1`}
+                                                src={`https://bbgnpwbarxehpmmnyfgq.supabase.in/storage/v1/object/public/blog/profilePic/${res.id}`}
+                                                fallbackSrc={`https://ui-avatars.com/api/?name=${res.nickname}&length=1`}
                                                 borderRadius="50%"
                                                 mr="10px"
                                                 boxSize="50px"

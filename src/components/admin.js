@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import swal from 'sweetalert';
 import { AiOutlineHeart, AiOutlineComment, AiOutlineEye, AiOutlineEdit, AiOutlineDelete, AiOutlineCloudUpload, AiOutlineEyeInvisible } from 'react-icons/ai'
 import { FaSort } from 'react-icons/fa'
-import { useToast, Tabs, TabList, TabPanels, Tab, TabPanel, Menu, MenuList, MenuItem, MenuButton, Button, Flex, Input, Image, InputGroup, InputLeftAddon, Box, InputRightElement, Text, PopoverTrigger, PopoverContent, PopoverBody, Popover, PopoverHeader, Badge } from "@chakra-ui/react"
+import { useToast, Tabs, TabList, TabPanels, Center, Tab, TabPanel, Menu, MenuList, MenuItem, MenuButton, Button, Flex, Input, Image, InputGroup, InputLeftAddon, Box, InputRightElement, Text, PopoverTrigger, PopoverContent, PopoverBody, Popover, PopoverHeader, Badge } from "@chakra-ui/react"
 import { CheckIcon } from "@chakra-ui/icons";
 import { BsPen, BsThreeDotsVertical } from "react-icons/bs";
 
@@ -12,6 +12,7 @@ import { BsPen, BsThreeDotsVertical } from "react-icons/bs";
 const Admin = (props) => {
     const [data, setData] = useState('')
     const [warn, setWarn] = useState('')
+    const [noPost, setNoPost] = useState('')
     const [profile, setProfile] = useState([])
     const [profilePic, setProfilePic] = useState('')
     const [username, setUsername] = useState('')
@@ -110,7 +111,7 @@ const Admin = (props) => {
             .order('title', { ascending: true })
         // console.log(data)
         if (data == '') {
-            setWarn('Your post will appear here.')
+            setNoPost('Make a post and it will appear here.')
         }
         setData(data)
     }
@@ -479,8 +480,9 @@ const Admin = (props) => {
         setWarn('')
         setProfile('')
         setProfilePic('')
+        setNoPost('')
         if (supabase.auth.session() == null) {
-            setWarn("Login in to see your post")
+            setWarn("Login in to see your post.")
         } else {
             getData()
             getProfile()
@@ -488,11 +490,12 @@ const Admin = (props) => {
     }, [])
 
     return (
-        data == '' ?
-            <h1 style={{ fontSize: '2rem', fontWeight: '500', color: 'white' }}>
-                {warn}
-            </h1>
+        supabase.auth.session() == null ?
+            <Center color="white" h="80vh">
+                Login in to see your post.
+            </Center>
             :
+            // <PostTab />
             <Tabs variant="line" size="md" isFitted >
                 <TabList color="white">
                     <Tab>Manage Posts</Tab>
@@ -500,7 +503,14 @@ const Admin = (props) => {
                 </TabList>
                 <TabPanels>
                     <TabPanel>
-                        <PostTab />
+                        {
+                            data == '' ?
+                                <Center color="white" h="70vh">
+                                    {noPost}
+                                </Center>
+                                :
+                                <PostTab />
+                        }
                     </TabPanel>
                     <TabPanel>
                         <ProfileTab />

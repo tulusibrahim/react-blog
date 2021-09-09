@@ -24,6 +24,54 @@ html::-webkit-scrollbar-thumb:hover {
   background: #35495f;
 }
 
+.category::-webkit-scrollbar {
+  height: 10px;
+}
+
+/* Track */
+.category::-webkit-scrollbar-track {
+  background: #0b1622;
+}
+
+/* Handle */
+.category::-webkit-scrollbar-thumb {
+  background: #425c77;
+  border-radius: 50px;
+}
+
+/* Handle on hover */
+.category::-webkit-scrollbar-thumb:hover {
+  background: #35495f;
+}
+
+.editor blockquote {
+  background-color: #152b43;
+  font-family: 'Fira Code', monospace;
+  padding: 10px;
+  border-radius: 5px;
+  word-wrap: break-word;
+}
+
+.editor h2 {
+  font-size: 1.5em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.editor h3 {
+  font-size: 1.17em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.editor p a {
+  color: #abacab;
+  font-style: italic;
+  text-decoration: underline;
+}
+
 .allwrapper {
   width: 100%;
   height: 100vh;
@@ -252,26 +300,6 @@ html::-webkit-scrollbar-thumb:hover {
 .cardcon .card .body {
   font-size: 1rem;
   color: #abacab;
-}
-
-.category::-webkit-scrollbar {
-  height: 10px;
-}
-
-/* Track */
-.category::-webkit-scrollbar-track {
-  background: #0b1622;
-}
-
-/* Handle */
-.category::-webkit-scrollbar-thumb {
-  background: #425c77;
-  border-radius: 50px;
-}
-
-/* Handle on hover */
-.category::-webkit-scrollbar-thumb:hover {
-  background: #35495f;
 }
 
 .about {

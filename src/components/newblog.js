@@ -4,7 +4,7 @@ import { useHistory, useLocation, Prompt } from "react-router-dom";
 import React, { useState, useRef, useEffect } from "react";
 import swal from 'sweetalert';
 import {
-    Box, Flex, Input, Text, Tag, Button, useToast, TagRightIcon, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure
+    Box, Flex, Input, Text, Tag, Button, Center, useToast, TagRightIcon, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure
 } from "@chakra-ui/react"
 import { WarningIcon } from "@chakra-ui/icons";
 import { useDebounce } from 'use-debounce';
@@ -111,15 +111,25 @@ const NewBlog = () => {
     }
 
     const postDataFinal = async () => {
-        let result = await supabase.from('blog').update({ isDraft: 'false' }).eq('id', savedId)
-        console.log(result)
-        if (result.error) {
-            toast({ description: 'Failed to post, please try again', status: 'error' })
-        }
-        else {
-            toast({ description: 'Post published successfully', status: 'success' })
-            history.push('/')
-        }
+        swal({
+            title: "Confirmation",
+            text: "Sure want to publish it now?",
+            icon: "warning",
+            buttons: true,
+        })
+            .then(async (willDelete) => {
+                if (willDelete) {
+                    let result = await supabase.from('blog').update({ isDraft: 'false' }).eq('id', savedId)
+                    console.log(result)
+                    if (result.error) {
+                        toast({ description: 'Failed to publish, please try again.', status: 'error' })
+                    }
+                    else {
+                        toast({ description: 'Post published successfully.', status: 'success' })
+                        history.push('/')
+                    }
+                }
+            })
     }
 
     const checkTag = async (data) => {
@@ -182,53 +192,66 @@ const NewBlog = () => {
         setSaveStatus()
         setUpload(false)
     }, [])
-
+    //backgroundColor: '#112236',
 
     return (
         supabase.auth.session() == null ?
             <h1 style={{ fontSize: '2rem', fontWeight: '500', textAlign: 'center', color: 'white' }}>You need to log in first to create new post.</h1>
             :
-            <div className="newblogconwrapper">
+            <Center w="100%" >
                 <Prompt message="Sure want to leave? Changes will not be saved." when={title == '' && body == ''} />
-                <div className="newblogcon">
-                    <Flex w="90%" mt="20px" justify="flex-end" alignItems="center">
-                        <Text color="whiteAlpha.700">{saveStatus}</Text>
-                        <Button colorScheme="messenger" type="submit" onClick={() => onOpen()} ml="10px" fontWeight="normal" borderRadius="5px">Next</Button>
+                <Flex w={["100%", "100%", "90%", "80%"]} h="fit-content" justify="center">
+                    <Flex w={["100%", "100%", "90%", "90%"]} h="fit-content" direction="column" pb="30px" align="center" >
+                        <Flex w="90%" mt="20px" mb="10px" justify="flex-end" alignItems="center">
+                            <Text color="whiteAlpha.700">{saveStatus}</Text>
+                            <Button colorScheme="messenger" type="submit" onClick={postDataFinal} ml="10px" fontWeight="normal" borderRadius="5px">Publish</Button>
+                        </Flex>
+                        <Box w="90%" minHeight="65vh">
+                            <Input variant="flushed" fontWeight="semibold" pb="5px" fontSize={["24px", "28px", "28px", "32px"]} placeholder="Title" mb={'10px'} color="white" onChange={(e => setTitle(e.target.value))} />
+                            <Editor
+                                style={{ width: '100%', paddingBottom: '15px', paddingTop: '1rem', paddingBottom: '1rem', color: '#e0e1dd', borderRadius: '5px', outline: 'none' }}
+                                text={body}
+                                className="editor"
+                                theme="beagle"
+                                onChange={e => setBody(e)}
+                            />
+                        </Box>
+                        <Flex wrap="wrap" mt='10px' w="90%">
+                            {
+                                alltag &&
+                                alltag.map((res, index) => <Tag cursor="pointer" key={index} m="5px" variant="subtle" colorScheme="telegram">{res.name}<TagRightIcon onClick={() => removeOneTag(res)} as={CloseIcon} boxSize="10px" /></Tag>)
+                            }
+                        </Flex>
+                        <Flex w="90%" justify="flex-start">
+                            <Input w={["60%", "50%", "40%", "30%"]} variant="flushed" textTransform="lowercase" borderColor="whiteAlpha.400" color="whiteAlpha.900" placeholder="Add tags" mt="20px" onKeyUp={(e) => e.keyCode == 13 && checkTag(e)} value={tag} onChange={e => setTag(e.target.value)}></Input>
+                        </Flex>
                     </Flex>
-                    <Box w="90%">
-                        <Input variant="flushed" placeholder="Title" mb={'10px'} color="white" onChange={(e => setTitle(e.target.value))} />
-                        < Editor
-                            style={{ width: '100%', paddingTop: '1rem', paddingBottom: '1rem', color: 'white', backgroundColor: '#12253a', outline: 'none' }}
-                            text={body}
-                            theme="beagle"
-                            onChange={e => setBody(e)}
-                        />
-                    </Box>
-                    {/* <button onClick={onOpen} style={{ color: 'red' }}>hehehe</button>
-                    <p style={{ color: 'white' }}>debounce value: {valueDebounceBody}</p> */}
-                </div>
-                <Modal onClose={onClose} size='lg' isOpen={isOpen} >
-                    <ModalOverlay />
-                    <ModalContent bg="#152b43">
-                        <ModalHeader color="whiteAlpha.900">Add tags</ModalHeader>
-                        <ModalCloseButton color="whiteAlpha.900" />
-                        <ModalBody>
-                            <Flex wrap="wrap" mt='10px'>
-                                {
-                                    alltag == '' ?
-                                        <Text color="whiteAlpha.500" fontSize={20} >No tags yet...</Text>
-                                        :
-                                        alltag.map((res, index) => <Tag cursor="pointer" key={index} m="5px" variant="subtle" colorScheme="telegram">{res.name}<TagRightIcon onClick={() => removeOneTag(res)} as={CloseIcon} boxSize="10px" /></Tag>)
-                                }
-                            </Flex>
-                            <Input variant="flushed" textTransform="lowercase" color="whiteAlpha.900" placeholder="Tags" mt="20px" onKeyUp={(e) => e.keyCode == 13 && checkTag(e)} value={tag} onChange={e => setTag(e.target.value)}></Input>
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button onClick={postDataFinal} variant="solid" colorScheme="messenger">Publish!</Button>
-                        </ModalFooter>
-                    </ModalContent>
-                </Modal>
-            </div>
+
+
+
+                    <Modal onClose={onClose} size='lg' isOpen={isOpen} >
+                        <ModalOverlay />
+                        <ModalContent bg="#152b43">
+                            <ModalHeader color="whiteAlpha.900">Add tags</ModalHeader>
+                            <ModalCloseButton color="whiteAlpha.900" />
+                            <ModalBody>
+                                <Flex wrap="wrap" mt='10px'>
+                                    {
+                                        alltag == '' ?
+                                            <Text color="whiteAlpha.500" fontSize={20} >No tags yet...</Text>
+                                            :
+                                            alltag.map((res, index) => <Tag cursor="pointer" key={index} m="5px" variant="subtle" colorScheme="telegram">{res.name}<TagRightIcon onClick={() => removeOneTag(res)} as={CloseIcon} boxSize="10px" /></Tag>)
+                                    }
+                                </Flex>
+                                <Input variant="flushed" textTransform="lowercase" color="whiteAlpha.900" placeholder="Tags" mt="20px" onKeyUp={(e) => e.keyCode == 13 && checkTag(e)} value={tag} onChange={e => setTag(e.target.value)}></Input>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button onClick={postDataFinal} variant="solid" colorScheme="messenger">Publish!</Button>
+                            </ModalFooter>
+                        </ModalContent>
+                    </Modal>
+                </Flex>
+            </Center>
     );
 }
 

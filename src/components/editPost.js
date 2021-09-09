@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../configs/configurations";
 import { useHistory } from "react-router-dom";
 import swal from 'sweetalert';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, Box, ModalFooter, ModalBody, ModalCloseButton, useToast, Flex, Tag, Text, TagRightIcon, Input, Button, useDisclosure } from "@chakra-ui/react"
+import { Modal, Center, ModalOverlay, ModalContent, ModalHeader, Box, ModalFooter, ModalBody, ModalCloseButton, useToast, Flex, Tag, Text, TagRightIcon, Input, Button, useDisclosure } from "@chakra-ui/react"
 import Editor from 'react-medium-editor';
 import { CloseIcon } from '@chakra-ui/icons'
 import { useDebounce } from 'use-debounce';
@@ -83,7 +83,7 @@ const EditPost = (props) => {
         }
         else {
             toast({ description: 'Post published successfully', status: 'success' })
-            history.push('/')
+            history.push('/profile')
         }
     }
 
@@ -150,60 +150,71 @@ const EditPost = (props) => {
             saveDataOnChange()
         }
     }, [valueDebounceBody, valueDebounceTitle])
-
+    //backgroundColor: '#12253a',
     return (
-        <div className="newblogconwrapper">
-            <div className="newblogcon">
-                <Flex w="90%" h="5vh" justifyContent="flex-end" mt="24px" alignItems="center">
-                    <Text color="whiteAlpha.700" mr="10px">{saveStatus}</Text>
-                    {
-                        props.location.query.res.isDraft == 'true' ?
-                            <Button colorScheme="messenger" onClick={() => onOpen()}>Next</Button>
-                            :
-                            <Button colorScheme="messenger" onClick={() => onOpen()}>Update</Button>
-                    }
-                </Flex>
-                <Box w="90%">
-                    {/* <input style={{ backgroundColor: "#0D1B2A" }} placeholder="title" name="title" className="title" onChange={(e) => setTitle(e.target.value)} defaultValue={props.location.query.res.title}></input> */}
-                    <Input variant="flushed" placeholder="Title" mb={'10px'} color="white" onChange={(e => setTitle(e.target.value))} defaultValue={title} />
-                    {/* <textarea style={{ overflow: 'auto' }} rows="10" cols="50" onChange={(e) => setBody(e.target.value)} placeholder="body" name="body" className="body" defaultValue={props.location.query.res.body}></textarea> */}
-                    <Editor
-                        style={{ width: '100%', paddingTop: '1rem', paddingBottom: '1rem', color: 'white', backgroundColor: '#12253a', outline: 'none' }}
-                        text={body}
-                        theme="beagle"
-                        onChange={e => setBody(e)}
-                    />
-                </Box>
-            </div>
-            <Modal onClose={onClose} size='lg' isOpen={isOpen} >
-                <ModalOverlay />
-                <ModalContent bg="#152b43">
-                    <ModalHeader color="whiteAlpha.900">Add tags</ModalHeader>
-                    <ModalCloseButton color="whiteAlpha.900" />
-                    <ModalBody>
-                        <Flex wrap="wrap" mt='10px'>
-                            {
-                                alltag == '' ?
-                                    <Text color="whiteAlpha.500" fontSize={20} >No tags yet...</Text>
-                                    :
-                                    alltag.map((res, index) => <Tag cursor="pointer" key={index} m="5px" variant="subtle" colorScheme="telegram">{res.name}<TagRightIcon onClick={() => removeOneTag(res)} as={CloseIcon} boxSize="10px" /></Tag>)
-                            }
-                        </Flex>
-                        <Input variant="flushed" color="whiteAlpha.900" textTransform="lowercase" placeholder="Tags" mt="20px" onKeyUp={(e) => e.keyCode == 13 && checkTag(e)} value={tag} onChange={e => setTag(e.target.value)}></Input>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button onClick={postDataFinal} variant="solid" colorScheme="messenger">
+        <Center w="100%" >
+            <Flex w={["100%", "100%", "90%", "80%"]} h="fit-content" justify="center">
+                <Flex w={["100%", "100%", "90%", "90%"]} h="fit-content" pb="20px" direction="column" align="center">
+                    <Flex w="90%" h="5vh" justifyContent="flex-end" mt="20px" mb="10px" alignItems="center">
+                        <Text color="whiteAlpha.700" mr="10px">{saveStatus}</Text>
+                        <Button colorScheme="messenger" onClick={postDataFinal} fontWeight="normal">
                             {
                                 props.location.query.res.isDraft == 'true' ?
-                                    'Publish!'
+                                    'Publish'
                                     :
-                                    'Update!'
+                                    'Update'
                             }
                         </Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
-        </div>
+                    </Flex>
+                    <Box w="90%" className="editor">
+                        <Input variant="flushed" fontWeight="semibold" fontSize={["24px", "28px", "28px", "32px"]} pb="5px" placeholder="Title" mb={'10px'} color="#E0E1DD" onChange={(e => setTitle(e.target.value))} defaultValue={title} />
+                        <Editor
+                            style={{ width: '100%', paddingBottom: '15px', paddingTop: '1rem', borderRadius: '5px', paddingBottom: '1rem', color: 'white', outline: 'none' }}
+                            text={body}
+                            theme="beagle"
+                            onChange={e => setBody(e)}
+                        />
+                    </Box>
+                    <Flex wrap="wrap" mt='10px' w="90%">
+                        {
+                            alltag &&
+                            alltag.map((res, index) => <Tag cursor="pointer" key={index} m="5px" variant="subtle" colorScheme="telegram">{res.name}<TagRightIcon onClick={() => removeOneTag(res)} as={CloseIcon} boxSize="10px" /></Tag>)
+                        }
+                    </Flex>
+                    <Flex w="90%" justify="flex-start">
+                        <Input w={["60%", "50%", "40%", "30%"]} variant="flushed" textTransform="lowercase" borderColor="whiteAlpha.400" color="whiteAlpha.900" placeholder="Add tags" mt="20px" onKeyUp={(e) => e.keyCode == 13 && checkTag(e)} value={tag} onChange={e => setTag(e.target.value)}></Input>
+                    </Flex>
+                </Flex>
+                <Modal onClose={onClose} size='lg' isOpen={isOpen} >
+                    <ModalOverlay />
+                    <ModalContent bg="#152b43">
+                        <ModalHeader color="whiteAlpha.900">Add tags</ModalHeader>
+                        <ModalCloseButton color="whiteAlpha.900" />
+                        <ModalBody>
+                            <Flex wrap="wrap" mt='10px'>
+                                {
+                                    alltag == '' ?
+                                        <Text color="whiteAlpha.500" fontSize={20} >No tags yet...</Text>
+                                        :
+                                        alltag.map((res, index) => <Tag cursor="pointer" key={index} m="5px" variant="subtle" colorScheme="telegram">{res.name}<TagRightIcon onClick={() => removeOneTag(res)} as={CloseIcon} boxSize="10px" /></Tag>)
+                                }
+                            </Flex>
+                            <Input variant="flushed" color="whiteAlpha.900" textTransform="lowercase" placeholder="Tags" mt="20px" onKeyUp={(e) => e.keyCode == 13 && checkTag(e)} value={tag} onChange={e => setTag(e.target.value)}></Input>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button onClick={postDataFinal} variant="solid" colorScheme="messenger">
+                                {
+                                    props.location.query.res.isDraft == 'true' ?
+                                        'Publish!'
+                                        :
+                                        'Update!'
+                                }
+                            </Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
+            </Flex>
+        </Center>
     );
 }
 

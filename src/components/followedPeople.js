@@ -58,18 +58,17 @@ const FollowedPeople = () => {
                         <Flex w="100%" justify="center" direction="column">
                             {
                                 followers == '' ?
-                                    <Box color="white" fontStyle="italic">
+                                    <Center color="white" fontStyle="italic">
                                         No people followed so far.
-                                    </Box>
+                                    </Center>
                                     :
                                     followers.map((res, key) => (
                                         <Link to={{ pathname: `/${res.nickname}` }} style={{ width: '95%' }}>
                                             <Flex key={key} p="10px" borderRadius="5px" bg="#152b43" align="center" my="5px">
-                                                <Image src={`https://bbgnpwbarxehpmmnyfgq.supabase.in/storage/v1/object/public/blog/profilePic/${res.id}` ?
-                                                    `https://bbgnpwbarxehpmmnyfgq.supabase.in/storage/v1/object/public/blog/profilePic/${res.id}`
-                                                    :
-                                                    `https://ui-avatars.com/api/?name=${res.nickname}&length=1`}
+                                                <Image
+                                                    src={`https://bbgnpwbarxehpmmnyfgq.supabase.in/storage/v1/object/public/blog/profilePic/${res.id}`}
                                                     boxSize="50px"
+                                                    fallbackSrc={`https://ui-avatars.com/api/?name=${res.nickname}&length=1`}
                                                     borderRadius="50%"
                                                     mr="10px"
                                                 />

@@ -34,10 +34,10 @@ const Topic = () => {
                         res.isDraft !== 'true' &&
                         <Box key={key} p="10px" m="10px" w={['90%', '90%', '90%', "45%"]} className="card" borderRadius="5px" boxShadow="2px 2px 4px #060f18,-2px -2px 4px #152b43;">
                             <Link to={{ pathname: `/article/${res.title}` }}>
-                                <Box fontSize="24px">{res.title}</Box>
+                                <Box fontSize="24px" color="rgb(184, 184, 184)" fontWeight="bold">{res.title}</Box>
                             </Link>
                             <Box color="grey">{res.date}</Box>
-                            <Text noOfLines={4} color="GrayText">{(res.body).replace(/<[^>]*>/g, '')}</Text>
+                            <Text noOfLines={4} color="#abacab">{(res.body).replace(/<[^>]*>/g, '')}</Text>
                         </Box>
                     ))
                 }
