@@ -166,7 +166,7 @@ const EditPost = (props) => {
                             }
                         </Button>
                     </Flex>
-                    <Box w="90%" className="editor">
+                    <Box w="90%" className="editor" minHeight="65vh">
                         <Input variant="flushed" fontWeight="semibold" fontSize={["24px", "28px", "28px", "32px"]} pb="5px" placeholder="Title" mb={'10px'} color="#E0E1DD" onChange={(e => setTitle(e.target.value))} defaultValue={title} />
                         <Editor
                             style={{ width: '100%', paddingBottom: '15px', paddingTop: '1rem', borderRadius: '5px', paddingBottom: '1rem', color: 'white', outline: 'none' }}

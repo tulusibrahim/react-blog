@@ -22,6 +22,7 @@ const Home = (props) => {
 
 
     useEffect(async () => {
+        document.title = "Home"
         getData()
     }, [])
 

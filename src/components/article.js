@@ -223,7 +223,7 @@ const Article = (props) => {
                         {
                             tags.map(res => (
                                 <Link to={{ pathname: `/topic/${(res.name).replace("#", '')}` }}>
-                                    <Tag m="5px" colorScheme="telegram" _hover={{ bgColor: '#115091', color: 'white', transition: '.2s' }}>{res.name}</Tag>
+                                    <Tag m="5px" colorScheme="telegram" _hover={{ bgColor: '#3c7592', color: 'white', transition: '.2s' }}>{res.name}</Tag>
                                 </Link>
                             ))
                         }

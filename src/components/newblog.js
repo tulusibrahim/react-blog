@@ -174,10 +174,15 @@ const NewBlog = () => {
         }
     }
 
+    //bug gabisa delete tag pas bikin new blog
+
     const removeOneTag = async (data) => {
         let getTagId = await supabase.from('blog_tags').select().eq('name', data.name)
+        console.log(getTagId)
         let deleteTag = await supabase.from('blog_postTag').delete().match({ post_id: savedId, tag_id: getTagId.data[0].id })
+        console.log(deleteTag)
         let result = await supabase.from('blog').select('*,blog_tags(*)').eq('id', savedId)
+        console.log(result)
         setAllTag(result.data[0].blog_tags)
     }
 
@@ -223,7 +228,7 @@ const NewBlog = () => {
                             }
                         </Flex>
                         <Flex w="90%" justify="flex-start">
-                            <Input w={["60%", "50%", "40%", "30%"]} variant="flushed" textTransform="lowercase" borderColor="whiteAlpha.400" color="whiteAlpha.900" placeholder="Add tags" mt="20px" onKeyUp={(e) => e.keyCode == 13 && checkTag(e)} value={tag} onChange={e => setTag(e.target.value)}></Input>
+                            <Input w={["60%", "50%", "40%", "30%"]} isDisabled={title || body ? false : true} variant="flushed" textTransform="lowercase" borderColor="whiteAlpha.400" color="whiteAlpha.900" placeholder="Add tags" mt="20px" onKeyUp={(e) => e.keyCode == 13 && checkTag(e)} value={tag} onChange={e => setTag(e.target.value)}></Input>
                         </Flex>
                     </Flex>
 

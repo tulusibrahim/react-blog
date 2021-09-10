@@ -65,9 +65,11 @@ const Friends = () => {
         setFollowers([])
         if (friends == 'followers') {
             // setFollowers([])
+            document.title = `${user} ${friends}`
             getFollowers()
         }
         else {
+            document.title = `${user} ${friends}`
             getFollowing()
         }
     }, [])
