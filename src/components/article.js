@@ -124,6 +124,16 @@ const Article = (props) => {
             .eq('title', title)
     }
 
+    function getText() {
+        if (window.getSelection) {
+            alert(window.getSelection())
+        } else if (window.document.getSelection) {
+            alert(window.document.getSelection())
+        } else if (window.document.selection) {
+            alert(window.document.selection.createRange().text)
+        }
+    }
+
     useEffect(() => {
         setSession(false)
         setComments([])
@@ -204,7 +214,7 @@ const Article = (props) => {
                                                 </>
                                         }
                                     </div>
-                                    <Text className="body" fontSize={["16px", "17px", "17px", "18px"]}>{parse(res.body)}</Text>
+                                    <Text className="body" onDoubleClickCapture={getText} onMouseUp={getText} fontSize={["16px", "17px", "17px", "18px"]}>{parse(res.body)}</Text>
                                 </div>
                             ))
                         }

@@ -1,13 +1,14 @@
 import { Link, useLocation } from 'react-router-dom'
 import { supabase } from "../configs/configurations";
 import { useEffect, useState } from 'react';
-import { Box, Image, Menu, MenuButton, MenuItem, MenuList, useBreakpointValue } from '@chakra-ui/react';
+import { Box, Image, Menu, MenuButton, MenuItem, MenuList, useColorMode } from '@chakra-ui/react';
 import { createBreakpoints } from "@chakra-ui/theme-tools"
 import { AiOutlineAlert, AiOutlineLogin, AiOutlineLogout, AiOutlineUser } from 'react-icons/ai';
 import { BiUser } from 'react-icons/bi'
 import { BsPen } from 'react-icons/bs'
 import { GrAlert } from 'react-icons/gr'
 import swal from 'sweetalert';
+import { MoonIcon } from '@chakra-ui/icons';
 
 
 const Navbar = (props) => {
@@ -16,6 +17,8 @@ const Navbar = (props) => {
     const [profilePic, setProfilePic] = useState('')
     const [nickName, setNickName] = useState('')
     let all = useLocation()
+    const { colorMode, toggleColorMode } = useColorMode()
+    let localSession = localStorage.getItem('supabase.auth.token')
 
     const getProfilePic = async () => {
         let profilePic = await supabase.storage.from('blog').download(`profilePic/${supabase.auth.user().id}`)
@@ -47,16 +50,31 @@ const Navbar = (props) => {
             })
     }
 
-    useEffect(() => {
-        setSession(supabase.auth.session())
+    // useEffect(() => {
 
-        // setProfilePic('')
-        if (session) {
+    //     // setProfilePic('')
+    //     if (localStorage.getItem('supabase.auth.token') !== null) {
+    //         setSession(true)
+    //         setNickName('')
+    //         getUsername()
+    //         getProfilePic()
+    //     }
+    //     else {
+    //         setSession(false)
+    //     }
+    // }, [localStorage])
+
+    useEffect(() => {
+        if (localStorage.getItem('supabase.auth.token') !== null) {
+            setSession(true)
             setNickName('')
             getUsername()
             getProfilePic()
         }
-    }, [all])
+        else {
+            setSession(false)
+        }
+    }, [localSession])
 
     useEffect(() => {
         setDisplay('none')
@@ -67,7 +85,7 @@ const Navbar = (props) => {
         <div className="navbarcon">
             <div className="navbar">
                 <div className="title"><Link to="/" className="link" >Write</Link></div>
-                <Box className="right" h="10vh" w={['60%', '40%', '30%', '20%']} d="flex" alignItems="center" justifyContent={session ? "space-evenly" : 'flex-end'}>
+                <Box className="right" bg={colorMode} h="10vh" w={['60%', '40%', '30%', '20%']} d="flex" alignItems="center" justifyContent={session ? "space-evenly" : 'flex-end'}>
                     {
                         session && nickName &&
                         <Box fontSize="12px" fontWeight="normal" bg="#399930" p="4px" borderRadius="4px">
@@ -122,6 +140,7 @@ const Navbar = (props) => {
                             }
                         </MenuList>
                     </Menu>
+                    {/* <MoonIcon cursor="pointer" onClick={toggleColorMode} /> */}
                 </Box>
             </div>
         </div>

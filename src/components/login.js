@@ -29,7 +29,7 @@ const Login = (props) => {
         }
         else {
             history.push('/')
-            document.location.reload()
+            // document.location.reload()
         }
     }
 
@@ -49,7 +49,7 @@ const Login = (props) => {
         }
         else {
             history.push('/')
-            document.location.reload()
+            // document.location.reload()
         }
     }
 

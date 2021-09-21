@@ -22,6 +22,7 @@ function App() {
   return (
     <ChakraProvider>
       <Router>
+        {/* hapus class allwrapper utk toggle color */}
         <div className="allwrapper">
           <div className="all">
             <Navbar />

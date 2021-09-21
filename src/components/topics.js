@@ -30,9 +30,9 @@ const Topic = () => {
             </Box>
             <Flex w="100%" direction="row" wrap="wrap" justify="space-around">
                 {
-                    data.map((res, key) => (
+                    data.map((res, index) => (
                         res.isDraft !== 'true' &&
-                        <Box key={key} p="10px" m="10px" w={['90%', '90%', '90%', "45%"]} className="card" borderRadius="5px" boxShadow="2px 2px 4px #060f18,-2px -2px 4px #152b43;">
+                        <Box key={index} p="10px" m="10px" w={['90%', '90%', '90%', "45%"]} className="card" borderRadius="5px" boxShadow="2px 2px 4px #060f18,-2px -2px 4px #152b43;">
                             <Link to={{ pathname: `/article/${res.title}` }}>
                                 <Box fontSize="24px" color="rgb(184, 184, 184)" fontWeight="bold">{res.title}</Box>
                             </Link>

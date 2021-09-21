@@ -20,9 +20,26 @@ const Home = (props) => {
         setData(data)
     }
 
+    window.addEventListener("storage", () => {
+        if (localStorage.getItem('supabase.auth.token')) {
+            let itemm = localStorage.getItem('supabase.auth.token')
+            console.log(itemm)
+            // setNickName('')
+            // getUsername()
+            // getProfilePic()
+        }
+    })
+
 
     useEffect(async () => {
         document.title = "Home"
+        if (localStorage.getItem('supabase.auth.token')) {
+            let itemm = localStorage.getItem('supabase.auth.token')
+            console.log(JSON.parse(itemm))
+            // setNickName('')
+            // getUsername()
+            // getProfilePic()
+        }
         getData()
     }, [])
 

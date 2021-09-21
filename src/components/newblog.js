@@ -198,6 +198,7 @@ const NewBlog = () => {
         setUpload(false)
     }, [])
     //backgroundColor: '#112236',
+    //editor js candidate replace medium editor
 
     return (
         supabase.auth.session() == null ?
