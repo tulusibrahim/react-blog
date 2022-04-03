@@ -16,7 +16,7 @@ const Home = (props) => {
 
 
     const getData = async () => {
-        const { data, error } = await supabase.from('blog').select().eq('isDraft', 'false')
+        const { data, error } = await supabase.from('blog').select().eq('isDraft', 'false').order('date', { ascending: false })
         setData(data)
     }
 

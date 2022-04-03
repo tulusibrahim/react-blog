@@ -26,7 +26,7 @@ const Article = (props) => {
                 blog_tags(*)
             `)
             .match({ title: title, isDraft: 'false' })
-        console.log(data[0].body)
+        console.log(data[0])
         setData(data)
         setComments(data[0].blog_comments)
         setTags(data[0].blog_tags)
@@ -169,7 +169,6 @@ const Article = (props) => {
                                             session &&
                                                 supabase.auth.user().email === res.email ?
                                                 <div>
-                                                    {/* <div className="articleoption" onClick={() => display == 'none' ? setDisplay('flex') : setDisplay('none')}> */}
                                                     <Menu>
                                                         <MenuButton>
                                                             <div className="articleoption" >
@@ -183,11 +182,6 @@ const Article = (props) => {
                                                                 </MenuItem>
                                                             </Link>
                                                         </MenuList>
-                                                        {/* <div style={{ display: display, transitionDelay: 1, flexDirection: 'column', position: 'absolute', right: 10, zIndex: 2, justifyContent: 'center', alignItems: 'center' }}>
-                                                            <div style={{ backgroundColor: '#12253a', padding: '10px', cursor: 'pointer' }}>
-                                                            </div>
-                                                        </div> */}
-
                                                     </Menu>
                                                 </div>
                                                 // </div>
@@ -198,7 +192,7 @@ const Article = (props) => {
                                     <div className="date">
                                         <img src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${res.email}&length=1`} width="25px" style={{ borderRadius: '50px', marginRight: '10px' }}></img>
                                         {
-                                            res.blog_users ?
+                                            res?.blog_users?.nickname ?
                                                 <>
                                                     <Link to={{ pathname: `/${res.blog_users.nickname}`, query: { res } }}>
                                                         <Text fontSize={["14px", "15px", "15px", "16px"]} >{res.blog_users.nickname}, &nbsp;</Text>
@@ -214,7 +208,7 @@ const Article = (props) => {
                                                 </>
                                         }
                                     </div>
-                                    <Text className="body" onDoubleClickCapture={getText} onMouseUp={getText} fontSize={["16px", "17px", "17px", "18px"]}>{parse(res.body)}</Text>
+                                    <Text className="body" fontSize={["16px", "17px", "17px", "18px"]}>{parse(res.body)}</Text>
                                 </div>
                             ))
                         }
