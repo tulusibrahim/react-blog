@@ -170,6 +170,9 @@ const Admin = (props) => {
             .download(path)
         // console.log(data)
 
+        let tess = await await supabase.storage.from('blog').getPublicUrl()
+        console.log('nehh', tess)
+
         if (data) {
             let image = URL.createObjectURL(data)
             // console.log(image)
