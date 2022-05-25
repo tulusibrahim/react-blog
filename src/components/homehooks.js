@@ -113,6 +113,7 @@ const useHome = (second) => {
         )
     }
 
+
     useEffect(async () => {
         getData()
         setFollowers([])
