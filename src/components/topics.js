@@ -1,23 +1,9 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { supabase } from '../configs/configurations';
+import { Link } from 'react-router-dom';
+import useTopic from './topicshooks';
 
 const Topic = () => {
-    let param = useParams()
-    const [data, setData] = useState([])
-
-    const getData = async () => {
-        let result = await supabase.from('blog_tags').select('*,blog(*)').eq('name', `#${param.topic}`)
-        let removeDuplicateValue = Object.values(result.data[0].blog.reduce((acc, current) => Object.assign(acc, { [current.id]: current }), {}))
-        setData(removeDuplicateValue)
-    }
-
-    useEffect(() => {
-        setData([])
-        getData()
-        document.title = `Topic - ${(param.topic).replace('#', '')}`
-    }, [])
+    let { data, param } = useTopic()
 
     return (
         <Flex w="100%" h="fit-content" mt="20px" direction="column" align="center" color="white">

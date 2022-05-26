@@ -1,85 +1,15 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { supabase } from "../configs/configurations";
-import { useEffect, useState } from 'react';
-import { Box, Image, Menu, MenuButton, MenuItem, MenuList, useColorMode } from '@chakra-ui/react';
+import { Box, Image, Menu, MenuButton, MenuItem, MenuList, } from '@chakra-ui/react';
 import { createBreakpoints } from "@chakra-ui/theme-tools"
-import { AiOutlineAlert, AiOutlineLogin, AiOutlineLogout, AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineAlert, AiOutlineLogin, AiOutlineLogout, } from 'react-icons/ai';
 import { BiUser } from 'react-icons/bi'
 import { BsPen } from 'react-icons/bs'
-import { GrAlert } from 'react-icons/gr'
-import swal from 'sweetalert';
-import { MoonIcon } from '@chakra-ui/icons';
+import useNavbar from './navbarhooks';
 
 
 const Navbar = (props) => {
-    const [session, setSession] = useState(false)
-    const [display, setDisplay] = useState('none')
-    const [profilePic, setProfilePic] = useState('')
-    const [nickName, setNickName] = useState('')
-    let all = useLocation()
-    const { colorMode, toggleColorMode } = useColorMode()
-    let localSession = localStorage.getItem('supabase.auth.token')
-
-    const getProfilePic = async () => {
-        let profilePic = await supabase.storage.from('blog').download(`profilePic/${supabase.auth.user().id}`)
-        if (profilePic.data) {
-            let image = URL.createObjectURL(profilePic.data)
-            setProfilePic(image)
-        }
-    }
-
-    const getUsername = async () => {
-        let result = await supabase.from('blog_users').select('nickname').eq('id', supabase.auth.session().user.id)
-        setNickName(result.data[0].nickname)
-    }
-
-
-    const logOut = async () => {
-        swal({
-            title: "Sure want to log out?",
-            // text: "Once deleted, you will not be able to see the post anymore!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-            .then(async res => {
-                if (res) {
-                    await supabase.auth.signOut()
-                    document.location.reload()
-                }
-            })
-    }
-
-    // useEffect(() => {
-
-    //     // setProfilePic('')
-    //     if (localStorage.getItem('supabase.auth.token') !== null) {
-    //         setSession(true)
-    //         setNickName('')
-    //         getUsername()
-    //         getProfilePic()
-    //     }
-    //     else {
-    //         setSession(false)
-    //     }
-    // }, [localStorage])
-
-    useEffect(() => {
-        if (localStorage.getItem('supabase.auth.token') !== null) {
-            setSession(true)
-            setNickName('')
-            getUsername()
-            getProfilePic()
-        }
-        else {
-            setSession(false)
-        }
-    }, [localSession])
-
-    useEffect(() => {
-        setDisplay('none')
-        setSession(supabase.auth.session())
-    }, [])
+    let { session, profilePic, nickName, colorMode, logOut } = useNavbar()
 
     return (
         <div className="navbarcon">
@@ -100,15 +30,10 @@ const Navbar = (props) => {
                         </Box>
                     }
                     <Menu>
-                        {/* <MenuButton> */}
-                        {/* </MenuButton> */}
                         <MenuButton >
                             {
                                 session ?
                                     <Image src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} boxSize={['30px', '30px', '30px', '30px']} borderRadius="50%"></Image>
-                                    // <div style={{ width: '30px', marginLeft: '10px' }}>
-                                    //     <img src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} style={{ width: '100%', borderRadius: '50px' }}></img>
-                                    // </div>
                                     :
                                     <BiUser size="25px" />
                             }
@@ -140,7 +65,6 @@ const Navbar = (props) => {
                             }
                         </MenuList>
                     </Menu>
-                    {/* <MoonIcon cursor="pointer" onClick={toggleColorMode} /> */}
                 </Box>
             </div>
         </div>

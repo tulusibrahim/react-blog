@@ -9,7 +9,6 @@ import Login from "./login";
 import Admin from './admin'
 import NewBlog from "./newblog";
 import Logout from "./logout";
-import NotResponsive from "./notResponsive";
 import EditPost from "./editPost";
 import { ChakraProvider } from "@chakra-ui/react"
 import Topic from './topics';
@@ -38,7 +37,6 @@ function App() {
               <Route path="/new" component={NewBlog}></Route>
               <Route path="/edit" component={EditPost}></Route>
               <Route path="/logout" component={Logout}></Route>
-              <Route path="/notresponsive" component={NotResponsive}></Route>
               <Route path="/topic/:topic" component={Topic}></Route>
               <Route exact path="/:user/:friends" component={Friends}></Route>
               <Route path="/:user" component={Profile}></Route>
