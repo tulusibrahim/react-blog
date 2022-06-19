@@ -1,6 +1,5 @@
 import { useColorMode } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import swal from 'sweetalert';
 import { supabase } from '../configs/configurations';
 
@@ -8,7 +7,6 @@ const useNavbar = (second) => {
     const [session, setSession] = useState(false)
     const [profilePic, setProfilePic] = useState('')
     const [nickName, setNickName] = useState('')
-    let all = useLocation()
     const { colorMode, toggleColorMode } = useColorMode()
     let localSession = localStorage.getItem('supabase.auth.token')
 
@@ -24,7 +22,6 @@ const useNavbar = (second) => {
         let result = await supabase.from('blog_users').select('nickname').eq('id', supabase.auth.session().user.id)
         setNickName(result.data[0].nickname)
     }
-
 
     const logOut = async () => {
         swal({

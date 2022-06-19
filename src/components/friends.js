@@ -2,7 +2,7 @@ import { Image } from "@chakra-ui/image";
 import { Box, Center, Flex, Text } from "@chakra-ui/layout";
 import { Link } from "react-router-dom";
 import { supabase } from "../configs/configurations";
-import useFriends from "./friendshooks";
+import useFriends from "../hooks/friendshooks";
 
 const Friends = () => {
     let { followers, user, friends } = useFriends()

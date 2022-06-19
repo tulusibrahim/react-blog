@@ -2,7 +2,7 @@ import { Image } from '@chakra-ui/image';
 import { Box, Center, Flex, Text } from '@chakra-ui/layout';
 import { Button } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import useProfile from './profilehooks';
+import useProfile from '../hooks/profilehooks';
 
 const Profile = (props) => {
     let {
@@ -19,7 +19,7 @@ const Profile = (props) => {
 
     return (
         <Flex w="100%" h="100%" mt="20px" justify="center" color="white" >
-            <Flex align="center" justify="space-evenly" w="95%" h="fit-content" mb="20px" direction="column">
+            <Flex align="center" justify="space-evenly" w="70%" h="fit-content" mb="20px" direction="column">
                 <Flex align="center" w="100%" justify="space-evenly" direction={['row', 'row', 'column', 'column']} mb="20px">
                     <Image boxSize={["60px", "70px", "90px", "120px"]} borderRadius="50%" src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${profile.nickname}&length=1`} />
                     <Flex align={["flex-start", "flex-start", "center", "center"]} direction="column">
@@ -27,10 +27,10 @@ const Profile = (props) => {
                         <Text fontStyle="italic" fontSize={["12px", "16px", "18px", "20px"]} ml="5px">{profile.bio}</Text>
                         <Flex>
                             <Link to={{ pathname: `/${profile.nickname}/following` }}>
-                                <Text ml="5px" fontSize={["12px", "16px", "18px", "20px"]}>{following} Following • </Text>
+                                <Text ml="5px" fontSize={["12px", "16px", "18px", "20px"]} _hover={{ color: 'gray.400' }}>{following} Following • </Text>
                             </Link>
                             <Link to={{ pathname: `/${profile.nickname}/followers` }}>
-                                <Text ml="5px" fontSize={["12px", "16px", "18px", "20px"]}>{followers} Followers</Text>
+                                <Text ml="5px" fontSize={["12px", "16px", "18px", "20px"]} _hover={{ color: 'gray.400' }}>{followers} Followers</Text>
                             </Link>
                         </Flex>
                         {

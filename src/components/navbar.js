@@ -5,14 +5,14 @@ import { createBreakpoints } from "@chakra-ui/theme-tools"
 import { AiOutlineAlert, AiOutlineLogin, AiOutlineLogout, } from 'react-icons/ai';
 import { BiUser } from 'react-icons/bi'
 import { BsPen } from 'react-icons/bs'
-import useNavbar from './navbarhooks';
+import useNavbar from '../hooks/navbarhooks';
 
 
 const Navbar = (props) => {
     let { session, profilePic, nickName, colorMode, logOut } = useNavbar()
 
     return (
-        <div className="navbarcon">
+        <div className="navbarcon" data-testid='navbar'>
             <div className="navbar">
                 <div className="title"><Link to="/" className="link" >Write</Link></div>
                 <Box className="right" bg={colorMode} h="10vh" w={['60%', '40%', '30%', '20%']} d="flex" alignItems="center" justifyContent={session ? "space-evenly" : 'flex-end'}>
@@ -35,10 +35,10 @@ const Navbar = (props) => {
                                 session ?
                                     <Image src={profilePic ? profilePic : `https://ui-avatars.com/api/?name=${supabase.auth.user().email}&length=1`} boxSize={['30px', '30px', '30px', '30px']} borderRadius="50%"></Image>
                                     :
-                                    <BiUser size="25px" />
+                                    <BiUser size="25px" data-testid='profileimage' />
                             }
                         </MenuButton>
-                        <MenuList bg="#0D1B2A" borderColor="GrayText" >
+                        <MenuList bg="#0D1B2A" borderColor="GrayText">
                             {
                                 session !== null ?
                                     <>

@@ -7,6 +7,7 @@ import swal from 'sweetalert';
 const useArticle = (second) => {
     const { title } = useParams()
     const [data, setData] = useState([])
+    const [coverImg, setCoverImg] = useState({})
     const [comments, setComments] = useState([])
     const [tags, setTags] = useState([])
     const [inputComment, setInputComments] = useState('')
@@ -23,9 +24,10 @@ const useArticle = (second) => {
                 blog_tags(*)
             `)
             .match({ title: title, isDraft: 'false' })
-        console.log(data[0])
+        console.log(data)
         setData(data)
         setComments(data[0].blog_comments)
+        if (data[0].coverImage !== null) setCoverImg(JSON.parse(data[0].coverImage))
         setTags(data[0].blog_tags)
 
         if (data[0].blog_users) {
@@ -132,6 +134,6 @@ const useArticle = (second) => {
         // document.title = title
     }, [])
 
-    return { data, comments, tags, profilePic, session, title, addLikes, postComment, setInputComments }
+    return { data, comments, tags, profilePic, session, title, coverImg, addLikes, postComment, setInputComments }
 }
 export default useArticle

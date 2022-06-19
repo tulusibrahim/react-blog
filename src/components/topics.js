@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import useTopic from './topicshooks';
+import useTopic from '../hooks/topicshooks';
 
 const Topic = () => {
     let { data, param } = useTopic()

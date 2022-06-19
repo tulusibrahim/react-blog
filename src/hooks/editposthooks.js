@@ -14,9 +14,13 @@ const useEditPost = (props) => {
     const [tag, setTag] = useState('')
     const [alltag, setAllTag] = useState([])
     const [savedId, setSavedId] = useState('')
+    const [selectedImg, setSelectedImg] = useState({})
     const [valueDebounceBody] = useDebounce(body, 1000);
     const [valueDebounceTitle] = useDebounce(title, 1000);
+    const [valueDebounceImg] = useDebounce(selectedImg, 1000);
     const [saveStatus, setSaveStatus] = useState('')
+    const [imageTitle, setImageTitle] = useState('')
+    const [image, setImage] = useState([])
     let toast = useToast()
 
     const getData = async (id) => {
@@ -24,6 +28,7 @@ const useEditPost = (props) => {
         console.log(result)
         setBody(result.data[0].body)
         setTitle(result.data[0].title)
+        if (result.data[0].coverImage !== null) setSelectedImg(JSON.parse(result.data[0].coverImage))
         // let parsedArray = result.data[0].blog_tags.map(res => res.name)
         setAllTag(result.data[0].blog_tags)
     }
@@ -35,10 +40,11 @@ const useEditPost = (props) => {
             .update({
                 title: title ? title : props.location.query.res.title,
                 body: body ? body : props.location.query.res.body,
+                coverImage: selectedImg ? selectedImg : props.location.query.res.selectedImg,
             })
             .eq('id', savedId)
-        // console.log(update)
-        if (update.error) {
+        console.log(update)
+        if (update.error !== null) {
             toast({ description: 'Failed to update, try later', status: 'warning', isClosable: true })
             setSaveStatus('Failed')
         }
@@ -53,6 +59,7 @@ const useEditPost = (props) => {
             .update({
                 title: title ? title : props.location.query.res.title,
                 body: body ? body : props.location.query.res.body,
+                coverImage: selectedImg ? selectedImg : props.location.query.res.selectedImg,
                 isDraft: 'false'
             })
             .eq('id', savedId)
@@ -113,6 +120,15 @@ const useEditPost = (props) => {
         setAllTag(result.data[0].blog_tags)
     }
 
+    const searchImage = async (e) => {
+        e.preventDefault()
+        let key = process.env.REACT_APP_VERCEL_PIXABAY_KEY
+        let data = await fetch(`https://pixabay.com/api/?key=${key}&q=${imageTitle}&per_page=15`)
+        let json = await data.json()
+        console.log(json)
+        setImage(json.hits)
+    }
+
     useEffect(() => {
         document.title = `Edit - ${props.location.query.res.title}`
         setSavedId(props.location.query.res.id)
@@ -120,12 +136,12 @@ const useEditPost = (props) => {
     }, [])
 
     useEffect(() => {
-        if (valueDebounceBody || valueDebounceTitle) {
+        if (valueDebounceBody || valueDebounceTitle || valueDebounceImg) {
             saveDataOnChange()
         }
-    }, [valueDebounceBody, valueDebounceTitle])
+    }, [valueDebounceBody, valueDebounceTitle, valueDebounceImg])
     //backgroundColor: '#12253a',
 
-    return { title, body, isOpen, onOpen, onClose, tag, saveStatus, postDataFinal, checkTag, removeOneTag, setTitle, setTag, setBody, alltag }
+    return { title, body, isOpen, onOpen, setSelectedImg, selectedImg, onClose, tag, saveStatus, image, postDataFinal, checkTag, removeOneTag, setTitle, setTag, setBody, searchImage, setImageTitle, alltag }
 }
 export default useEditPost

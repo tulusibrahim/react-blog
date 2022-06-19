@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom'
-import useTagList from './taglisthooks';
+import useTagList from '../hooks/taglisthooks';
 
 const Tags = () => {
     let { session, dataTag } = useTagList()

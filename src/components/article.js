@@ -2,13 +2,14 @@ import { useEffect } from "react";
 import { supabase } from "../configs/configurations";
 import { Link } from "react-router-dom"
 import parse from 'html-react-parser';
-import { Flex, Menu, MenuButton, MenuItem, MenuList, Tag, Text } from "@chakra-ui/react";
-import useArticle from "./articlehooks";
+import { Box, Flex, Image, Menu, MenuButton, MenuItem, MenuList, Tag, Text } from "@chakra-ui/react";
+import useArticle from "../hooks/articlehooks";
 
 const Article = () => {
-    let { data, comments, tags, profilePic, session, title, addLikes, postComment, setInputComments } = useArticle()
-
+    let { data, comments, tags, profilePic, session, title, coverImg, addLikes, postComment, setInputComments } = useArticle()
+    // let image = JSON.parse(coverImg)
     useEffect(() => {
+        console.log(coverImg)
         document.title = title
     }, [])
 
@@ -75,6 +76,19 @@ const Article = () => {
                                                 </>
                                         }
                                     </div>
+                                    {
+                                        Object.entries(coverImg).length > 0 ?
+                                            <Flex justify='center' w='100%' mb='50px' pos='relative'>
+                                                <Image src={coverImg.webformatURL} />
+                                                <Box display={coverImg ? 'block' : 'none'} pos={'absolute'} bottom='-30px' color='white'>
+                                                    By&nbsp;
+                                                    <a href={`http://pixabay.com/users/${coverImg.user}`} style={{ textDecoration: 'underline' }} target="_blank" rel="noopener noreferrer">{coverImg.user}</a>
+                                                    &nbsp;on&nbsp;
+                                                    <a href={coverImg.pageURL} style={{ textDecoration: 'underline' }} target="_blank" rel="noopener noreferrer">PixaBay</a>
+                                                </Box>
+                                            </Flex>
+                                            : null
+                                    }
                                     <Text className="body" fontSize={["16px", "17px", "17px", "18px"]}>{parse(res.body)}</Text>
                                 </div>
                             ))

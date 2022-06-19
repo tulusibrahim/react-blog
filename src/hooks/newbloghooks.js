@@ -9,16 +9,18 @@ import { useToast, useDisclosure } from "@chakra-ui/react"
 const useNewBlog = (second) => {
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
+    const [selectedImg, setSelectedImg] = useState({})
     const [tag, setTag] = useState('')
     const [alltag, setAllTag] = useState([])
     const [upload, setUpload] = useState(false)
     let history = useHistory()
-    const idForLater = uuidv4()
+    const [image, setImage] = useState([])
     let toast = useToast()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [valueDebounceBody] = useDebounce(body, 1000);
     const [valueDebounceTitle] = useDebounce(title, 1000);
-    let location = useLocation()
+    const [valueDebounceImg] = useDebounce(selectedImg, 1000);
+    const [imageTitle, setImageTitle] = useState('')
     const [savedId, setSavedId] = useState('')
     const [saveStatus, setSaveStatus] = useState('')
 
@@ -37,6 +39,7 @@ const useNewBlog = (second) => {
                         authorUserId: supabase.auth.user().id,
                         email: user.email,
                         date: moment().format('DD MMMM YYYY'),
+                        coverImage: selectedImg ? selectedImg : {},
                         isDraft: true
                     }
                 ])
@@ -66,6 +69,7 @@ const useNewBlog = (second) => {
                         authorUserId: supabase.auth.user().id,
                         email: user.email,
                         date: moment().format('DD MMMM YYYY'),
+                        coverImage: selectedImg ? selectedImg : {},
                         isDraft: true
                     }
                 )
@@ -149,16 +153,24 @@ const useNewBlog = (second) => {
         setAllTag(result.data[0].blog_tags)
     }
 
+    const searchImage = async (e) => {
+        e.preventDefault()
+        let key = process.env.REACT_APP_VERCEL_PIXABAY_KEY
+        let data = await fetch(`https://pixabay.com/api/?key=${key}&q=${imageTitle}&per_page=15`)
+        let json = await data.json()
+        console.log(json)
+        setImage(json.hits)
+    }
     //bug gabisa delete tag pas bikin new blog
 
     // window.onpopstate = () =>
     //     history.location.pathname == '/new' &&
 
     useEffect(() => {
-        if (valueDebounceBody || valueDebounceTitle) {
+        if (valueDebounceBody || valueDebounceTitle || valueDebounceImg) {
             postDataOnChange()
         }
-    }, [valueDebounceBody, valueDebounceTitle])
+    }, [valueDebounceBody, valueDebounceTitle, valueDebounceImg])
 
     useEffect(() => {
         document.title = "New Blog"
@@ -168,7 +180,7 @@ const useNewBlog = (second) => {
     //backgroundColor: '#112236',
     //editor js candidate replace medium editor
 
-    return { body, alltag, title, saveStatus, tag, onClose, isOpen, setBody, setTitle, removeOneTag, checkTag, setTag, postDataFinal }
+    return { body, alltag, title, saveStatus, tag, onClose, isOpen, image, setSelectedImg, searchImage, setImageTitle, selectedImg, setBody, setTitle, removeOneTag, checkTag, setTag, postDataFinal }
 }
 
 export default useNewBlog

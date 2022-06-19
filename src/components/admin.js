@@ -1,5 +1,5 @@
 import { supabase } from "../configs/configurations";
-import useAdmin from "./adminhooks";
+import useAdmin from "../hooks/adminhooks";
 import { Tabs, TabList, TabPanels, Center, Tab, TabPanel } from "@chakra-ui/react"
 
 const Admin = () => {

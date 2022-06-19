@@ -4,7 +4,7 @@ import parse from 'html-react-parser';
 import Tags from './taglist'
 import { Box, Center, Flex } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
-import useHome from "./homehooks";
+import useHome from "../hooks/homehooks";
 
 const Home = () => {
     let { ArticleHome, loading, FollowedPeople } = useHome()

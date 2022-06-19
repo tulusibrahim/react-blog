@@ -1,6 +1,6 @@
 import { Input, Text, InputGroup, Button, InputRightElement, Box, Flex } from "@chakra-ui/react"
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
-import useLogin from "./loginhooks";
+import useLogin from "../hooks/loginhooks";
 
 const Login = (props) => {
     let { login, show, signUp, logIn, loginWithGithub, setEmail, setPassword, setlogin, setShow } = useLogin()
