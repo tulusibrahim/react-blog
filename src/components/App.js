@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./home";
 import Navbar from "./navbar";
 // import Search from "./search";
@@ -6,18 +6,16 @@ import About from "./about";
 import Article from "./article";
 import PageNotFound from "./pageNotFound";
 import Login from "./login";
-import Admin from './admin'
+import Admin from "./admin";
 import NewBlog from "./newblog";
 import Logout from "./logout";
 import EditPost from "./editPost";
-import { ChakraProvider } from "@chakra-ui/react"
-import Topic from './topics';
-import Profile from './profile';
-import Friends from './friends';
-
+import { ChakraProvider } from "@chakra-ui/react";
+import Topic from "./topics";
+import Profile from "./profile";
+import Friends from "./friends";
 
 function App() {
-
   return (
     <ChakraProvider>
       <Router>
@@ -26,7 +24,7 @@ function App() {
           <div className="all">
             <Navbar />
             <Switch>
-              <Route exact path="/" >
+              <Route exact path="/">
                 {/* <Search /> */}
                 <Home />
               </Route>
